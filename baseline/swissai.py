@@ -12,10 +12,16 @@ class SwissAIConfig:
     api_key: str = None
 
 def load_swissai_api_key() -> Optional[str]:
-    dir = os.path.dirname(os.path.abspath(__file__))
-    key_path = os.path.join(os.path.dirname(dir),'API-key', 'swissai_api_key.txt')
-    with open(key_path, 'r') as f:
-        return f.read().strip()
+    """Load SwissAI API key from API-key directory at project root."""
+    # Get project root (one level up from baseline)
+    baseline_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(baseline_dir)
+    key_path = os.path.join(project_root, 'API-key', 'swissai_api_key.txt')
+    try:
+        with open(key_path, 'r') as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return None
     
 def get_swissai_chat_model(config: Optional[SwissAIConfig] = None) -> ChatOpenAI:
     cfg = config or SwissAIConfig()

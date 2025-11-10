@@ -17,7 +17,8 @@ from swissai import SwissAIConfig
 
 def project_root() -> str:
     """Get the root directory of the project."""
-    return os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    # baseline is now at root level, so go up one directory from baseline
+    return os.path.dirname(os.path.dirname(__file__))
 
 def get_table_paths(dataset: str, split: str, tables_path: str | None) -> str:
     if tables_path:
@@ -89,7 +90,7 @@ def main():
     parser.add_argument("--tables_path", type=str, help="Override path to tables metadata json")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_tokens", type=int, default=1200)
-    parser.add_argument("--log_path", type=str, help="Path to save log file (JSON format). Default: Exp/baseline/logs/planner_log.json")
+    parser.add_argument("--log_path", type=str, help="Path to save log file (JSON format). Default: baseline/logs/planner_log.json")
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
     args = parser.parse_args()
 
@@ -113,7 +114,7 @@ def main():
     if args.log_path:
         log_path = args.log_path
     else:
-        # Default log path: Exp/baseline/logs/planner_log.json
+        # Default log path: baseline/logs/planner_log.json
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
         log_path = os.path.join(log_dir, "planner_log.json")
     
