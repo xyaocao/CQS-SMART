@@ -1,0 +1,47 @@
+[
+  {
+    "timestamp": "2025-11-10T17:31:06.513256",
+    "question": "How many singers do we have?",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT COUNT(singer.Singer_ID) FROM singer;"
+  },
+  {
+    "timestamp": "2025-11-10T17:31:42.210504",
+    "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Country",
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age DESC"
+    },
+    "sql": "SELECT Name, Country, Age FROM singer ORDER BY Age DESC;"
+  }
+]
