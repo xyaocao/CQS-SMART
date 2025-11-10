@@ -21,7 +21,6 @@ def json_file(text: str) -> Dict[str, Any]:
 
 class PlannerGraph:
     """Graph for the baseline planner agent."""
-
     def __init__(self, swissai_config: SwissAIConfig = None):
         self.model = get_swissai_chat_model(swissai_config)
         self.plan_prompt = ChatPromptTemplate.from_messages([
