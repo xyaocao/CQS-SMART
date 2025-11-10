@@ -3,6 +3,7 @@ from dataclasses import dataclass, field
 
 @dataclass
 class PlannerState:
+    
     """State passed through the baseline planner.
 
     - question: natural language question
