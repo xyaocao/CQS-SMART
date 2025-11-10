@@ -43,5 +43,55 @@
       "order_by": "singer.Age DESC"
     },
     "sql": "SELECT Name, Country, Age FROM singer ORDER BY Age DESC;"
+  },
+  {
+    "timestamp": "2025-11-10T18:30:08.122688",
+    "question": "How many singers do we have?",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT COUNT(singer.Singer_ID) FROM singer;"
+  },
+  {
+    "timestamp": "2025-11-10T18:42:20.293069",
+    "question": "What is the average, minimum, and maximum age of all singers from France?",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [
+        "singer.Country = 'France'"
+      ],
+      "aggregations": [
+        "AVG(singer.Age)",
+        "MIN(singer.Age)",
+        "MAX(singer.Age)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France';"
   }
 ]
