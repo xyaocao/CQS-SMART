@@ -10,16 +10,24 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
-from dataloader import load_spider, get_schema_from_spider
+from dataloader import load_spider
 from planneragent import PlannerGraph
 from state import PlannerState
 from swissai import SwissAIConfig
 
+# Reuse utilities from run_planner to get schema text and write logs
+from run_planner import get_table_paths as rp_get_table_paths
+from run_planner import load_schema_text as rp_load_schema_text
+from run_planner import save_log as rp_save_log
+
+
 def project_root() -> str:
     return os.path.dirname(os.path.dirname(__file__))
 
+
 def ignore_errors_decode(b: bytes) -> str:
     return b.decode(errors='ignore')
+
 
 def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
     conn = sqlite3.connect(db_path)
@@ -29,6 +37,7 @@ def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
     rows = cur.fetchall()
     conn.close()
     return rows
+
 
 def read_examples(path: str) -> list[dict]:
     with open(path, "r", encoding="utf-8") as f:
@@ -127,14 +136,19 @@ def main():
     parser.add_argument("--max_examples", type=int, default=10**9)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_tokens", type=int, default=1200)
+    # Logging options consistent with run_planner
+    parser.add_argument("--log_path", type=str, help="Path to save log file (JSON). Default: baseline/logs/planner_log.json")
+    parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
     args = parser.parse_args()
 
     # Resolve paths
     default_examples, default_tables, default_db_root, default_gold = get_spider_paths(args.split)
     examples_path = args.examples_path or default_examples
-    tables_path = args.tables_path or default_tables
     db_root = args.db_root or default_db_root
     gold_sql_path = args.gold_sql_path or default_gold
+
+    # Use run_planner's table path resolver to match its behavior
+    tables_path = rp_get_table_paths("spider", args.split, args.tables_path)
 
     # Load data
     print("=== Resolved Paths ===")
@@ -159,11 +173,18 @@ def main():
         examples = examples[:min_len]
         gold_pairs = gold_pairs[:min_len]
 
-    # Load schema metadata
-    spider_tables = load_spider(tables_path)
+    # Load schema metadata (for run_planner.load_schema_text)
+    spider_tables = load_spider(tables_path)  # not strictly needed here, but kept for parity
 
     # Planner agent
     graph = PlannerGraph(SwissAIConfig(temperature=args.temperature, max_tokens=args.max_tokens))
+
+    # Resolve default log path like run_planner
+    if args.log_path:
+        log_path = args.log_path
+    else:
+        log_dir = os.path.join(os.path.dirname(__file__), "logs")
+        log_path = os.path.join(log_dir, "planner_log.json")
 
     start = max(0, args.start)
     end = min(len(examples), start + max(0, args.max_examples))
@@ -178,15 +199,38 @@ def main():
 
         # Use the example's db_id for schema and db path; gold's db_id is a sanity check
         active_db_id = db_id or gold_db_id
-        schema_text = get_schema_from_spider(spider_tables, active_db_id)
+
+        # Get schema text via run_planner utility (to match planner usage)
+        schema_text = rp_load_schema_text("spider", active_db_id, tables_path)
 
         # Invoke planner to generate SQL for the current question
         state = PlannerState(question=question, db_id=active_db_id, schema_text=schema_text)
+        out_state = None
         try:
-            out_state = graph.invoke(state)
+            out_dict = graph.invoke(state)
+            out_state = PlannerState(**out_dict)
             gen_sql = (out_state.sql or "").strip().rstrip(";")
-        except Exception:
+        except Exception as e:
+            print(f"[ERROR] Failed to generate plan/SQL for question '{question[:50]}...': {e}")
             gen_sql = ""
+            out_state = PlannerState(question=question, db_id=active_db_id, schema_text=schema_text)
+
+        # Log using run_planner's logger
+        try:
+            rp_save_log(
+                log_path=log_path,
+                question=question,
+                db_id=active_db_id,
+                dataset="spider",
+                split=args.split,
+                plan=getattr(out_state, "plan", {}) if out_state else {},
+                sql=gen_sql,
+                schema_text=schema_text if args.save_schema else None
+            )
+        except Exception as e:
+            # Logging shouldn't break evaluation
+            print(f"[ERROR] Failed to save log: {e}")
+            pass
 
         # Execute both queries
         db_path = resolve_db_path(db_root, active_db_id, args.split)
@@ -194,6 +238,7 @@ def main():
             print(f"[WARN] SQLite not found for db_id '{active_db_id}'. Checked '{db_root}' and standard Spider locations.")
             total += 1
             continue
+
         gold_sql_clean = (gold_sql or "").strip().rstrip(";")
         try:
             gen_rows = exec_sql(db_path, gen_sql) if gen_sql else []
