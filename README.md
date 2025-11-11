@@ -1,2 +1,2 @@
 # CQS-SMART
-Critical Questions for Text-to-SQL: Scheme-Guided Multi-Agent Reasoning with LLMs.
+Critical Questions and Scheme-Guided Multi-Agent Reasoning for Text-to-SQL.
