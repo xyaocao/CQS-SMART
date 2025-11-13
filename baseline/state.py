@@ -2,6 +2,21 @@ from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 
 @dataclass
+class QwenState:
+    """State passed through the baseline qwenagent.
+
+    - question: natural language question
+    - db_id: database identifier (Spider_dev db name)
+    - schema_text: textual schema description for the db_id
+    - sql: final SQL produced by the sql-generation node
+    """
+
+    question: str
+    db_id: Optional[str] = None
+    schema_text: Optional[str] = None
+    sql: Dict[str, Any] = field(default_factory=dict)
+
+@dataclass
 class PlannerState:
     
     """State passed through the baseline planner.
