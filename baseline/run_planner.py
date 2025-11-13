@@ -79,7 +79,7 @@ def save_log(log_path: str, question: str, db_id: str, dataset: str, split: str,
     with open(log_file, 'w', encoding='utf-8') as f:
         json.dump(logs, f, indent=2, ensure_ascii=False)
     
-    print(f"\n=== Log saved to: {log_path} ===")
+    # print(f"\n=== Log saved to: {log_path} ===")
         
 def main():
     parser = argparse.ArgumentParser()
