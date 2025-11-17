@@ -12,13 +12,14 @@ if current_dir not in sys.path:
 
 from dataloader import load_spider
 from planneragent import PlannerGraph
-from state import PlannerState
-from swissai import SwissAIConfig
+from qwenagent import QwenGraph
+from state import PlannerState, QwenState
+from llm import LLMConfig
 
 # Reuse utilities from run_planner to get schema text and write logs
-from run_planner import get_table_paths as rp_get_table_paths
-from run_planner import load_schema_text as rp_load_schema_text
-from run_planner import save_log as rp_save_log
+from run_planner import get_table_paths 
+from run_planner import load_schema_text 
+from run_planner import save_log 
 
 
 def project_root() -> str:
@@ -46,9 +47,9 @@ def read_examples(path: str) -> list[dict]:
 
 def parse_gold_sql(path: str) -> List[Tuple[str, str]]:
     """
-    Parse test_gold.sql lines as-is, preserving duplicates:
+    Parse dev_gold.sql lines as-is, preserving duplicates:
       <SQL><TAB><db_id>
-    Returns a list of (sql, db_id) with no deduplication.
+    Returns a list of (sql, db_id) tuples.
     """
     if not os.path.exists(path):
         raise FileNotFoundError(f"Gold SQL file not found: {path}")
@@ -136,6 +137,7 @@ def main():
     parser.add_argument("--max_examples", type=int, default=10**9)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_tokens", type=int, default=1200)
+    parser.add_argument("--baseline", choices=["planner", "qwenagent"], default="planner", help="Choose which baseline agent to evaluate 'planner' or 'qwenagent' ")
     # Logging options consistent with run_planner
     parser.add_argument("--log_path", type=str, help="Path to save log file (JSON). Default: baseline/logs/planner_log.json")
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
@@ -148,7 +150,7 @@ def main():
     gold_sql_path = args.gold_sql_path or default_gold
 
     # Use run_planner's table path resolver to match its behavior
-    tables_path = rp_get_table_paths("spider", args.split, args.tables_path)
+    tables_path = get_table_paths("spider", args.split, args.tables_path)
 
     # Load data
     print("=== Resolved Paths ===")
@@ -176,15 +178,26 @@ def main():
     # Load schema metadata (for run_planner.load_schema_text)
     spider_tables = load_spider(tables_path)  # not strictly needed here, but kept for parity
 
-    # Planner agent
-    graph = PlannerGraph(SwissAIConfig(temperature=args.temperature, max_tokens=args.max_tokens))
+    # Select baseline agent
+    config = LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
+    if args.baseline == "planner":
+        graph = PlannerGraph(config)
+        state_cls = PlannerState
+        expects_plan = True
+    else:
+        graph = QwenGraph(config)
+        state_cls = QwenState
+        expects_plan = False
 
     # Resolve default log path like run_planner
     if args.log_path:
         log_path = args.log_path
     else:
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        log_path = os.path.join(log_dir, "planner_log.json")
+        default_log = "planner_log.json" if args.baseline == "planner" else "qwenagent_log.json"
+        log_path = os.path.join(log_dir, default_log)
+
+    command_line = " ".join(sys.argv)
 
     start = max(0, args.start)
     end = min(len(examples), start + max(0, args.max_examples))
@@ -201,29 +214,35 @@ def main():
         active_db_id = db_id or gold_db_id
 
         # Get schema text via run_planner utility (to match planner usage)
-        schema_text = rp_load_schema_text("spider", active_db_id, tables_path)
+        schema_text = load_schema_text("spider", active_db_id, tables_path)
 
-        # Invoke planner to generate SQL for the current question
-        state = PlannerState(question=question, db_id=active_db_id, schema_text=schema_text)
+        # Invoke selected agent to generate SQL for the current question
+        state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
         out_state = None
         try:
             out_dict = graph.invoke(state)
-            out_state = PlannerState(**out_dict)
+            out_state = state_cls(**out_dict)
             gen_sql = (out_state.sql or "").strip().rstrip(";")
         except Exception as e:
             print(f"[ERROR] Failed to generate plan/SQL for question '{question[:50]}...': {e}")
             gen_sql = ""
-            out_state = PlannerState(question=question, db_id=active_db_id, schema_text=schema_text)
+            out_state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
 
         # Log using run_planner's logger
         try:
-            rp_save_log(
+            log_inputs = {
+                "question": question,
+                "db_id": active_db_id,
+                "dataset": "spider",
+                "split": args.split,
+                "baseline": args.baseline,
+                "example_index": idx,
+            }
+            save_log(
                 log_path=log_path,
-                question=question,
-                db_id=active_db_id,
-                dataset="spider",
-                split=args.split,
-                plan=getattr(out_state, "plan", {}) if out_state else {},
+                command_line=command_line,
+                inputs=log_inputs,
+                plan=getattr(out_state, "plan", {}) if expects_plan and out_state else {},
                 sql=gen_sql,
                 schema_text=schema_text if args.save_schema else None
             )

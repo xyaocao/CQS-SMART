@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 from state import QwenState
 from prompts_qwenagent import SQLGen_system_prompt, SQLGen_human
-from swissai import get_swissai_chat_model, SwissAIConfig
+from llm import get_llm_chat_model, LLMConfig
 
 def json_file(text: str) -> Dict[str, Any]:
     text = text.strip()
@@ -21,8 +21,8 @@ def json_file(text: str) -> Dict[str, Any]:
 
 class QwenGraph:
     """Graph for the baseline qwenagent."""
-    def __init__(self, swissai_config: SwissAIConfig = None):
-        self.model = get_swissai_chat_model(swissai_config)
+    def __init__(self, llm_config: LLMConfig = None):
+        self.model = get_llm_chat_model(llm_config)
         self.sqlgen_prompt = ChatPromptTemplate.from_messages([
             ("system", SQLGen_system_prompt),
             ("human", SQLGen_human),

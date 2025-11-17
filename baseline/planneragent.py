@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
 from state import PlannerState
 from prompts_planner import Planner_system_prompt, Planner_human, SQLGen_system_prompt, SQLGen_human
-from swissai import get_swissai_chat_model, SwissAIConfig
+from llm import get_llm_chat_model, LLMConfig
 
 def json_file(text: str) -> Dict[str, Any]:
     text = text.strip()
@@ -21,8 +21,8 @@ def json_file(text: str) -> Dict[str, Any]:
 
 class PlannerGraph:
     """Graph for the baseline planner agent."""
-    def __init__(self, swissai_config: SwissAIConfig = None):
-        self.model = get_swissai_chat_model(swissai_config)
+    def __init__(self, llm_config: LLMConfig = None):
+        self.model = get_llm_chat_model(llm_config)
         self.plan_prompt = ChatPromptTemplate.from_messages([
             ("system", Planner_system_prompt),
             ("human", Planner_human),

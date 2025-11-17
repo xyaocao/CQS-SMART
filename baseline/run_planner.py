@@ -14,7 +14,7 @@ if current_dir not in sys.path:
 from dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
 from planneragent import PlannerGraph
 from state import PlannerState
-from swissai import SwissAIConfig
+from llm import LLMConfig
 
 def project_root() -> str:
     """Get the root directory of the project."""
@@ -140,7 +140,7 @@ def main():
     schema_resolver = build_schema_resolver(args.dataset, tables_meta_path)
 
     graph = PlannerGraph(
-        SwissAIConfig(temperature=args.temperature, max_tokens=args.max_tokens)
+        LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
     )
     command_line = " ".join(sys.argv)
 

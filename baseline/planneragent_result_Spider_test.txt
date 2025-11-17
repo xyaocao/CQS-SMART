@@ -1,1 +1,2 @@
+# Evaluate from model "Qwen/Qwen3-Next-80B-A3B-Instruct"
 Execution Accuracy (2147 ex): 0.6511  (correct: 1398)

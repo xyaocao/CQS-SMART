@@ -4,9 +4,9 @@
 '''
 #!/bin/bash
 # Type 1: Single run
-python -m baseline.run_qwenagent "question" "db_id" --dataset spider --input_mode: single
-E:/Anaconda/envs/langchain_env/python.exe baseline/run_qwenagent.py "question" "db_id" --dataset spider --input_mode: single
+python -m baseline.run_qwenagent "question" "db_id" --dataset spider --input_mode single
+E:/Anaconda/envs/langchain_env/python.exe baseline/run_qwenagent.py "question" "db_id" --dataset spider --input_mode single
 
 # Type 2: Batch run
-python -m baseline.run_qwenagent --dataset spider --split dev --input_mode: batch --start 10 --num_examples 5
-E:/Anaconda/envs/langchain_env/python.exe baseline/run_qwenagent.py --dataset spider --split dev --input_mode: batch --start 10 --num_examples 5
+python -m baseline.run_qwenagent --dataset spider --split dev --input_mode batch --start 10 --num_examples 5
+E:/Anaconda/envs/langchain_env/python.exe baseline/run_qwenagent.py --dataset spider --split dev --input_mode batch --start 10 --num_examples 5

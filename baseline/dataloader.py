@@ -26,12 +26,14 @@ def load_schema(entries: List[Dict[str, Any]], db_id: str) -> str:
     primary_keys = entry.get('primary_keys') or []
     foreign_keys = entry.get('foreign_keys') or []
     
+    # column_idx_to_table_col = {0 : (0, "id")),}
     column_idx_to_table_col: Dict[int, Tuple[str, str]] = {
         idx: (table_idx, column_name)
         for idx, (table_idx, column_name) in enumerate(columns)
         if table_idx != -1 and column_name
     }
 
+    # table_to_columns = {0: [(0, "id", "number"), (1, "name", "text")],}
     table_to_columns: Dict[int, List[Tuple[int, str, str]]] = {i: [] for i in range(len(tables))}
     for idx, (table_idx, column_name) in enumerate(columns):
         if table_idx == -1 or not column_name:
@@ -39,6 +41,7 @@ def load_schema(entries: List[Dict[str, Any]], db_id: str) -> str:
         column_type = column_types[idx] if idx < len(column_types) else None
         table_to_columns[table_idx].append((idx, column_name, column_type))
     
+    # fk_lookup = {0: ["table_1.column_a", "table_2.column_b"],}
     fk_lookup: Dict[int, List[str]] = {}
     for src_idx, tgt_idx in foreign_keys:
         target = column_idx_to_table_col.get(tgt_idx)
