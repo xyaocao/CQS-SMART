@@ -33,15 +33,15 @@ def get_table_paths(dataset: str, split: str, tables_path: str | None) -> str:
     else:
         raise ValueError(f"Unsupported dataset: {dataset}")
     
-# def load_schema_text(dataset: str, db_id: str, tables_meta_path: str | None) -> str:
-#     if dataset == "spider":
-#         tables = load_spider(tables_meta_path)
-#         return get_schema_from_spider(tables, db_id)
-#     elif dataset == "bird":
-#         tables = load_bird(tables_meta_path)
-#         return get_schema_from_bird(tables, db_id)
-#     else:
-#         raise ValueError(f"Unsupported dataset: {dataset}")
+def load_schema_text(dataset: str, db_id: str, tables_meta_path: str | None) -> str:
+    if dataset == "spider":
+        tables = load_spider(tables_meta_path)
+        return get_schema_from_spider(tables, db_id)
+    elif dataset == "bird":
+        tables = load_bird(tables_meta_path)
+        return get_schema_from_bird(tables, db_id)
+    else:
+        raise ValueError(f"Unsupported dataset: {dataset}")
 
 
 def get_examples_path(dataset: str, split: str, examples_path: str | None) -> str:
