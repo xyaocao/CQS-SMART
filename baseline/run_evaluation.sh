@@ -1,8 +1,10 @@
-#Evaluate the Planner baseline on the Spider test set
-E:/Anaconda/envs/langchain_env/python.exe baseline/evaluation.py  --baseline planner --split test --max_examples 999999
-python -m baseline.evaluation.py --baseline planner --split test --max_examples 999999
+# From the project root (F:\MAster Thesis\CQS-SMART)
 
-#Evaluate the QwenAgent baseline on the Spider dev set
+#Evaluate the Planner baseline on the Spider dev set
+E:/Anaconda/envs/langchain_env/python.exe baseline/evaluation.py  --baseline planner --split dev --max_examples 999999
+python -m baseline.evaluation.py --baseline planner --split dev --max_examples 999999
+
+#Evaluate the BaseAgent baseline on the Spider dev set
 E:/Anaconda/envs/langchain_env/python.exe baseline/evaluation.py  --baseline baseagent --split dev --max_examples 999999
 python -m baseline.evaluation.py --baseline baseagent --split dev --max_examples 999999
 
