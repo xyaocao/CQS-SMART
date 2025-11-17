@@ -9,4 +9,4 @@ E:/Anaconda/envs/langchain_env/python.exe baseline/run_baseagent.py "question" "
 
 # Type 2: Batch run
 python -m baseline.run_baseagent --dataset spider --split dev --input_mode batch --start 10 --num_examples 5
-E:/Anaconda/envs/langchain_env/python.exe baseline/run_baseagent.py --dataset spider --split dev --input_mode batch --start 10 --num_examples 5
+E:/Anaconda/envs/langchain_env/python.exe baseline/run_baseagent.py --dataset spider --split dev --input_mode batch --start 5 --num_examples 5

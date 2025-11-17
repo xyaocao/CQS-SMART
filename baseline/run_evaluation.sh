@@ -1,5 +1,3 @@
-# From the project root (F:\MAster Thesis\CQS-SMART)
-
 #Evaluate the Planner baseline on the Spider test set
 E:/Anaconda/envs/langchain_env/python.exe baseline/evaluation.py  --baseline planner --split test --max_examples 999999
 python -m baseline.evaluation.py --baseline planner --split test --max_examples 999999

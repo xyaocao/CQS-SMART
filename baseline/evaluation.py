@@ -21,14 +21,11 @@ from run_planner import get_table_paths
 from run_planner import load_schema_text 
 from run_planner import save_log 
 
-
 def project_root() -> str:
     return os.path.dirname(os.path.dirname(__file__))
 
-
 def ignore_errors_decode(b: bytes) -> str:
     return b.decode(errors='ignore')
-
 
 def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
     conn = sqlite3.connect(db_path)
@@ -39,11 +36,9 @@ def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
     conn.close()
     return rows
 
-
 def read_examples(path: str) -> list[dict]:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
-
 
 def parse_gold_sql(path: str) -> List[Tuple[str, str]]:
     """
@@ -82,7 +77,6 @@ def parse_gold_sql(path: str) -> List[Tuple[str, str]]:
         )
     return pairs
 
-
 def get_spider_paths(split: str) -> tuple[str, str, str, str]:
     root = project_root()
     examples = os.path.join(root, "Data", "spider_data", f"{split}.json")
@@ -94,7 +88,6 @@ def get_spider_paths(split: str) -> tuple[str, str, str, str]:
     )
     gold = os.path.join(root, "Data", "spider_data", f"{split}_gold.sql")
     return examples, tables, db_root, gold
-
 
 def resolve_db_path(db_root: str, db_id: str, split: str) -> str | None:
     """
@@ -124,7 +117,6 @@ def resolve_db_path(db_root: str, db_id: str, split: str) -> str | None:
         if os.path.exists(path):
             return path
     return None
-
 
 def main():
     parser = argparse.ArgumentParser(description="Compute execution accuracy against Spider gold SQL.")
@@ -277,7 +269,6 @@ def main():
             print(f"[{idx + 1}/{end}] acc={correct/total:.4f}")
 
     print(f"Execution Accuracy ({total} ex): {correct/total if total else 0.0:.4f}  (correct: {correct})")
-
 
 if __name__ == "__main__":
     main()

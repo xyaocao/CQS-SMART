@@ -19,6 +19,7 @@ def json_file(text: str) -> Dict[str, Any]:
         text = text[start:end+1]
     return json.loads(text)
 
+
 class BaseGraph:
     """Graph for the baseline baseagent."""
     def __init__(self, llm_config: LLMConfig = None):

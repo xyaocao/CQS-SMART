@@ -76,7 +76,6 @@ def build_schema_resolver(dataset: str, tables_meta_path: str | None) -> Callabl
         raise ValueError(f"Unsupported dataset: {dataset}")
     return resolver
     
-    
 def save_log(log_path: str, command_line: str, inputs: str, sql: str, schema_text: str = None):
     """Save the execution log to a JSON file."""
     log_entry = {
@@ -218,7 +217,6 @@ def main():
         print("No examples were successfully processed.")
     else:
         print(f"\nProcessed {processed} examples from index {start} to {end - 1}.")
-
 
 if __name__ == "__main__":
     main()
