@@ -1,0 +1,33 @@
+[
+  {
+    "timestamp": "2025-11-13T16:01:36.163242",
+    "command_line": "baseline/run_planner.py How many singers do we have? concert_singer --dataset spider",
+    "inputs": {
+      "question": "How many singers do we have?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "tables_path": null,
+      "temperature": 0.0,
+      "max_tokens": 1200,
+      "log_path": null,
+      "save_schema": false
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT COUNT(singer.Singer_ID) FROM singer;"
+  }
+]

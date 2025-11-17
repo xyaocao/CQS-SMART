@@ -57043,8 +57043,6 @@
     },
     "sql": "SELECT Orders.order_id, Orders.order_status_code, COUNT(Order_Items.order_id) AS product_count\nFROM Orders\nJOIN Order_Items ON Orders.order_id = Order_Items.order_id\nGROUP BY Orders.order_id, Orders.order_status_code"
   },
-
-  
   {
     "timestamp": "2025-11-13T13:04:56.820062",
     "question": "How many singers do we have?",
@@ -84056,5 +84054,63 @@
       "limit": null
     },
     "sql": "SELECT Properties.property_name\nFROM Properties\nJOIN Ref_Property_Types ON Properties.property_type_code = Ref_Property_Types.property_type_code\nWHERE Ref_Property_Types.property_type_description IN ('House', 'Apartment')\n  AND Properties.room_count > 1"
+  },
+  {
+    "timestamp": "2025-11-13T14:16:50.929539",
+    "question": "What is the total number of singers?",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT COUNT(singer.Singer_ID) FROM singer;"
+  },
+  {
+    "timestamp": "2025-11-13T16:00:03.234112",
+    "command_line": "baseline/run_planner.py How many singers do we have? concert_singer --dataset spider",
+    "inputs": {
+      "question": "How many singers do we have?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "tables_path": null,
+      "temperature": 0.0,
+      "max_tokens": 1200,
+      "log_path": null,
+      "save_schema": false
+    },
+    "question": "How many singers do we have?",
+    "db_id": "concert_singer",
+    "dataset": "spider",
+    "split": "dev",
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "sql": "SELECT COUNT(singer.Singer_ID) FROM singer;"
   }
 ]
