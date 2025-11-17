@@ -1,4 +1,4 @@
-'''SQL Generation Prompts for the baseagent Baseline'''
+'''SQL Generation Prompts for the baseagent baseline'''
 
 SQLGen_system_prompt = (
     "You are an SQL expert. Generate a valid SQL query based on the provided question and schema."

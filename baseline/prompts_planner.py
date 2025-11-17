@@ -1,7 +1,7 @@
-'''Planner and SQL Generation Prompts for Text-to-SQL System'''
+'''Planner and SQL Generation Prompts for the planner baseline'''
 
 Planner_system_prompt = (
-    "You a query planner for tesxt-to-SQL system. Given a natural language question and a database schema,"
+    "You a query planner expert for tesxt-to-SQL system. Given a natural language question and a database schema,"
     "produce a structured query plan that outlines the steps to generate the SQL query. Use exact tables and column names from the schema."
 )
 
