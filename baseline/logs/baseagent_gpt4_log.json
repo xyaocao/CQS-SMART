@@ -1,5 +1,75 @@
 [
   {
+    "timestamp": "2025-11-17T14:37:34.892322",
+    "command_line": "baseline/evaluation.py --baseline qwenagent --split dev --max_examples 999999",
+    "inputs": {
+      "question": "How many singers do we have?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "qwenagent",
+      "example_index": 0
+    },
+    "plan": {},
+    "sql": ""
+  },
+  {
+    "timestamp": "2025-11-17T15:54:19.859754",
+    "command_line": "baseline/evaluation.py --baseline qwenagent --split dev --max_examples 999999",
+    "inputs": {
+      "question": "How many singers do we have?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "qwenagent",
+      "example_index": 0
+    },
+    "plan": {},
+    "sql": ""
+  },
+  {
+    "timestamp": "2025-11-17T15:54:23.046677",
+    "command_line": "baseline/evaluation.py --baseline qwenagent --split dev --max_examples 999999",
+    "inputs": {
+      "question": "What is the total number of singers?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "qwenagent",
+      "example_index": 1
+    },
+    "plan": {},
+    "sql": ""
+  },
+  {
+    "timestamp": "2025-11-17T15:54:25.615302",
+    "command_line": "baseline/evaluation.py --baseline qwenagent --split dev --max_examples 999999",
+    "inputs": {
+      "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "qwenagent",
+      "example_index": 2
+    },
+    "plan": {},
+    "sql": ""
+  },
+  {
+    "timestamp": "2025-11-17T15:54:26.942978",
+    "command_line": "baseline/evaluation.py --baseline qwenagent --split dev --max_examples 999999",
+    "inputs": {
+      "question": "What are the names, countries, and ages for every singer in descending order of age?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "qwenagent",
+      "example_index": 3
+    },
+    "plan": {},
+    "sql": ""
+  },
+  {
     "timestamp": "2025-11-17T16:40:08.639980",
     "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999",
     "inputs": {
