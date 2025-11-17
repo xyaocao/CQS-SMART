@@ -42,7 +42,6 @@ def load_schema_text(dataset: str, db_id: str, tables_meta_path: str | None) -> 
         return get_schema_from_bird(tables, db_id)
     else:
         raise ValueError(f"Unsupported dataset: {dataset}")
-    
       
 def get_examples_path(dataset: str, split: str, examples_path: str | None) -> str:
     if examples_path:

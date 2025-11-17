@@ -131,24 +131,9 @@ def main():
     parser.add_argument("--max_tokens", type=int, default=1200)
     parser.add_argument("--log_path", type=str, help="Path to save log file (JSON format).")
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
-    parser.add_argument(
-        "--input_mode",
-        choices=["single", "batch"],
-        default="single",
-        help="Control how inputs are provided to the planner.",
-    )
-    parser.add_argument(
-        "--start",
-        type=int,
-        default=0,
-        help="Start index when running in batch mode (0-based).",
-    )
-    parser.add_argument(
-        "--num_examples",
-        type=int,
-        default=None,
-        help="Number of examples to run in batch mode (processes all remaining if omitted or <= 0).",
-    )
+    parser.add_argument("--input_mode", choices=["single", "batch"], default="single", help="Control how inputs are provided to the planner",)
+    parser.add_argument("--start", type=int, default=0, help="Start index when running in batch mode (0-based)",)
+    parser.add_argument("--num_examples", type=int, default=None, help="Number of examples to run in batch mode (processes all remaining if omitted or <= 0)",)
     args = parser.parse_args()
 
     tables_meta_path = get_table_paths(args.dataset, args.split, args.tables_path)
