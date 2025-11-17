@@ -3,8 +3,8 @@ import json
 from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
-from state import QwenState
-from prompts_qwenagent import SQLGen_system_prompt, SQLGen_human
+from state import BaseState
+from prompts_baseagent import SQLGen_system_prompt, SQLGen_human
 from llm import get_llm_chat_model, LLMConfig
 
 def json_file(text: str) -> Dict[str, Any]:
@@ -19,8 +19,8 @@ def json_file(text: str) -> Dict[str, Any]:
         text = text[start:end+1]
     return json.loads(text)
 
-class QwenGraph:
-    """Graph for the baseline qwenagent."""
+class BaseGraph:
+    """Graph for the baseline baseagent."""
     def __init__(self, llm_config: LLMConfig = None):
         self.model = get_llm_chat_model(llm_config)
         self.sqlgen_prompt = ChatPromptTemplate.from_messages([
@@ -28,13 +28,13 @@ class QwenGraph:
             ("human", SQLGen_human),
         ]) 
 
-        graph = StateGraph(QwenState)
+        graph = StateGraph(BaseState)
         graph.add_node("sqlgen", self.sqlgen_node)
         graph.add_edge(START, "sqlgen")
         graph.add_edge("sqlgen", END)
         self.app = graph.compile()       
 
-    def sqlgen_node(self, state: QwenState) -> QwenState:
+    def sqlgen_node(self, state: BaseState) -> BaseState:
             prompt_value = self.sqlgen_prompt.format_prompt(
                 question = state.question,
                 schema = state.schema_text or "",
@@ -53,5 +53,5 @@ class QwenGraph:
             state.sql = sql_text.strip()
             return state
     
-    def invoke(self, state: QwenState) -> QwenState:
+    def invoke(self, state: BaseState) -> BaseState:
         return self.app.invoke(state)

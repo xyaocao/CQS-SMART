@@ -12,8 +12,8 @@ if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
 from dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
-from qwenagent import QwenGraph
-from state import QwenState
+from baseagent import BaseGraph
+from state import BaseState
 from llm import LLMConfig
 
 def project_root() -> str:
@@ -131,7 +131,7 @@ def main():
     tables_meta_path = get_table_paths(args.dataset, args.split, args.tables_path)
     schema_resolver = build_schema_resolver(args.dataset, tables_meta_path)
 
-    graph = QwenGraph(
+    graph = BaseGraph(
         LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
     )
     command_line = " ".join(sys.argv)
@@ -148,9 +148,9 @@ def main():
             parser.error("question and db_id are required when --input_mode=single")
 
         schema_text = schema_resolver(args.db_id)
-        state = QwenState(question=args.question, db_id=args.db_id, schema_text=schema_text)
+        state = BaseState(question=args.question, db_id=args.db_id, schema_text=schema_text)
         out_dict = graph.invoke(state)
-        out = QwenState(**out_dict)
+        out = BaseState(**out_dict)
 
         print("\n=== SQL ===")
         print(out.sql)
@@ -191,10 +191,10 @@ def main():
             continue
 
         schema_text = schema_resolver(db_id)
-        state = QwenState(question=question, db_id=db_id, schema_text=schema_text)
+        state = BaseState(question=question, db_id=db_id, schema_text=schema_text)
         try:
             out_dict = graph.invoke(state)
-            out = QwenState(**out_dict)
+            out = BaseState(**out_dict)
         except Exception as exc:
             print(f"[ERROR] Failed to invoke qwenagent for example {idx} ({db_id}): {exc}")
             continue

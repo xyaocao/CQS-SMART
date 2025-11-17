@@ -12,8 +12,8 @@ if current_dir not in sys.path:
 
 from dataloader import load_spider
 from planneragent import PlannerGraph
-from qwenagent import QwenGraph
-from state import PlannerState, QwenState
+from baseagent import BaseGraph
+from state import PlannerState, BaseState
 from llm import LLMConfig
 
 # Reuse utilities from run_planner to get schema text and write logs
@@ -137,7 +137,7 @@ def main():
     parser.add_argument("--max_examples", type=int, default=10**9)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_tokens", type=int, default=1200)
-    parser.add_argument("--baseline", choices=["planner", "qwenagent"], default="planner", help="Choose which baseline agent to evaluate 'planner' or 'qwenagent' ")
+    parser.add_argument("--baseline", choices=["planner", "baseagent"], default="planner", help="Choose which baseline agent to evaluate 'planner' or 'baseagent' ")
     # Logging options consistent with run_planner
     parser.add_argument("--log_path", type=str, help="Path to save log file (JSON). Default: baseline/logs/planner_log.json")
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
@@ -185,8 +185,8 @@ def main():
         state_cls = PlannerState
         expects_plan = True
     else:
-        graph = QwenGraph(config)
-        state_cls = QwenState
+        graph = BaseGraph(config)
+        state_cls = BaseState
         expects_plan = False
 
     # Resolve default log path like run_planner
@@ -194,7 +194,7 @@ def main():
         log_path = args.log_path
     else:
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        default_log = "planner_log.json" if args.baseline == "planner" else "qwenagent_log.json"
+        default_log = "planner_log.json" if args.baseline == "planner" else "baseagent_log.json"
         log_path = os.path.join(log_dir, default_log)
 
     command_line = " ".join(sys.argv)

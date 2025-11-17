@@ -2,8 +2,8 @@ from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
 
 @dataclass
-class QwenState:
-    """State passed through the baseline qwenagent.
+class BaseState:
+    """State passed through the baseline baseagent.
 
     - question: natural language question
     - db_id: database identifier (Spider_dev db name)
