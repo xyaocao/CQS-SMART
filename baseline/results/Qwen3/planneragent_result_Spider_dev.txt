@@ -1,2 +1,2 @@
-# Evaluate on slider_dev dataset using model "Qwen/Qwen3-Next-80B-A3B-Instruct"
+# Evaluate planner agent on slider_dev dataset using model "Qwen/Qwen3-Next-80B-A3B-Instruct"
 Execution Accuracy (1034 ex): 0.6963  (correct: 720)
