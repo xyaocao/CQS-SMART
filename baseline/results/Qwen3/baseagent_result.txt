@@ -1,0 +1,2 @@
+# Evaluate baseagent on slider_dev dataset using model "Qwen/Qwen3-Next-80B-A3B-Instruct"
+Execution Accuracy (1034 ex): 0.7544  (correct: 780)
