@@ -139,7 +139,7 @@ def main():
         log_path = args.log_path
     else:
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        default_name = "qwenagent_log.json" if args.input_mode == "single" else "qwenagent_batch_log.json"
+        default_name = "baseagent_log.json" if args.input_mode == "single" else "baseagent_batch_log.json"
         log_path = os.path.join(log_dir, default_name)
     
     if args.input_mode == "single":
@@ -195,7 +195,7 @@ def main():
             out_dict = graph.invoke(state)
             out = BaseState(**out_dict)
         except Exception as exc:
-            print(f"[ERROR] Failed to invoke qwenagent for example {idx} ({db_id}): {exc}")
+            print(f"[ERROR] Failed to invoke baseagent for example {idx} ({db_id}): {exc}")
             continue
 
         print(f"\n=== Example {idx} | db_id={db_id} ===")
