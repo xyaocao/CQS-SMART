@@ -1,6 +1,7 @@
 from typing import Dict, Any
 import json
 import ast
+import re
 from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import SystemMessage, HumanMessage
@@ -64,18 +65,62 @@ def escape_newlines_in_strings(lines: str) -> str:
         result.append(ch)
     return "".join(result)
 
+def strip_code_fences(text: str) -> str:
+    """Remove ```...```.or ````json...``` code fences and return the inner content."""
+    if "```" not in text:
+        return text
+    pieces = text.split("```")
+    for piece in pieces:
+        trimmed = piece.strip()
+        if trimmed.lower().stratswith("json"):
+            trimmed = trimmed[4:].strip()
+        if trimmed.startswith("{") or trimmed.startswith("["):
+            return trimmed
+    return pieces[0]
+
+def extract_json_object(text:str) -> str:
+    """Return the first JSON object substring found in the text."""
+    in_string = False
+    escape = False
+    depth = 0 
+    strat_idx: int | None =None
+    for idx, ch in enumerate(text):
+        if escape:
+            escape = False
+            continue
+        if ch == "\\":
+            escape = True
+            continue
+        if ch == '"':
+            in_string = not in_string
+            continue
+        if in_string:
+            continue
+        if ch == "{":
+            if depth == 0:
+                strat_idx = idx
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0  and strat_idx is not None:
+                return text[strat_idx:idx+1]
+    return text
+        
 def json_file(text: str) -> Dict[str, Any]:
     """ Parse an LLM response that should contain JSON but may be wrapped in code fences or use single quotes.
     Fall back to ast.literal_eval if json.loads fails."""
-    text = text.strip()
-    if text.lower().startswith("```"):
-        text = text.split("\n", 1)[1]
-        if text.endswith("```"):
-            text = text.rsplit("```", 1)[0]
-    start = text.find("{")
-    end = text.rfind("}") 
-    if start != -1 and end != -1 and end > start:
-        text = text[start:end+1]
+    # text = text.strip()
+    # if text.lower().startswith("```"):
+    #     text = text.split("\n", 1)[1]
+    #     if text.endswith("```"):
+    #         text = text.rsplit("```", 1)[0]
+    # start = text.find("{")
+    # end = text.rfind("}") 
+    # if start != -1 and end != -1 and end > start:
+    #     text = text[start:end+1]
+    # return json.loads(text)
+    text = strip_code_fences(text)
+    text = extract_json_object(text)
     text = escape_newlines_in_strings(text)
     text = strip_inline_comments(text)
 
@@ -126,6 +171,8 @@ class PlannerGraph:
             )
             response = self.model.invoke(prompt_value.to_messages())
             sql_text = response.content if hasattr(response, 'content') else str(response)
+           # Remove <think> </think> tags 
+            sql_text = re.sub(r"<think>.*?</think>", "", sql_text, flags=re.DOTALL | re.IGNORECASE)
            # Extract just SQL if fenced
             if "```" in sql_text:
                 lower = sql_text.lower()
