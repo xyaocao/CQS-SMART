@@ -2,23 +2,9 @@ from typing import Dict, Any
 import json
 from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import SystemMessage, HumanMessage
 from state import BaseState
 from prompts_baseagent import SQLGen_system_prompt, SQLGen_human
 from llm import get_llm_chat_model, LLMConfig
-
-def json_file(text: str) -> Dict[str, Any]:
-    text = text.strip()
-    if text.lower().startswith("```"):
-        text = text.split("\n", 1)[1]
-        if text.endswith("```"):
-            text = text.rsplit("```", 1)[0]
-    start = text.find("{")
-    end = text.rfind("}") 
-    if start != -1 and end != -1 and end > start:
-        text = text[start:end+1]
-    return json.loads(text)
-
 
 class BaseGraph:
     """Graph for the baseline baseagent."""

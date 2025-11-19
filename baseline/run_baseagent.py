@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 import json
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Any, List
@@ -76,7 +77,8 @@ def build_schema_resolver(dataset: str, tables_meta_path: str | None) -> Callabl
         raise ValueError(f"Unsupported dataset: {dataset}")
     return resolver
     
-def save_log(log_path: str, command_line: str, inputs: str, sql: str, schema_text: str = None):
+
+def save_log(log_path: str, command_line: str, inputs: dict, plan: dict, sql: str, schema_text: str = None, latency_sec: float | None = None,):
     """Save the execution log to a JSON file."""
     log_entry = {
         "timestamp": datetime.now().isoformat(),
@@ -84,6 +86,8 @@ def save_log(log_path: str, command_line: str, inputs: str, sql: str, schema_tex
         "inputs": inputs,
         "sql": sql,
     }
+    if latency_sec is not None:
+        log_entry["latency_sec"] = latency_sec
     
     if schema_text:
         log_entry["schema_text"] = schema_text
@@ -139,7 +143,7 @@ def main():
         log_path = args.log_path
     else:
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        default_name = "baseagent_log.json" if args.input_mode == "single" else "baseagent_batch_log.json"
+        default_name = "baseagent_singlerun_log.json" if args.input_mode == "single" else "baseagent_batch_log.json"
         log_path = os.path.join(log_dir, default_name)
     
     if args.input_mode == "single":

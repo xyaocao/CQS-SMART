@@ -31,12 +31,13 @@ def strip_inline_comments(lines: str) -> str:
                 new_line_chars.append(ch)
                 continue
             if not in_string and ch == "/" and idx + 1 < len(line) and line[idx + 1] == "/":
-                break  # Ignore rest of line
+                break
             new_line_chars.append(ch)
-        cleaned = "".join(new_line_chars)
+        cleaned = "".join(new_line_chars).rstrip()
         if cleaned:
             cleaned_lines.append(cleaned)
     return "\n".join(cleaned_lines) if cleaned_lines else lines
+
 
 def escape_newlines_in_strings(lines: str) -> str:
     """Replace literal newline characters inside double-quoted strings with \\n."""
@@ -66,29 +67,29 @@ def escape_newlines_in_strings(lines: str) -> str:
     return "".join(result)
 
 def strip_code_fences(text: str) -> str:
-    """Remove ```...```.or ````json...``` code fences and return the inner content."""
+    """Remove ```...``` or ```json...``` fences and return the inner content."""
     if "```" not in text:
         return text
     pieces = text.split("```")
     for piece in pieces:
         trimmed = piece.strip()
-        if trimmed.lower().stratswith("json"):
+        if trimmed.lower().startswith("json"):
             trimmed = trimmed[4:].strip()
         if trimmed.startswith("{") or trimmed.startswith("["):
             return trimmed
     return pieces[0]
 
-def extract_json_object(text:str) -> str:
+def extract_json_object(text: str) -> str:
     """Return the first JSON object substring found in the text."""
     in_string = False
     escape = False
-    depth = 0 
-    strat_idx: int | None =None
+    depth = 0
+    start_idx: int | None = None
     for idx, ch in enumerate(text):
         if escape:
             escape = False
             continue
-        if ch == "\\":
+        if ch =="\\":
             escape = True
             continue
         if ch == '"':
@@ -96,28 +97,31 @@ def extract_json_object(text:str) -> str:
             continue
         if in_string:
             continue
-        if ch == "{":
+        if ch =="{":
             if depth == 0:
-                strat_idx = idx
+                start_idx = idx
             depth += 1
-        elif ch == "}":
+        elif ch =="}":
             depth -= 1
-            if depth == 0  and strat_idx is not None:
-                return text[strat_idx:idx+1]
+            if depth == 0 and start_idx is not None:
+                return text[start_idx:idx + 1]
     return text
-        
+
 def json_file(text: str) -> Dict[str, Any]:
-    """ Parse an LLM response that should contain JSON but may be wrapped in code fences or use single quotes.
-    Fall back to ast.literal_eval if json.loads fails."""
+    """
+    Parse an LLM response that should contain JSON but may be wrapped in code fences
+    or use Python-style single quotes / inline comments. Falls back to ast.literal_eval
+    when strict JSON parsing fails.
+    """
     # text = text.strip()
     # if text.lower().startswith("```"):
     #     text = text.split("\n", 1)[1]
     #     if text.endswith("```"):
     #         text = text.rsplit("```", 1)[0]
     # start = text.find("{")
-    # end = text.rfind("}") 
+    # end = text.rfind("}")
     # if start != -1 and end != -1 and end > start:
-    #     text = text[start:end+1]
+    #     text = text[start:end + 1]
     # return json.loads(text)
     text = strip_code_fences(text)
     text = extract_json_object(text)
@@ -130,8 +134,8 @@ def json_file(text: str) -> Dict[str, Any]:
         try:
             return ast.literal_eval(text)
         except Exception as exc:
-            raise ValueError("Failed to parse the response from planner as JSON: {text}") from exc
-        
+            raise ValueError(f"Failed to parse planner output as JSON: {text}") from exc
+
 class PlannerGraph:
     """Graph for the baseline planner agent."""
     def __init__(self, llm_config: LLMConfig = None):
@@ -171,7 +175,7 @@ class PlannerGraph:
             )
             response = self.model.invoke(prompt_value.to_messages())
             sql_text = response.content if hasattr(response, 'content') else str(response)
-           # Remove <think> </think> tags 
+            # Remove any `<think>...</think>` reasoning blocks
             sql_text = re.sub(r"<think>.*?</think>", "", sql_text, flags=re.DOTALL | re.IGNORECASE)
            # Extract just SQL if fenced
             if "```" in sql_text:

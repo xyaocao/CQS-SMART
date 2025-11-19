@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import sqlite3
+import time
 from typing import List, Tuple, Any
 import argparse
 
@@ -129,9 +130,9 @@ def main():
     parser.add_argument("--max_examples", type=int, default=10**9)
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_tokens", type=int, default=1200)
-    parser.add_argument("--baseline", choices=["planner", "baseagent"], default="planner", help="Choose which baseline agent to evaluate 'planner' or 'baseagent' ")
+    parser.add_argument("--baseline", choices=["planner", "baseagent"], default="planner", help="Choose which baseline agent to evaluate 'planner' or 'baseagent'")
     # Logging options consistent with run_planner
-    parser.add_argument("--log_path", type=str, help="Path to save log file (JSON). Default: baseline/logs/planner_log.json")
+    parser.add_argument("--log_path", type=str, help="Path to save log file (JSON). Default: baseline_logs/planner_log.json")
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
     args = parser.parse_args()
 
@@ -195,8 +196,12 @@ def main():
     end = min(len(examples), start + max(0, args.max_examples))
     total = 0
     correct = 0
+    gen_latency_sum = 0.0
+    exec_latency_sum = 0.0
+    total_latency_sum = 0.0
 
     for idx in range(start, end):
+        total_start = time.perf_counter()
         ex = examples[idx]
         question = ex.get("question", "")
         db_id = ex.get("db_id", "")
@@ -211,8 +216,11 @@ def main():
         # Invoke selected agent to generate SQL for the current question
         state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
         out_state = None
+        gen_latency = 0.0
         try:
+            start_time = time.perf_counter()
             out_dict = graph.invoke(state)
+            gen_latency = time.perf_counter() - start_time
             out_state = state_cls(**out_dict)
             gen_sql = (out_state.sql or "").strip().rstrip(";")
         except Exception as e:
@@ -220,37 +228,43 @@ def main():
             gen_sql = ""
             out_state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
 
-        # Log using run_planner's logger
-        try:
-            log_inputs = {
-                "question": question,
-                "db_id": active_db_id,
-                "dataset": "spider",
-                "split": args.split,
-                "baseline": args.baseline,
-                "example_index": idx,
-            }
-            save_log(
-                log_path=log_path,
-                command_line=command_line,
-                inputs=log_inputs,
-                plan=getattr(out_state, "plan", {}) if expects_plan and out_state else {},
-                sql=gen_sql,
-                schema_text=schema_text if args.save_schema else None
-            )
-        except Exception as e:
-            # Logging shouldn't break evaluation
-            print(f"[ERROR] Failed to save log: {e}")
-            pass
+        plan_payload = getattr(out_state, "plan", {}) if expects_plan and out_state else {}
+        log_inputs = {
+            "question": question,
+            "db_id": active_db_id,
+            "dataset": "spider",
+            "split": args.split,
+            "baseline": args.baseline,
+            "example_index": idx,
+            "latency": {
+                "generation_sec": gen_latency,
+            },
+        }
 
         # Execute both queries
         db_path = resolve_db_path(db_root, active_db_id, args.split)
         if not db_path:
             print(f"[WARN] SQLite not found for db_id '{active_db_id}'. Checked '{db_root}' and standard Spider locations.")
+            total_latency = time.perf_counter() - total_start
+            log_inputs["latency"]["execution_sec"] = 0.0
+            log_inputs["latency"]["total_sec"] = total_latency
+            try:
+                save_log(
+                    log_path=log_path,
+                    command_line=command_line,
+                    inputs=log_inputs,
+                    plan=plan_payload,
+                    sql=gen_sql,
+                    schema_text=schema_text if args.save_schema else None,
+                    latency_sec=gen_latency,
+                )
+            except Exception as e:
+                print(f"[ERROR] Failed to save log: {e}")
             total += 1
             continue
 
         gold_sql_clean = (gold_sql or "").strip().rstrip(";")
+        exec_start = time.perf_counter()
         try:
             gen_rows = exec_sql(db_path, gen_sql) if gen_sql else []
         except Exception:
@@ -260,7 +274,28 @@ def main():
         except Exception:
             gold_rows = []
 
+        exec_latency = time.perf_counter() - exec_start
+        total_latency = time.perf_counter() - total_start
+        log_inputs["latency"]["execution_sec"] = exec_latency
+        log_inputs["latency"]["total_sec"] = total_latency
+
+        try:
+            save_log(
+                log_path=log_path,
+                command_line=command_line,
+                inputs=log_inputs,
+                plan=plan_payload,
+                sql=gen_sql,
+                schema_text=schema_text if args.save_schema else None,
+                latency_sec=gen_latency,
+            )
+        except Exception as e:
+            print(f"[ERROR] Failed to save log: {e}")
+
         total += 1
+        gen_latency_sum += gen_latency
+        exec_latency_sum += exec_latency
+        total_latency_sum += total_latency
         # Compare raw execution results exactly as returned by sqlite3.fetchall()
         if gen_rows == gold_rows:
             correct += 1
@@ -268,7 +303,16 @@ def main():
         if (idx - start + 1) % 25 == 0:
             print(f"[{idx + 1}/{end}] acc={correct/total:.4f}")
 
-    print(f"Execution Accuracy ({total} ex): {correct/total if total else 0.0:.4f}  (correct: {correct})")
+    print(f"Execution Accuracy ({total} examples): {correct/total if total else 0.0:.4f}  (correct: {correct})")
+    if total:
+        print(
+            f"Average Latencies (s): generation={gen_latency_sum/total:.3f}, "
+            f"execution={exec_latency_sum/total:.3f}, total={total_latency_sum/total:.3f}"
+        )
+        print(
+            f"Total Latencies (s): generation={gen_latency_sum:.3f}, "
+            f"execution={exec_latency_sum:.3f}, total={total_latency_sum:.3f}"
+        )
 
 if __name__ == "__main__":
     main()

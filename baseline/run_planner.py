@@ -2,6 +2,7 @@ import os
 import sys
 import argparse
 import json
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Any, List
@@ -80,7 +81,7 @@ def build_schema_resolver(dataset: str, tables_meta_path: str | None) -> Callabl
     return resolver
 
 
-def save_log(log_path: str, command_line: str, inputs: str, plan: dict, sql: str, schema_text: str = None):
+def save_log(log_path: str, command_line: str, inputs: dict, plan: dict, sql: str, schema_text: str = None, latency_sec: float | None = None):
     """Save the execution log to a JSON file."""
     log_entry = {
         "timestamp": datetime.now().isoformat(),
@@ -93,6 +94,8 @@ def save_log(log_path: str, command_line: str, inputs: str, plan: dict, sql: str
         "plan": plan,
         "sql": sql,
     }
+    if latency_sec is not None:
+        log_entry["latency_sec"] = latency_sec
     
     if schema_text:
         log_entry["schema_text"] = schema_text
@@ -157,7 +160,9 @@ def main():
 
         schema_text = schema_resolver(args.db_id)
         state = PlannerState(question=args.question, db_id=args.db_id, schema_text=schema_text)
+        start_time = time.perf_counter()
         out_dict = graph.invoke(state)
+        latency = time.perf_counter() - start_time
         out = PlannerState(**out_dict)
 
         print("\n=== PLAN ===")
@@ -173,6 +178,7 @@ def main():
             plan=out.plan,
             sql=out.sql,
             schema_text=schema_text if args.save_schema else None,
+            latency_sec=latency,
         )
         return
 
@@ -205,7 +211,9 @@ def main():
         schema_text = schema_resolver(db_id)
         state = PlannerState(question=question, db_id=db_id, schema_text=schema_text)
         try:
+            start_time = time.perf_counter()
             out_dict = graph.invoke(state)
+            latency = time.perf_counter() - start_time
             out = PlannerState(**out_dict)
         except Exception as exc:
             print(f"[ERROR] Failed to invoke planner for example {idx} ({db_id}): {exc}")
@@ -225,6 +233,7 @@ def main():
             plan=out.plan,
             sql=out.sql,
             schema_text=schema_text if args.save_schema else None,
+            latency_sec=latency,
         )
         processed += 1
 
