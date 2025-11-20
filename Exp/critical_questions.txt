@@ -1,0 +1,30 @@
+Critical Questions for Skeptic Agent:
+- Does the plan violate fundamental SQL grammar or operator placement rules?
+- Are aliases correctly used and unique for self-references or nested components?
+- Does the plan reference any table that does not exist in the schema?
+- Does the plan reference any column that does not exist in the selected tables?
+- Is the chosen column the unique, canonically intended mapping for the NL entity (e.g., resolving ambiguous_col via schema description)?
+- Is the filtering condition applied to the correct column based on the semantic intent of the NL question?
+- Is a selected column (in SELECT/JOIN/FILTER) semantically irrelevant to the NL question's focus?
+- Does the final projection include columns not explicitly needed to answer the question?
+- Is there a complete defined (FK or soft-linked) transitive path connecting all tables required by the question?
+- Does the proposed join path use an incorrect linking column, violating a Primary/Foreign Key relationship?
+- Does the question's intent (e.g., "list all X, including those without Y") require a non-INNER join type (LEFT, RIGHT, FULL)?
+- Is the inclusion of this table necessary for the join path, filtering, or the semantic result (i.r., is it redundant)?
+- Does the NL condition require calculation on an intermediate dataset (e.g., "above average"), necessitating a subquery structure?
+- Is the logic of the generated subquery mismatched with the requirements or context of the outer query?
+- Is the planned correlation logic in a nested query correct and compliant with scope rules?
+- Is the subquery structure utilized by the outer query or is it redundant?
+- Does the NL intent imply set-based logic (combining or excluding distinct result sets) that requires UNION, INTERSECT, or EXCEPT?
+- Is the filter operator or value format logicaly compatible with the target column's data type?
+- Is an explicit filtering clause (WHERE/HAVING) missing despite the NL question containing a clear condition?
+- Is the literal value used in the predicate incorrectly formatted for the target data type (e.g., date missing quotes)?
+- Is the plan incorrectly using a hardcoded literal value shwere the NL question requested a derived or calculated value (e.g., MAX/MIN)?
+- Is the planned function (e.g., conditional, mathematical) supported by the target databased environment?
+- Is an aggregation function used without the necessary GROUP BY clause?
+- If GROUP BY is present, does it include all non-aggregated columns selected for the final output?
+- Is a HAVING clause present without a required preceding GROUP BY clause?
+- Is the filter condition incorrectly applied to a group (HAVING where WHERE is needed) or vice-versa?
+- Is the chosen aggregation function semantically incorrect for the quantitative intent (e.g., using AVG for total count)?
+- Does the NL request imply a ranking or presentation constraint (e.g., "highest", "top three") that requires ORDER BY and/or LIMIT clauses?
+- Is the same column or calculation duplicated in the final output?
