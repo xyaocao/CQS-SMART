@@ -6,16 +6,10 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Any, List
-
-# Add the current directory to the path to allow imports from same directory
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
-
-from dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
-from planneragent import PlannerGraph
-from state import PlannerState
-from llm import LLMConfig
+from baseline.dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
+from baseline.planneragent import PlannerGraph
+from baseline.state import PlannerState
+from baseline.llm import LLMConfig
 
 def project_root() -> str:
     """Get the root directory of the project."""

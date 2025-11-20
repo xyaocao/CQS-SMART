@@ -5,14 +5,14 @@ from langchain_openai import ChatOpenAI
 
 @dataclass
 class LLMConfig:
-    model: str = "Qwen/Qwen3-Next-80B-A3B-Instruct"
+    # model: str = "Qwen/Qwen3-Next-80B-A3B-Instruct"
     # model: str = "swissai/Apertus-70B-Instruct"
-    # model: str = "gpt-4"
+    model: str = "gpt-4"
     # model: str = "gpt-4o-mini"
     temperature: float = 0.0
     max_tokens: int = 1000
-    base_url: str = "https://api.swissai.cscs.ch/v1"
-    # base_url: str = "https://api.openai.com/v1/"
+    # base_url: str = "https://api.swissai.cscs.ch/v1"
+    base_url: str = "https://api.openai.com/v1/"
     api_key: str = None
 
 def load_llm_api_key() -> Optional[str]:
@@ -20,8 +20,8 @@ def load_llm_api_key() -> Optional[str]:
     # Get project root (one level up from baseline)
     baseline_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(baseline_dir)
-    key_path = os.path.join(project_root, 'API-key', 'swissai_api_key.txt')
-    # key_path = os.path.join(project_root, 'API-key', 'gpt_api_key.txt')
+    # key_path = os.path.join(project_root, 'API-key', 'swissai_api_key.txt')
+    key_path = os.path.join(project_root, 'API-key', 'gpt_api_key.txt')
     try:
         with open(key_path, 'r') as f:
             return f.read().strip()

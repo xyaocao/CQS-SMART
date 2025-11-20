@@ -5,22 +5,16 @@ import sqlite3
 import time
 from typing import List, Tuple, Any
 import argparse
-
-# Add the current directory to the path to allow imports from same directory
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
-
-from dataloader import load_spider
-from planneragent import PlannerGraph
-from baseagent import BaseGraph
-from state import PlannerState, BaseState
-from llm import LLMConfig
+from baseline.dataloader import load_spider
+from baseline.planneragent import PlannerGraph
+from baseline.baseagent import BaseGraph
+from baseline.state import PlannerState, BaseState
+from baseline.llm import LLMConfig
 
 # Reuse utilities from run_planner to get schema text and write logs
-from run_planner import get_table_paths 
-from run_planner import load_schema_text 
-from run_planner import save_log 
+from baseline.run_planner import get_table_paths 
+from baseline.run_planner import load_schema_text 
+from baseline.run_planner import save_log 
 
 def project_root() -> str:
     return os.path.dirname(os.path.dirname(__file__))
