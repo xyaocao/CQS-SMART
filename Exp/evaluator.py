@@ -1,0 +1,171 @@
+import time
+import sys
+from collections import defaultdict
+from pathlib import Path
+from typing import Any, Dict, Optional
+baseline_dir = Path(__file__).resolve().parent.parent
+if str(baseline_dir) not in sys.path:
+    sys.path.insert(0, str(baseline_dir))
+from baseline.evaluation import exec_sql, get_spider_paths, parse_gold_sql, read_examples, resolve_db_path
+from baseline.run_planner import load_schema_text  
+from pipeline_utils import PipelineConfig, update_json, init_agents, snapshot_inputs
+from loop_engines import FirstLoopEngine, LoopStageError, LoopEngine, LoopResult
+
+
+class MultiAgentEvaluator:
+    """Runs planner → skeptic → reasoner/SQL → execution accuracy."""
+    def __init__(self, config: PipelineConfig, engine: Optional[LoopEngine] = None):
+        if config.dataset != "spider":
+            raise ValueError("Currently only the Spider dataset is supported.")
+        self.config = config
+        self.planner, self.skeptic, self.reasoner = init_agents(config)
+        self.engine = engine or FirstLoopEngine(self.planner, self.skeptic, self.reasoner)
+        self.inputs_snapshot = snapshot_inputs(config)
+        examples, tables, db_root, gold_sql = get_spider_paths(config.split)
+        self.examples_path = Path(config.examples_path or examples)
+        self.tables_path = Path(config.tables_path or tables)
+        self.db_root = Path(config.db_root or db_root)
+        self.gold_sql_path = Path(config.gold_sql_path or gold_sql)
+
+        self.examples = read_examples(str(self.examples_path))
+        self.gold_pairs = parse_gold_sql(str(self.gold_sql_path))
+        if len(self.examples) != len(self.gold_pairs):
+            n = min(len(self.examples), len(self.gold_pairs))
+            self.examples = self.examples[:n]
+            self.gold_pairs = self.gold_pairs[:n]
+
+    def run(self):
+        cfg = self.config
+        start = max(cfg.start, 0)
+        end = min(len(self.examples), start + cfg.max_examples) if cfg.max_examples > 0 else len(self.examples)
+
+        total = 0
+        correct = 0
+        latency_sums = defaultdict(float)
+        latency_counts = defaultdict(int)
+
+        def record_latency(metric: str, value: float):
+            latency_sums[metric] += value
+            latency_counts[metric] += 1
+
+        print("=== Multi-Agent First Loop Evaluation ===")
+        print(f"Dataset split   : {cfg.split}")
+        print(f"Examples path   : {self.examples_path}")
+        print(f"Tables path     : {self.tables_path}")
+        print(f"DB root         : {self.db_root}")
+        print(f"Gold SQL path   : {self.gold_sql_path}")
+        print(f"Logging to      : {cfg.log_path}")
+        print(f"Processing range: [{start}, {end}) across {len(self.examples)} examples")
+
+
+        for idx in range(start, end):
+            example = self.examples[idx]
+            gold_sql, gold_db_id = self.gold_pairs[idx]
+            question = example.get("question", "")
+            db_id = example.get("db_id") or gold_db_id
+
+            schema_text = load_schema_text("spider", db_id, self.tables_path)
+            log_entry: Dict[str, Any] = {
+                "timestamp": cfg.timestamp,
+                "example_index": idx,
+                "command_line": cfg.command_line,
+                "question": question,
+                "db_id": db_id,
+                # "split": cfg.split,
+                # "dataset": cfg.dataset,
+                "inputs": self.inputs_snapshot,
+                "latency": {},
+            }
+            try:
+                agent_result = self.engine.run(question, schema_text)
+            except LoopStageError as exc:
+                partial = exc.partial or {}
+                log_entry.update({k: v for k, v in partial.items() if k != "latency"})
+                partial_lat = partial.get("latency", {})
+                log_entry["latency"].update(partial_lat)
+                for key in ("planner_sec", "skeptic_sec", "reasoner_decision_sec", "sqlgen_sec"):
+                    if key in partial_lat:
+                        record_latency(key, partial_lat[key])
+                log_entry["error"] = str(exc)
+                elapsed = exc.elapsed
+                log_entry["latency"]["total_sec"] = elapsed
+                record_latency("total_sec", elapsed)
+                update_json(cfg.log_path, log_entry)
+                print(f"[ERROR] {exc.stage} failed for idx={idx}, db={db_id}: {exc.original}")
+                continue
+
+            log_entry["plan"] = agent_result.plan
+            log_entry["skeptic_feedback"] = agent_result.skeptic_feedback
+            log_entry["reasoner_decision"] = agent_result.reasoner_decision
+            log_entry["final_sql"] = agent_result.final_sql
+            log_entry["latency"].update(agent_result.latency)
+            base_total = agent_result.latency.get("total_sec", 0.0)
+            final_sql = agent_result.final_sql
+
+            for key in ("planner_sec", "skeptic_sec", "reasoner_decision_sec", "sqlgen_sec"):
+                if key in agent_result.latency:
+                    record_latency(key, agent_result.latency[key])
+
+            db_path = resolve_db_path(self.db_root, db_id, cfg.split)
+            if not db_path:
+                log_entry["error"] = f"SQLite DB not found for {db_id}"
+                log_entry["latency"]["total_sec"] = base_total
+                record_latency("total_sec", base_total)
+                update_json(cfg.log_path, log_entry)
+                print(f"[WARN] DB missing for idx={idx}, db={db_id}")
+                continue
+
+            gold_sql_clean = (gold_sql or "").strip().rstrip(";")
+            exec_start = time.perf_counter()
+            try:
+                gen_rows = exec_sql(db_path, final_sql) if final_sql else []
+            except Exception as exc:
+                gen_rows = []
+                log_entry["execution_error"] = f"Generated SQL failed: {exc}"
+            try:
+                gold_rows = exec_sql(db_path, gold_sql_clean) if gold_sql_clean else []
+            except Exception as exc:
+                gold_rows = []
+                log_entry["gold_execution_error"] = f"Gold SQL failed: {exc}"
+            exec_latency = time.perf_counter() - exec_start
+
+            total_time = base_total + exec_latency
+            log_entry["latency"]["execution_sec"] = exec_latency
+            log_entry["latency"]["total_sec"] = total_time
+            record_latency("execution_sec", exec_latency)
+            record_latency("total_sec", total_time)
+
+            total += 1
+            hit = gen_rows == gold_rows
+            correct += int(hit)
+            log_entry["exec_match"] = hit
+            log_entry["accuracy_so_far"] = correct / total if total else 0.0
+
+            if cfg.save_schema:
+                log_entry["schema_text"] = schema_text
+
+            update_json(cfg.log_path, log_entry)
+
+            if (idx - start + 1) % 10 == 0:
+                print(f"[{idx + 1}/{end}] acc={correct / total:.4f}")
+
+        print(f"\nFinal Execution Accuracy: {correct}/{total} = {correct / total if total else 0:.4f}")
+
+        if latency_counts:
+            print("\nLatency summary (total | avg per example | examples):")
+            ordered_metrics = [
+                ("planner_sec", "Planner"),
+                ("skeptic_sec", "Skeptic"),
+                ("reasoner_decision_sec", "Reasoner decision"),
+                ("sqlgen_sec", "SQL generation"),
+                ("execution_sec", "Execution"),
+                ("total_sec", "Whole system"),
+            ]
+            for key, label in ordered_metrics:
+                count = latency_counts.get(key, 0)
+                if not count:
+                    continue
+                total_latency = latency_sums.get(key, 0.0)
+                avg_latency = total_latency / count if count else 0.0
+                print(f"  {label:<18}: {total_latency:8.2f}s | {avg_latency:8.2f}s | {count:3d}")
+

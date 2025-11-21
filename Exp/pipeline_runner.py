@@ -1,5 +1,4 @@
 import json
-import time
 from pathlib import Path
 from typing import Any, Dict, List
 import sys
@@ -9,6 +8,7 @@ if str(baseline_dir) not in sys.path:
 from baseline.run_planner import load_schema_text  
 from baseline.evaluation import get_spider_paths, read_examples  
 from pipeline_utils import PipelineConfig, update_json, init_agents, snapshot_inputs
+from loop_engines import FirstLoopEngine, LoopStageError
 
 class SinglerunPipeline:
     """Answers a single question by using the first-loop agents: planner -> skeptic -> reasoner (with sqlgen)."""
@@ -17,6 +17,7 @@ class SinglerunPipeline:
             raise ValueError("SinglerunPipeline requires input_mode='single'")
         self.config = config
         self.planner, self.skeptic, self.reasoner = init_agents(config)
+        self.engine = FirstLoopEngine(self.planner, self.skeptic, self.reasoner)
         self.inputs_snapshot = snapshot_inputs(config)
         examples, tables, db_root, gold_sql = get_spider_paths(config.split)
         self.tables_path = Path(config.tables_path or tables)
@@ -37,46 +38,22 @@ class SinglerunPipeline:
             "inputs": self.inputs_snapshot,
             "latency": {},
         }
-        total_start = time.perf_counter()
         try:
-            plan, plan_latency = self.planner.run(question, schema_text)
-            log_entry["plan"] = plan
-            log_entry["latency"]["planner_sec"] = plan_latency
-            # log_entry["planner_raw"] = planner_raw
-        except Exception as exc:
-            log_entry["error"] = f"Planner failure: {exc}"
-            log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
-            update_json(cfg.log_path, log_entry)
-            raise
-        try: 
-            feedback, skeptic_latency = self.skeptic.run(question, schema_text, plan)
-            log_entry["skeptic_feedback"] = feedback
-            log_entry["latency"]["skeptic_sec"] = skeptic_latency
-            # log_entry["skeptic_raw"] = skeptic_raw
-        except Exception as exc:
-            log_entry["error"] = f"Skeptic failure: {exc}"
-            log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
-            update_json(cfg.log_path, log_entry)
-            raise
-        try:
-            decision, decision_latency, final_sql, sql_latency = self.reasoner.run(
-                question, schema_text, plan, feedback
-            )
-            log_entry["reasoner_decision"] = decision
-            log_entry["latency"]["reasoner_decision_sec"] = decision_latency
-            # log_entry["reasoner_raw"] = decision_raw
-            log_entry["final_sql"] = final_sql
-            log_entry["latency"]["sqlgen_sec"] = sql_latency
-            # log_entry["sqlgen_raw"] = sql_raw
-        except Exception as exc:
-            log_entry["error"] = f"Reasoner failure: {exc}"
-            log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
+            agent_result = self.engine.run(question, schema_text)
+        except LoopStageError as exc:
+            partial = exc.partial or {}
+            log_entry.update({k: v for k, v in partial.items() if k != "latency"})
+            log_entry["latency"].update(partial.get("latency", {}))
+            log_entry["error"] = str(exc)
+            log_entry["latency"]["total_sec"] = exc.elapsed
             update_json(cfg.log_path, log_entry)
             raise
 
-        total_time = time.perf_counter() - total_start
-        log_entry["latency"]["execution_sec"] = 0.0
-        log_entry["latency"]["total_sec"] = total_time
+        log_entry["plan"] = agent_result.plan
+        log_entry["skeptic_feedback"] = agent_result.skeptic_feedback
+        log_entry["reasoner_decision"] = agent_result.reasoner_decision
+        log_entry["final_sql"] = agent_result.final_sql
+        log_entry["latency"].update(agent_result.latency)
 
         if cfg.save_schema:
             log_entry["schema_text"] = schema_text
@@ -84,13 +61,13 @@ class SinglerunPipeline:
         update_json(cfg.log_path, log_entry)
 
         print("\n=== PLAN ===")
-        print(json.dumps(plan, ensure_ascii=False))
+        print(json.dumps(agent_result.plan, ensure_ascii=False))
         print("\n=== SKEPTIC FEEDBACK ===")
         print(json.dumps(log_entry["skeptic_feedback"], ensure_ascii=False))
         print("\n=== REASONER DECISION ===")
-        print(json.dumps(decision, ensure_ascii=False))
+        print(json.dumps(agent_result.reasoner_decision, ensure_ascii=False))
         print("\n=== SQL ===")
-        print(final_sql.strip())
+        print(agent_result.final_sql.strip())
 
 class BatchPipeline:
     """Processes a batch of examples using the first-loop agents: planner -> skeptic -> reasoner (with sqlgen)."""
@@ -99,6 +76,7 @@ class BatchPipeline:
             raise ValueError("BatchPipeline requires input_mode='batch'")
         self.config = config
         self.planner, self.skeptic, self.reasoner = init_agents(config)
+        self.engine = FirstLoopEngine(self.planner, self.skeptic, self.reasoner)
         self.inputs_snapshot = snapshot_inputs(config)
         examples, tables, db_root, gold_sql = get_spider_paths(config.split)
         self.examples_path = Path(config.examples_path or examples)
@@ -133,49 +111,23 @@ class BatchPipeline:
                 "inputs": self.inputs_snapshot,
                 "latency": {},
             }
-            total_start = time.perf_counter()
-
             try:
-                plan, plan_latency = self.planner.run(question, schema_text)
-                log_entry["plan"] = plan
-                log_entry["latency"]["planner_sec"] = plan_latency
-                # log_entry["planner_raw"] = planner_raw
-            except Exception as exc:
-                log_entry["error"] = f"Planner failure: {exc}"
-                log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
+                agent_result = self.engine.run(question, schema_text)
+            except LoopStageError as exc:
+                partial = exc.partial or {}
+                log_entry.update({k: v for k, v in partial.items() if k != "latency"})
+                log_entry["latency"].update(partial.get("latency", {}))
+                log_entry["error"] = str(exc)
+                log_entry["latency"]["total_sec"] = exc.elapsed
                 update_json(cfg.log_path, log_entry)
-                print(f"[ERROR] Planner failed for idx={idx}, db={db_id}: {exc}")
-                continue
-            try:
-                feedback, skeptic_latency = self.skeptic.run(question, schema_text, plan)
-                log_entry["skeptic_feedback"] = feedback
-                log_entry["latency"]["skeptic_sec"] = skeptic_latency
-                # log_entry["skeptic_raw"] = skeptic_raw
-            except Exception as exc:
-                log_entry["error"] = f"Skeptic failure: {exc}"
-                log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
-                update_json(cfg.log_path, log_entry)
-                print(f"[ERROR] Skeptic failed for idx={idx}, db={db_id}: {exc}")
+                print(f"[ERROR] {exc.stage} failed for idx={idx}, db={db_id}: {exc.original}")
                 continue
 
-            try:
-                decision, decision_latency, final_sql, sql_latency = self.reasoner.run(question, schema_text, plan, feedback)
-                log_entry["reasoner_decision"] = decision
-                log_entry["latency"]["reasoner_decision_sec"] = decision_latency
-                # log_entry["reasoner_raw"] = decision_raw
-                log_entry["final_sql"] = final_sql
-                log_entry["latency"]["sqlgen_sec"] = sql_latency
-                # log_entry["sqlgen_raw"] = sql_raw
-            except Exception as exc:
-                log_entry["error"] = f"Reasoner failure: {exc}"
-                log_entry["latency"]["total_sec"] = time.perf_counter() - total_start
-                update_json(cfg.log_path, log_entry)
-                print(f"[ERROR] Reasoner failed for idx={idx}, db={db_id}: {exc}")
-                continue
-
-            total_time = time.perf_counter() - total_start
-            log_entry["latency"]["execution_sec"] = 0.0
-            log_entry["latency"]["total_sec"] = total_time
+            log_entry["plan"] = agent_result.plan
+            log_entry["skeptic_feedback"] = agent_result.skeptic_feedback
+            log_entry["reasoner_decision"] = agent_result.reasoner_decision
+            log_entry["final_sql"] = agent_result.final_sql
+            log_entry["latency"].update(agent_result.latency)
 
             if cfg.save_schema:
                 log_entry["schema_text"] = schema_text
@@ -184,10 +136,10 @@ class BatchPipeline:
 
             print(f"\n=== Example {idx} | db_id={db_id} ===")
             print("Question:", question)
-            print("Plan:", json.dumps(plan, ensure_ascii=False))
-            print("Skeptic Feedback:", json.dumps(feedback, ensure_ascii=False))
-            print("Reasoner Decision:", json.dumps(decision, ensure_ascii=False))
-            print("SQL:", final_sql.strip())
+            print("Plan:", json.dumps(agent_result.plan, ensure_ascii=False))
+            print("Skeptic Feedback:", json.dumps(agent_result.skeptic_feedback, ensure_ascii=False))
+            print("Reasoner Decision:", json.dumps(agent_result.reasoner_decision, ensure_ascii=False))
+            print("SQL:", agent_result.final_sql.strip())
 
         print(f"\nProcessed {max(0, end - start)} examples.")
 

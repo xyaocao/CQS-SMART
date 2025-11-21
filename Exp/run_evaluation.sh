@@ -1,0 +1,5 @@
+E:/Anaconda/envs/langchain_env/python.exe Exp/evaluation.py --dataset spider --split dev
+
+#Override default paths choose your own paths
+E:/Anaconda/envs/langchain_env/python.exe Exp/evaluation.py --dataset spider --split test --examples_path "Data\spider_data\test.json" --tables_path "Data\spider_data\test_tables.json" --db_root "Data\spider_data\test_database" --gold_sql_path "Data\spider_data\test_gold.sql" --start 0 --max_examples 999999 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 1200
+python -m Exp.evaluation.py --dataset spider --split test --examples_path "Data\spider_data\test.json" --tables_path "Data\spider_data\test_tables.json" --db_root "Data\spider_data\test_database" --gold_sql_path "Data\spider_data\test_gold.sql" --start 0 --max_examples 999999 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 1200
