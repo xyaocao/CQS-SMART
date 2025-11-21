@@ -106,22 +106,80 @@ def extract_json_object(text: str) -> str:
                 return text[start_idx:idx + 1]
     return text
 
+def normalize_scalar(value: str) -> Any:
+    """Normalize a scalar value, handling None/empty/N/A variants."""
+    cleaned = value.strip().strip(",").strip()
+    if not cleaned:
+        return ""
+    if cleaned.lower() in {"none", "n/a", "na", "null", "nil", "empty", "no issues", "no recommendations"}:
+        return ""
+    if (cleaned.startswith("'") and cleaned.endswith("'")) or (cleaned.startswith('"') and cleaned.endswith('"')):
+        cleaned = cleaned[1:-1].strip()
+    return cleaned
+
+
+def parse_key_value_response(text: str) -> Dict[str, Any]:
+    """
+    Fallback parser that handles simple 'Key: value' or bullet-list responses when
+    the model fails to emit strict JSON. Returns {} if no structured data is found.
+    """
+    data: Dict[str, Any] = {}
+    current_key: str | None = None
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line:
+            continue
+
+        # Handle markdown bullets or numbering
+        line = line.lstrip("-*•0123456789. ").strip()
+        if not line:
+            continue
+
+        if ":" in line:
+            key, value = line.split(":", 1)
+            key = key.strip().strip('"').strip("'").lower()
+            if not key:
+                continue
+            normalized = normalize_scalar(value)
+            if key in data and isinstance(data[key], list):
+                if normalized:
+                    data[key].append(normalized)
+            else:
+                data[key] = normalized
+            current_key = key if not normalized else None
+            if key in {"issues", "recommendations", "concerns"} and data.get(key) == "":
+                data[key] = []
+                current_key = key
+            continue
+
+        if current_key:
+            entry = normalize_scalar(line)
+            if not entry:
+                continue
+            existing = data.get(current_key)
+            if not isinstance(existing, list):
+                existing = [] if not existing else [existing]
+            existing.append(entry)
+            data[current_key] = existing
+
+    # Final cleanup for known list-type keys
+    for key in ("issues", "recommendations", "concerns"):
+        if key in data and not isinstance(data[key], list):
+            value = data[key]
+            if not value:
+                data[key] = []
+            else:
+                data[key] = [value]
+    return data
+
+
 def json_file(text: str) -> Dict[str, Any]:
     """
     Parse an LLM response that should contain JSON but may be wrapped in code fences
     or use Python-style single quotes / inline comments. Falls back to ast.literal_eval
-    when strict JSON parsing fails.
+    and then to key-value parsing when strict JSON parsing fails.
     """
-    # text = text.strip()
-    # if text.lower().startswith("```"):
-    #     text = text.split("\n", 1)[1]
-    #     if text.endswith("```"):
-    #         text = text.rsplit("```", 1)[0]
-    # start = text.find("{")
-    # end = text.rfind("}")
-    # if start != -1 and end != -1 and end > start:
-    #     text = text[start:end + 1]
-    # return json.loads(text)
+    original_text = text
     text = strip_code_fences(text)
     text = extract_json_object(text)
     text = escape_newlines_in_strings(text)
@@ -132,8 +190,11 @@ def json_file(text: str) -> Dict[str, Any]:
     except json.JSONDecodeError:
         try:
             return ast.literal_eval(text)
-        except Exception as exc:
-            raise ValueError(f"Failed to parse planner output as JSON: {text}") from exc
+        except Exception:
+            fallback = parse_key_value_response(original_text)
+            if fallback:
+                return fallback
+            raise ValueError(f"Failed to parse structured output as JSON: {text[:200]}...") from None
 
 class PlannerGraph:
     """Graph for the baseline planner agent."""
