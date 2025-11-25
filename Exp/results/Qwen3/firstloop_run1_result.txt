@@ -1,5 +1,6 @@
 # Evaluate multi-agent firstloop on slider_dev dataset using model ""Qwen/Qwen3-Next-80B-A3B-Instruct"
 
+# Result from comparing execution results ignoring the order of rows (SQL doesn't guarantee order without ORDER BY)
 Final Execution Accuracy: 776/1034 = 0.7505
 
 Latency summary (total | avg per example | examples):

@@ -855,5 +855,478 @@
     "final_sql": "SELECT COUNT(Singer_ID) AS singer_count, Country\nFROM singer\nGROUP BY Country;",
     "exec_match": true,
     "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T13:45:03.797128",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T13:45:03.761156",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.8112844000570476,
+      "skeptic_sec": 2.357916499953717,
+      "reasoner_decision_sec": 6.493592399870977,
+      "sqlgen_sec": 0.4572018999606371,
+      "execution_sec": 0.0051061001140624285,
+      "total_sec": 10.13277900009416
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The query requests the maximum and minimum death toll 'each time', implying a per-battle aggregation, but no GROUP BY clause is present to group by battle. Without GROUP BY, MAX and MIN will be computed over the entire dataset, not per battle as required.",
+        "The question asks for the maximum and minimum death toll 'caused each time' — 'each time' refers to each battle, so the output must be grouped by battle. The current plan lacks this critical grouping, rendering the result semantically incorrect.",
+        "The plan includes 'battle' and 'ship' tables in the join path, but they are not used in the SELECT, GROUP BY, or any filtering condition. While they are necessary for the join path, their inclusion without any output or filtering makes the query unnecessarily complex and potentially misleading — however, this is secondary to the missing GROUP BY.",
+        "The aggregation functions MAX(death.killed) and MIN(death.killed) are applied without any GROUP BY, which violates SQL grammar rules in standard SQL implementations (e.g., PostgreSQL, MySQL in strict mode). This will cause a syntax or semantic error."
+      ],
+      "recommendations": [
+        "Add a GROUP BY clause on battle.id (or battle.name) to compute MAX and MIN killed per battle.",
+        "Include battle.id or battle.name in the SELECT clause to show which battle each max/min death toll corresponds to, as the question implies per-battle results.",
+        "Consider whether the question intends to return one global max/min (unlikely given 'each time') — if so, clarify intent; if per-battle, GROUP BY is mandatory."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The skeptic correctly identifies that the query lacks a GROUP BY clause, which is essential to compute maximum and minimum death tolls per battle as implied by 'each time'. Without grouping by battle, the aggregations will return global values, not per-battle results. Additionally, to make the output meaningful, the battle identifier should be included in the SELECT clause. The join path is correct but must be paired with proper grouping.",
+      "adjustments": [
+        "Add GROUP BY battle.id to compute MAX and MIN killed per battle.",
+        "Include battle.id (or battle.name) in the SELECT clause to associate each max/min death toll with the corresponding battle.",
+        "Ensure the SELECT clause contains: MAX(death.killed), MIN(death.killed), and battle.id (or battle.name)."
+      ]
+    },
+    "final_sql": "SELECT MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll, battle.id AS battle_id\nFROM death\nJOIN ship ON death.caused_by_ship_id = ship.id\nJOIN battle ON ship.lost_in_battle = battle.id\nGROUP BY battle.id;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T13:49:20.345175",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T13:49:20.307615",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.7825671001337469,
+      "skeptic_sec": 2.992310000117868,
+      "reasoner_decision_sec": 1.2393578998744488,
+      "sqlgen_sec": 0.44271470000967383,
+      "execution_sec": 0.00422089989297092,
+      "total_sec": 5.469765599817038
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "warn",
+      "issues": [
+        "The NL question asks for 'maximum and minimum death toll caused each time', implying a grouping by each battle or event ('each time'), but the plan lacks a GROUP BY clause. Without GROUP BY, MAX and MIN will return global extremes across all deaths, not per battle/event.",
+        "The term 'each time' semantically refers to each battle (as death tolls are caused by ships lost in battles), so the query should group by battle to compute max/min death toll per battle. The current plan ignores this grouping requirement.",
+        "The plan includes tables 'battle' and 'ship' that are not used in the SELECT or for filtering, but they are necessary for the join path to link death to battle. However, since the output does not include any battle or ship identifier (e.g., battle.name), the grouping by battle is not reflected in the result, making the joins semantically incomplete.",
+        "The aggregation functions MAX(death.killed) and MIN(death.killed) are applied without grouping, which contradicts the intent of 'each time'. This results in a single global max and min, not one per battle.",
+        "The projected column list only includes death.killed (via aggregations), but the question implies the output should represent per-event extremes. Without including a grouping identifier (e.g., battle.name or battle.id), the result is ambiguous and does not answer 'each time'."
+      ],
+      "recommendations": [
+        "Add GROUP BY battle.id (or battle.name) to compute MAX and MIN death toll per battle, aligning with 'each time'.",
+        "Include battle.id or battle.name in the SELECT clause to make the grouping explicit in the output, so the result shows max/min death toll per battle.",
+        "Ensure the join path remains intact (death → ship → battle) to correctly associate deaths with battles, but now group by the battle entity.",
+        "Remove any ambiguity by explicitly selecting the grouping column alongside the aggregations to satisfy the semantic intent of 'each time'."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The skeptic correctly identifies that the query lacks a GROUP BY clause to compute maximum and minimum death tolls per battle, as required by the phrase 'each time'. The current plan returns global extremes, which misrepresents the question's intent. Additionally, the result set does not include any identifier for the battle (e.g., battle.name or battle.id), making the output ambiguous and semantically incomplete. The joins are correct but insufficient without grouping and explicit output of the grouping key.",
+      "adjustments": [
+        "Add GROUP BY battle.id to compute MAX and MIN death toll per battle.",
+        "Include battle.id or battle.name in the SELECT clause to explicitly show the grouping context in the result.",
+        "Retain the existing join path (death.caused_by_ship_id = ship.id AND ship.lost_in_battle = battle.id) to correctly link deaths to battles.",
+        "Ensure the final SELECT includes both the grouping column (battle.id or battle.name) and the two aggregations: MAX(death.killed) and MIN(death.killed)."
+      ]
+    },
+    "final_sql": "SELECT battle.id, MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll\nFROM death\nJOIN ship ON death.caused_by_ship_id = ship.id\nJOIN battle ON ship.lost_in_battle = battle.id\nGROUP BY battle.id;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T13:58:20.224124",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T13:58:20.187743",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.8130465000867844,
+      "skeptic_sec": 2.628591800108552,
+      "reasoner_decision_sec": 1.071191699942574,
+      "sqlgen_sec": 0.4000165001489222,
+      "execution_sec": 0.0037330000195652246,
+      "total_sec": 4.9250680999830365
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "warn",
+      "issues": [
+        "The NL question asks for 'maximum and minimum death toll caused each time', implying a grouping by each battle or event ('each time'), but the plan lacks a GROUP BY clause. Without GROUP BY, MAX and MIN will return global extremes across all battles, not per-battle extremes as implied by 'each time'.",
+        "The plan selects only 'death.killed' in the columns list but uses aggregations (MAX, MIN) — this is syntactically valid in some SQL dialects, but semantically misleading because the output will be two scalar values, not one per battle as 'each time' suggests.",
+        "The question's intent ('each time') strongly implies a per-battle aggregation, yet the final projection does not include any identifier for 'time' (e.g., battle.name or battle.date), making the results uninterpretable as 'per time' values.",
+        "The tables 'battle' and 'ship' are included in the join path but their attributes are not projected or used in filtering — they are only used for linking. However, since the question requires 'each time' (i.e., per battle), the battle identifier must be included in the output to make the aggregation meaningful."
+      ],
+      "recommendations": [
+        "Add GROUP BY battle.id (or battle.name) to compute MAX and MIN killed per battle.",
+        "Include battle.name or battle.date in the SELECT clause to identify 'each time' in the result.",
+        "Update the columns list to include at least one battle identifier (e.g., 'battle.name') alongside the aggregations to make the output semantically aligned with 'each time'.",
+        "Remove the misleading 'columns': ['death.killed'] entry since it is not projected — aggregations are the output, not the raw column."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan fails to capture the core intent of 'each time', which requires per-battle aggregation. Without GROUP BY and a battle identifier in the output, the results are globally aggregated and uninterpretable. The columns list is misleading and must be updated to reflect the actual projected fields: battle identifier and the aggregations.",
+      "adjustments": [
+        "Add GROUP BY battle.name to compute MAX and MIN killed per battle.",
+        "Include 'battle.name' in the SELECT clause to identify 'each time' in the result.",
+        "Remove 'death.killed' from the columns list since it is not projected; instead, project only the aggregations and battle.name.",
+        "Ensure the final projection is: SELECT battle.name, MAX(death.killed), MIN(death.killed) GROUP BY battle.name."
+      ]
+    },
+    "final_sql": "SELECT battle.name, MAX(death.killed), MIN(death.killed)\nFROM battle\nJOIN ship ON battle.id = ship.lost_in_battle\nJOIN death ON ship.id = death.caused_by_ship_id\nGROUP BY battle.name;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T14:15:53.935100",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T14:15:53.898611",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.9587990001309663,
+      "skeptic_sec": 1.9601881001144648,
+      "reasoner_decision_sec": 0.9988520001061261,
+      "sqlgen_sec": 0.44784969999454916,
+      "execution_sec": 0.002469100058078766,
+      "total_sec": 4.376930100144818
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "warn",
+      "issues": [
+        "The NL question asks for 'maximum and minimum death toll caused each time', implying a grouping by each battle or event ('each time'), but the plan lacks a GROUP BY clause. Without GROUP BY, MAX and MIN will return global extremes across all battles, not per-battle extremes as implied by 'each time'.",
+        "The plan projects only aggregated values (MAX, MIN) but does not include any identifier (e.g., battle.name or battle.id) to indicate 'each time', making the output semantically ambiguous and uninterpretable.",
+        "The tables 'battle' and 'ship' are included in the join path but are not projected in the SELECT clause, despite being essential to define the context of 'each time'. Their inclusion is necessary for semantic correctness but their absence in output violates the intent of the question."
+      ],
+      "recommendations": [
+        "Add GROUP BY on battle.id or battle.name to compute MAX and MIN death toll per battle, aligning with 'each time'.",
+        "Include battle.name or battle.id in the SELECT clause to provide context for each maximum and minimum value, resolving the ambiguity of 'each time'.",
+        "Remove the misleading implication that global extremes are the answer — the question clearly seeks per-event (per-battle) extremes."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan incorrectly computes global MAX and MIN death tolls without grouping by battle, which contradicts the question's requirement to find extremes 'each time' (i.e., per battle). The absence of battle identifiers in the SELECT clause renders the output meaningless, as there is no context for which battle the extremes correspond to. The skeptic's feedback is valid and critical for semantic accuracy.",
+      "adjustments": [
+        "Add GROUP BY battle.id to compute maximum and minimum death toll per battle.",
+        "Include battle.name in the SELECT clause to provide interpretable context for 'each time'.",
+        "Retain the aggregations MAX(death.killed) and MIN(death.killed) but ensure they are computed per group."
+      ]
+    },
+    "final_sql": "SELECT battle.name, MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll\nFROM battle\nJOIN ship ON battle.id = ship.lost_in_battle\nJOIN death ON ship.id = death.caused_by_ship_id\nGROUP BY battle.id;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T14:17:44.757040",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T14:17:44.719242",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 1.125681099947542,
+      "skeptic_sec": 4.4505780001636595,
+      "reasoner_decision_sec": 1.3669278000015765,
+      "sqlgen_sec": 0.4364305001217872,
+      "execution_sec": 0.002438700059428811,
+      "total_sec": 7.390395499998704
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The NL question asks for 'maximum and minimum death toll caused each time', implying a grouping by each battle or event ('each time'), but the plan lacks a GROUP BY clause. Without GROUP BY, MAX and MIN will return global extremes across all battles, not per-battle extremes as implied by 'each time'.",
+        "The plan does not include any column in the SELECT projection to identify 'each time' (e.g., battle.name or battle.id), making the output semantically meaningless even if grouped, because there is no way to know which battle the max/min death toll corresponds to.",
+        "The SELECT clause only includes 'death.killed' in the column list, but aggregations (MAX, MIN) are specified — this is ambiguous and invalid SQL without GROUP BY or explicit aggregation aliases. The plan does not project the aggregated results as named columns.",
+        "The tables 'battle' and 'ship' are included in the join path but are not referenced in the SELECT projection or WHERE conditions. They are only used for joining, yet their presence is necessary for the transitive path. However, since the output does not include any attribute from them to identify 'each time', their inclusion is semantically insufficient and misleading — the plan fails to answer the actual question.",
+        "The phrase 'each time' strongly implies per-battle aggregation, but the plan treats the entire dataset as a single group. This is a fundamental misalignment with the natural language intent."
+      ],
+      "recommendations": [
+        "Add GROUP BY on battle.id or battle.name to compute MAX and MIN death toll per battle.",
+        "Include battle.name or battle.id in the SELECT projection to identify 'each time' in the output.",
+        "Project the aggregated values as named columns: MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll.",
+        "Remove the redundant column 'death.killed' from the SELECT list since it is not aggregated and would cause a SQL error when GROUP BY is added.",
+        "Ensure the final SELECT includes only the grouping column and the two aggregated columns to align with the question’s intent."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan fundamentally misinterprets 'each time' as a global aggregation rather than a per-battle aggregation. The absence of GROUP BY and the lack of a meaningful identifier for each battle render the query semantically incorrect. The SELECT clause is also malformed, mixing non-aggregated columns with aggregations without aliases. The skeptic's feedback correctly identifies these critical flaws, and the recommendations are precise and necessary to align the query with the natural language intent.",
+      "adjustments": [
+        "Add GROUP BY battle.id to compute maximum and minimum death toll per battle.",
+        "Include battle.name in the SELECT projection to identify 'each time' (battle) in the output.",
+        "Project aggregated values as named columns: MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll.",
+        "Remove 'death.killed' from the SELECT column list to avoid SQL errors when GROUP BY is applied.",
+        "Ensure the final SELECT contains only: battle.name, MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll."
+      ]
+    },
+    "final_sql": "SELECT battle.name, MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll\nFROM battle\nJOIN ship ON battle.id = ship.lost_in_battle\nJOIN death ON ship.id = death.caused_by_ship_id\nGROUP BY battle.id;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T14:25:31.645957",
+    "example_index": 494,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 494 --skeptic_temperature 0.2",
+    "question": "What is maximum and minimum death toll caused each time?",
+    "db_id": "battle_death",
+    "inputs": {
+      "timestamp": "2025-11-25T14:25:31.609496",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 494,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.8116403000894934,
+      "skeptic_sec": 8.305809499928728,
+      "reasoner_decision_sec": 3.011884900042787,
+      "sqlgen_sec": 0.45470450003631413,
+      "execution_sec": 0.0024096998386085033,
+      "total_sec": 12.595108699752018
+    },
+    "plan": {
+      "tables": [
+        "battle",
+        "ship",
+        "death"
+      ],
+      "columns": [
+        "death.killed"
+      ],
+      "joins": [
+        "death.caused_by_ship_id = ship.id",
+        "ship.lost_in_battle = battle.id"
+      ],
+      "conditions": [],
+      "aggregations": [
+        "MAX(death.killed)",
+        "MIN(death.killed)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The plan includes tables 'battle' and 'ship' that are redundant because none of their columns are used in the SELECT projection, WHERE filters, or HAVING conditions. Their only role is in join paths, but the question asks for MAX and MIN death toll 'each time' — implying a per-battle aggregation, which requires grouping by battle context. However, the query does not GROUP BY any battle or ship attribute, making the joins structurally meaningless for the intended result.",
+        "The NLQ asks for 'maximum and minimum death toll caused each time' — the phrase 'each time' strongly implies grouping by each battle event. The plan fails to include a GROUP BY clause on battle.id or battle.name, making the MAX/MIN aggregates global rather than per-battle, which misrepresents the intent.",
+        "The column 'death.killed' is correctly referenced, but the absence of any grouping or output of the context ('each time') means the result will be two global values, not one per battle as implied by the question."
+      ],
+      "recommendations": [
+        "Remove redundant tables 'battle' and 'ship' from the plan unless they are needed for grouping — but if grouping is required, they must be retained and included in GROUP BY.",
+        "Add GROUP BY on battle.id (or battle.name) to compute MAX and MIN death toll per battle, as implied by 'each time'.",
+        "Include battle.id or battle.name in the SELECT projection to align with the semantic intent of 'each time' — otherwise, the result is not answering the question as posed.",
+        "If the intent is truly global MAX/MIN across all battles (ignoring 'each time'), then the question is misphrased and the joins are still redundant — remove 'battle' and 'ship' entirely and query only 'death'."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The Skeptic correctly identifies that 'battle' and 'ship' are redundant unless used for grouping, and the phrase 'each time' demands per-battle aggregation. The current plan lacks GROUP BY and does not project battle context, rendering the joins meaningless. The fix requires pruning the redundant tables only if grouping is not needed — but since 'each time' implies per-battle, we must retain battle.id in GROUP BY and SELECT. The ship table is entirely unnecessary as death.killed is directly linked via caused_by_ship_id, and ship.lost_in_battle is not used for filtering or projection. Thus, we remove 'ship' and keep only 'battle' and 'death', with GROUP BY on battle.id and include battle.id in SELECT.",
+      "adjustments": [
+        "Remove 'ship' from the tables list because it is redundant and not needed for grouping or projection.",
+        "Retain 'battle' in the tables list to enable per-battle aggregation as required by 'each time'.",
+        "Add 'battle.id' to the SELECT projection to report the context of 'each time'.",
+        "Add 'GROUP BY battle.id' to compute MAX and MIN death toll per battle.",
+        "Ensure the joins are updated to: 'death.caused_by_ship_id = ship.id' (but ship is removed, so this join must be eliminated). Since ship is removed, the join 'ship.lost_in_battle = battle.id' is also invalid — therefore, we must remove both joins. However, death.caused_by_ship_id links to ship.id, and ship.lost_in_battle links to battle.id — without ship, we cannot connect death to battle. Therefore, we must keep ship as a bridge table. Correction: The Skeptic said 'redundant tables' — but ship is necessary as a bridge. Re-evaluating: The issue is not that ship is redundant, but that it's not projected. The real problem is the missing GROUP BY and missing battle context. So we must keep both ship and battle, but add GROUP BY on battle.id and include battle.id in SELECT. The Skeptic's 'redundant' label is misleading — ship is a necessary join table. Therefore, we do NOT remove any tables. Instead, we add GROUP BY and SELECT battle.id. The Skeptic's recommendation says: 'Remove redundant tables ... unless they are needed for grouping — but if grouping is required, they must be retained and included in GROUP BY.' So we retain all tables and fix the grouping. Final adjustment: Keep all tables, add GROUP BY battle.id, add battle.id to SELECT."
+      ]
+    },
+    "final_sql": "SELECT MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll, battle.id AS battle_id\nFROM death\nJOIN ship ON death.caused_by_ship_id = ship.id\nJOIN battle ON ship.lost_in_battle = battle.id\nGROUP BY battle.id;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
   }
 ]
