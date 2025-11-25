@@ -1,0 +1,11 @@
+import pathlib
+firstloop = set(int(line.strip()) for line in pathlib.Path('Exp/check_mismatches/firstloop_run2_mismatches.txt').read_text().split())
+base = set(int(line.strip()) for line in pathlib.Path('Exp/check_mismatches/baseagent_run2_mismatches.txt').read_text().split())
+print('firstloop count', len(firstloop))
+print('base count', len(base))
+print('overlap', len(firstloop & base))
+print('firstloop-only', len(firstloop - base))
+print('base-only', len(base - firstloop))
+print('overlap list:\n', sorted(firstloop & base))
+print('first-only list:\n', sorted(firstloop - base))
+print('base-only list:\n', sorted(base - firstloop))
