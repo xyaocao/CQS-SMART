@@ -1,2 +1,0 @@
-# Evaluate baseagent on slider_dev dataset using model "GPT-4"
-Execution Accuracy (1034 ex): 0.7099  (correct: 734)

@@ -1,2 +1,0 @@
-# Evaluate planner agent on slider_dev dataset using model "GPT-4"
-Execution Accuracy (1034 ex): 0.5899  (correct: 610)
