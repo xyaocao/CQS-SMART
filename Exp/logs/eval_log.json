@@ -1328,5 +1328,430 @@
     "final_sql": "SELECT MAX(death.killed) AS max_death_toll, MIN(death.killed) AS min_death_toll, battle.id AS battle_id\nFROM death\nJOIN ship ON death.caused_by_ship_id = ship.id\nJOIN battle ON ship.lost_in_battle = battle.id\nGROUP BY battle.id;",
     "exec_match": false,
     "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:50.079597",
+    "example_index": 0,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "How many singers do we have?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.7067203999031335,
+      "skeptic_sec": 0.4283265999983996,
+      "reasoner_decision_sec": 0.516023299889639,
+      "sqlgen_sec": 0.22993869986385107,
+      "execution_sec": 0.0023549001198261976,
+      "total_sec": 1.8912402000278234
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies that counting singers requires only the singer table, with no joins or filters needed. The Skeptic found no issues, and the plan is minimal and accurate for the question 'How many singers do we have?'",
+      "adjustments": []
+    },
+    "final_sql": "SELECT COUNT(*) FROM singer;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:52.161225",
+    "example_index": 1,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "What is the total number of singers?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.3967472999356687,
+      "skeptic_sec": 0.426079299999401,
+      "reasoner_decision_sec": 0.5495869999285787,
+      "sqlgen_sec": 0.24453120003454387,
+      "execution_sec": 0.0021069999784231186,
+      "total_sec": 1.625374199822545
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies that the total number of singers can be obtained by counting the Singer_ID in the singer table. No joins, conditions, or additional tables are needed. The skeptic confirms no issues or recommendations, so the plan is valid and ready for execution.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT COUNT(Singer_ID) FROM singer;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:53.813009",
+    "example_index": 2,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.3735334000084549,
+      "skeptic_sec": 0.43375209998339415,
+      "reasoner_decision_sec": 0.6070621001999825,
+      "sqlgen_sec": 0.2440279999282211,
+      "execution_sec": 0.0020773999858647585,
+      "total_sec": 1.6655555998440832
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Country",
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age DESC"
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies the singer table as the sole source for Name, Country, and Age fields. No joins are needed since all required data is in one table. The ordering by Age DESC matches the requirement to show singers from oldest to youngest. No issues or recommendations from the skeptic confirm the plan is sound.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Name, Country, Age FROM singer ORDER BY Age DESC;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:55.505849",
+    "example_index": 3,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "What are the names, countries, and ages for every singer in descending order of age?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.39496889989823103,
+      "skeptic_sec": 0.4416922000236809,
+      "reasoner_decision_sec": 0.5363990999758244,
+      "sqlgen_sec": 0.24644659995101392,
+      "execution_sec": 0.002756000030785799,
+      "total_sec": 1.6276261999737471
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Country",
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age DESC"
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies the singer table as the sole source for names, countries, and ages. No joins are needed since all required columns are in the singer table. The ordering by age in descending order is properly specified. The skeptic found no issues, confirming the plan is sound.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Name, Country, Age FROM singer ORDER BY Age DESC;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:57.170234",
+    "example_index": 4,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "What is the average, minimum, and maximum age of all singers from France?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.44609540002420545,
+      "skeptic_sec": 0.2793107000179589,
+      "reasoner_decision_sec": 0.6558581998106092,
+      "sqlgen_sec": 0.33966349996626377,
+      "execution_sec": 0.0022084000520408154,
+      "total_sec": 1.7287205001339316
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [
+        "singer.Country = 'France'"
+      ],
+      "aggregations": [
+        "AVG(singer.Age)",
+        "MIN(singer.Age)",
+        "MAX(singer.Age)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies the singer table as the sole source of required data (age, country). No joins are needed since all required information (age and country) is present in the singer table. The condition filters for French singers, and the aggregations (AVG, MIN, MAX) are appropriately applied. Skeptic feedback confirms no issues.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT AVG(Age) AS average_age, MIN(Age) AS minimum_age, MAX(Age) AS maximum_age\nFROM singer\nWHERE Country = 'France';",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:02:59.022233",
+    "example_index": 5,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "What is the average, minimum, and maximum age for all French singers?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.4484230999369174,
+      "skeptic_sec": 0.2786143000703305,
+      "reasoner_decision_sec": 0.7229304001666605,
+      "sqlgen_sec": 0.3549957999493927,
+      "execution_sec": 0.0020430998411029577,
+      "total_sec": 1.8123083997052163
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Age"
+      ],
+      "joins": [],
+      "conditions": [
+        "singer.Country = 'France'"
+      ],
+      "aggregations": [
+        "AVG(singer.Age)",
+        "MIN(singer.Age)",
+        "MAX(singer.Age)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The plan correctly identifies the singer table as the sole source of required data (age, country). No joins are needed since all information (age, country) is present in the singer table. The condition filters for French singers, and the aggregations (AVG, MIN, MAX) are appropriately applied. Skeptic confirms no issues. No redundant tables or extra_table references exist.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT AVG(Age) AS average_age, MIN(Age) AS minimum_age, MAX(Age) AS maximum_age\nFROM singer\nWHERE Country = 'France';",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T16:03:00.864435",
+    "example_index": 6,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev",
+    "question": "Show the name and the release year of the song by the youngest singer.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T16:02:50.032744",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 50,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 5.892685099970549,
+      "skeptic_sec": 2.319589899852872,
+      "reasoner_decision_sec": 1.0705291999038309,
+      "sqlgen_sec": 0.25682750018313527,
+      "execution_sec": 0.002221599919721484,
+      "total_sec": 9.549217600142583
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Song_release_year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age ASC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The plan selects 'singer.Name' and 'singer.Song_release_year', but the question asks for 'the name and the release year of the song' — 'singer.Name' refers to the singer's name, not the song's name. The correct column for the song name is 'singer.Song_Name', which is available but not selected.",
+        "The projected columns do not align with the primary output entity requested in the NLQ. The NLQ asks for song attributes (name and release year), but the plan returns singer attributes (singer's name and song release year), creating a semantic mismatch.",
+        "The column 'singer.Name' is ambiguous and misleading in this context; the schema provides 'singer.Song_Name' as the clear, specific column for the song's name, which must be used instead.",
+        "The plan ignores the need to ensure the song is associated with the youngest singer via the correct entity linkage — while not requiring joins in this case (since song details are in singer table), the projection is semantically wrong."
+      ],
+      "recommendations": [
+        "Replace 'singer.Name' with 'singer.Song_Name' in the SELECT clause to return the song's name, not the singer's name.",
+        "Keep 'singer.Song_release_year' as it correctly refers to the song's release year.",
+        "Ensure the ORDER BY 'singer.Age ASC' and LIMIT 1 remain, as they correctly identify the youngest singer and thus the associated song.",
+        "Verify that no other tables are needed — since all required data (song name, release year, age) is in the singer table, no joins are necessary and the current table list is acceptable after fixing the column selection."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan incorrectly selects 'singer.Name' (singer's name) instead of 'singer.Song_Name' (song's name), which is the required output per the question. The Skeptic correctly identifies this semantic mismatch. The singer table contains all necessary data (song name, release year, age), so no joins or additional tables are needed. The fix is purely a column replacement: use Song_Name instead of Name. No redundant tables exist; the table list is correct after this adjustment.",
+      "adjustments": [
+        "Replace 'singer.Name' with 'singer.Song_Name' in the SELECT clause.",
+        "Keep 'singer.Song_release_year' unchanged as it correctly represents the song's release year.",
+        "Retain the existing ORDER BY 'singer.Age ASC' and LIMIT 1 to identify the youngest singer and their song."
+      ]
+    },
+    "final_sql": "SELECT Song_Name, Song_release_year FROM singer ORDER BY Age ASC LIMIT 1;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
   }
 ]
