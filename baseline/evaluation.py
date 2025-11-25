@@ -3,8 +3,12 @@ import sys
 import json
 import sqlite3
 import time
-from typing import List, Tuple, Any
+from typing import List, Tuple, Any, Iterable
 import argparse
+from pathlib import Path
+baseline_dir = Path(__file__).resolve().parent.parent
+if str(baseline_dir) not in sys.path:
+    sys.path.insert(0, str(baseline_dir))
 from baseline.dataloader import load_spider
 from baseline.planneragent import PlannerGraph
 from baseline.baseagent import BaseGraph
@@ -15,6 +19,7 @@ from baseline.llm import LLMConfig
 from baseline.run_planner import get_table_paths 
 from baseline.run_planner import load_schema_text 
 from baseline.run_planner import save_log 
+from collections import Counter
 
 def project_root() -> str:
     return os.path.dirname(os.path.dirname(__file__))
@@ -30,6 +35,36 @@ def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
     rows = cur.fetchall()
     conn.close()
     return rows
+
+def normalize_cell(value: Any) -> Any:
+    """
+    Bring SQL cell values to a comparable form.
+    Floats are rounded to reduce tiny precision diffs; bytes decode to str.
+    """
+    if isinstance(value, float):
+        # Spider answers rarely need >6 decimals; rounding avoids noise
+        return round(value, 6)
+    if isinstance(value, (bytes, bytearray)):
+        return value.decode(errors="ignore")
+    return value
+
+def canonicalize_row(row: Iterable[Any]) -> Tuple[Any, ...]:
+    """
+    Sort row values so column ordering differences do not impact equality.
+    """
+    normalized = [normalize_cell(v) for v in row]
+    try:
+        return tuple(sorted(normalized))
+    except TypeError:
+        # As a last resort compare via str() to keep determinism
+        return tuple(sorted(str(v) for v in normalized))
+
+def canonicalize_rows(rows: Iterable[Tuple[Any, ...]]) -> Counter:
+    """
+    Convert a sequence of SQL rows to a multiset representation that
+    ignores both row order and column order.
+    """
+    return Counter(canonicalize_row(row) for row in rows)
 
 def read_examples(path: str) -> list[dict]:
     with open(path, "r", encoding="utf-8") as f:
@@ -222,7 +257,7 @@ def main():
             gen_sql = ""
             out_state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
 
-        plan_payload = getattr(out_state, "plan", {}) if expects_plan and out_state else {}
+        plan = getattr(out_state, "plan", {}) if expects_plan and out_state else {}
         log_inputs = {
             "question": question,
             "db_id": active_db_id,
@@ -247,7 +282,7 @@ def main():
                     log_path=log_path,
                     command_line=command_line,
                     inputs=log_inputs,
-                    plan=plan_payload,
+                    plan=plan,
                     sql=gen_sql,
                     schema_text=schema_text if args.save_schema else None,
                     latency_sec=gen_latency,
@@ -273,12 +308,20 @@ def main():
         log_inputs["latency"]["execution_sec"] = exec_latency
         log_inputs["latency"]["total_sec"] = total_latency
 
+        # Compare results ignoring order (SQL doesn't guarantee order without ORDER BY)
+        # and column positions (agent might alias/select columns in different order)
+        gen_counter = canonicalize_rows(gen_rows) if gen_rows else Counter()
+        gold_counter = canonicalize_rows(gold_rows) if gold_rows else Counter()
+        hit = gen_counter == gold_counter
+        
+        log_inputs["exec_match"] = hit
+
         try:
             save_log(
                 log_path=log_path,
                 command_line=command_line,
                 inputs=log_inputs,
-                plan=plan_payload,
+                plan=plan,
                 sql=gen_sql,
                 schema_text=schema_text if args.save_schema else None,
                 latency_sec=gen_latency,
@@ -290,9 +333,7 @@ def main():
         gen_latency_sum += gen_latency
         exec_latency_sum += exec_latency
         total_latency_sum += total_latency
-        # Compare raw execution results exactly as returned by sqlite3.fetchall()
-        if gen_rows == gold_rows:
-            correct += 1
+        correct += int(hit)
 
         if (idx - start + 1) % 25 == 0:
             print(f"[{idx + 1}/{end}] acc={correct/total:.4f}")

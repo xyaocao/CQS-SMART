@@ -1,17 +1,16 @@
 import time
 import sys
+from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Optional
 baseline_dir = Path(__file__).resolve().parent.parent
 if str(baseline_dir) not in sys.path:
     sys.path.insert(0, str(baseline_dir))
-from baseline.evaluation import exec_sql, get_spider_paths, parse_gold_sql, read_examples, resolve_db_path
+from baseline.evaluation import exec_sql, get_spider_paths, parse_gold_sql, read_examples, resolve_db_path, canonicalize_rows
 from baseline.run_planner import load_schema_text  
 from pipeline_utils import PipelineConfig, update_json, init_agents, snapshot_inputs
 from loop_engines import FirstLoopEngine, LoopStageError, LoopEngine, LoopResult
-
-
 class MultiAgentEvaluator:
     """Runs planner → skeptic → reasoner/SQL → execution accuracy."""
     def __init__(self, config: PipelineConfig, engine: Optional[LoopEngine] = None):
@@ -66,7 +65,7 @@ class MultiAgentEvaluator:
 
             schema_text = load_schema_text("spider", db_id, self.tables_path)
             log_entry: Dict[str, Any] = {
-                "timestamp": cfg.timestamp,
+                "timestamp": datetime.now().isoformat(),
                 "example_index": idx,
                 "command_line": cfg.command_line,
                 "question": question,
@@ -136,7 +135,11 @@ class MultiAgentEvaluator:
             record_latency("total_sec", total_time)
 
             total += 1
-            hit = gen_rows == gold_rows
+
+            # Compare results ignoring row order and column ordering differences
+            gen_counter = canonicalize_rows(gen_rows or [])
+            gold_counter = canonicalize_rows(gold_rows or [])
+            hit = gen_counter == gold_counter
             correct += int(hit)
             log_entry["exec_match"] = hit
             log_entry["accuracy_so_far"] = correct / total if total else 0.0
