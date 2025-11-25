@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 import sys
+from datetime import datetime
 baseline_dir = Path(__file__).resolve().parent.parent
 if str(baseline_dir) not in sys.path:
     sys.path.insert(0, str(baseline_dir))
@@ -29,7 +30,7 @@ class SinglerunPipeline:
         db_id = cfg.db_id or ""
         schema_text = load_schema_text(cfg.dataset, db_id, str(self.tables_path))
         log_entry: Dict[str, Any] = {
-            "timestamp": cfg.timestamp,
+            "timestamp": datetime.now().isoformat(),
             "command_line": cfg.command_line,
             "question": question,
             "db_id": db_id,
@@ -101,7 +102,7 @@ class BatchPipeline:
             db_id = example.get("db_id", "")
             schema_text = load_schema_text(cfg.dataset, db_id, str(self.tables_path))
             log_entry: Dict[str, Any] = {
-                "timestamp": cfg.timestamp,
+                "timestamp": datetime.now().isoformat(),
                 "example_index": idx,
                 "command_line": cfg.command_line,
                 "question": question,

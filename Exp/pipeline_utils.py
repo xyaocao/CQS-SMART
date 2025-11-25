@@ -13,7 +13,6 @@ from baseline.llm import LLMConfig
 
 @dataclass
 class PipelineConfig:
-    timestamp: str = datetime.now().isoformat(),
     command_line: str = ""
     dataset: str = "spider"
     split: str = "dev"
@@ -44,6 +43,7 @@ def load_critical_questions(path: Path | None) -> str:
     
 def snapshot_inputs(cfg: PipelineConfig) -> Dict[str, Any]:
     return {
+        "timestamp": datetime.now().isoformat(),
         "dataset": cfg.dataset,
         "split": cfg.split,
         "start": cfg.start,

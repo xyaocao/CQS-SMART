@@ -6,6 +6,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Any, List
+import sys
+from pathlib import Path
+baseline_dir = Path(__file__).resolve().parent.parent
+if str(baseline_dir) not in sys.path:
+    sys.path.insert(0, str(baseline_dir))
 from baseline.dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
 from baseline.baseagent import BaseGraph
 from baseline.state import BaseState

@@ -4,6 +4,11 @@ import ast
 import re
 from langgraph.graph import StateGraph, START, END
 from langchain_core.prompts import ChatPromptTemplate
+import sys
+from pathlib import Path
+baseline_dir = Path(__file__).resolve().parent.parent
+if str(baseline_dir) not in sys.path:
+    sys.path.insert(0, str(baseline_dir))
 from baseline.state import PlannerState
 from baseline.prompts_planner import Planner_system_prompt, Planner_human, SQLGen_system_prompt, SQLGen_human
 from baseline.llm import get_llm_chat_model, LLMConfig
