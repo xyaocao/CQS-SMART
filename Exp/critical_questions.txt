@@ -19,6 +19,7 @@ Critical Questions for Skeptic Agent:
 - Does the proposed join path use an incorrect linking column, violating a Primary/Foreign Key relationship?
 - Does the question's intent (e.g., "list all X, including those without Y") require a non-INNER join type (LEFT, RIGHT, FULL)?
 - Does the chosen join pattern correctly reflect the required row inclusion rules, and is the current pattern (LEFT JOIN... IS NULL) the most appropriate structural fit for the semantic exclusion requested?
+- Does the plan include tables (e.g., battle, ship) that are redundant because none of their columns are used for projection or filtering? If YES, this violates minimal retrieval (extra_table) and requires IMMEDIATE pruning BEFORE aggregation logic is finalized.
 - Is the inclusion of this table necessary for the join path, filtering, or the semantic result (i.r., is it redundant)?
 - Can the current logical structure be simplified by substituting a complex multi-clause construct (e.g., LEFT JOIN... WHERE IS NULL) with a single, equivalent Set Operation (EXCEPT) for greater clarity and adherence to optimization heuristics?
 - Does the NL condition require calculation on an intermediate dataset (e.g., "above average"), necessitating a subquery structure?
@@ -33,6 +34,7 @@ Critical Questions for Skeptic Agent:
 - Is the literal value used in the predicate incorrectly formatted for the target data type (e.g., date missing quotes)?
 - Is the plan incorrectly using a hardcoded literal value shwere the NL question requested a derived or calculated value (e.g., MAX/MIN)?
 - Is the planned function (e.g., conditional, mathematical) supported by the target databased environment?
+- When the plan requests only pure aggregate values (MAX/MIN) and the NLQ uses an ambiguous grouping phrase ("each time") without explicitly requesting a grouping identifier (e.g., battle name) in the output, resolve the ambiguity to global extremes, confirming that GROUP BY is not required.
 - Is an aggregation function used without the necessary GROUP BY clause?
 - If GROUP BY is present, does it include all non-aggregated columns selected for the final output?
 - Is a HAVING clause present without a required preceding GROUP BY clause?
