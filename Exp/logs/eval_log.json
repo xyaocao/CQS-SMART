@@ -1,16 +1,15 @@
 [
   {
-    "timestamp": [
-      "2025-11-21T16:08:23.929948"
-    ],
-    "example_index": 33,
-    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 33",
-    "question": "Show the name and theme for all concerts and the number of singers in each concert.",
+    "timestamp": "2025-11-25T08:54:24.309342",
+    "example_index": 6,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 6 --skeptic_temperature 0.2",
+    "question": "Show the name and the release year of the song by the youngest singer.",
     "db_id": "concert_singer",
     "inputs": {
+      "timestamp": "2025-11-25T08:54:24.269968",
       "dataset": "spider",
       "split": "dev",
-      "start": 33,
+      "start": 6,
       "max_examples": 1,
       "planner_temperature": 0.0,
       "max_tokens": 1200,
@@ -22,212 +21,155 @@
       "input_mode": "batch"
     },
     "latency": {
-      "planner_sec": 7.755315299960785,
-      "skeptic_sec": 2.9964140999363735,
-      "reasoner_decision_sec": 3.4018579999683425,
-      "sqlgen_sec": 1.9411015999503434,
-      "execution_sec": 0.0029765000799670815,
-      "total_sec": 16.106625300017186
+      "planner_sec": 0.7942705999594182,
+      "skeptic_sec": 0.5525093998294324,
+      "reasoner_decision_sec": 0.7497004000470042,
+      "sqlgen_sec": 0.39931279979646206,
+      "execution_sec": 0.0034117999020963907,
+      "total_sec": 2.5058260997757316
     },
     "plan": {
       "tables": [
-        "concert",
-        "singer_in_concert",
         "singer"
-      ],
-      "columns": [
-        "concert.concert_Name",
-        "concert.Theme",
-        "COUNT(singer.Singer_ID)"
-      ],
-      "joins": [
-        {
-          "left_table": "concert",
-          "right_table": "singer_in_concert",
-          "left_column": "concert_ID",
-          "right_column": "concert_ID",
-          "type": "INNER"
-        },
-        {
-          "left_table": "singer_in_concert",
-          "right_table": "singer",
-          "left_column": "Singer_ID",
-          "right_column": "Singer_ID",
-          "type": "INNER"
-        }
-      ],
-      "conditions": [],
-      "aggregations": [
-        {
-          "type": "COUNT",
-          "column": "singer.Singer_ID",
-          "alias": "Number_of_Singers"
-        }
-      ],
-      "group_by": [
-        "concert.concert_Name",
-        "concert.Theme"
-      ],
-      "order_by": "",
-      "limit": null
-    },
-    "skeptic_feedback": {
-      "verdict": "ok",
-      "issues": [],
-      "recommendations": []
-    },
-    "reasoner_decision": {
-      "verdict": "proceed",
-      "thoughts": "The plan correctly joins the necessary tables and selects the appropriate columns. It also correctly uses the COUNT aggregation function to count the number of singers in each concert. The skeptic feedback also does not indicate any issues. Therefore, the plan can proceed.",
-      "adjustments": []
-    },
-    "final_sql": "SELECT concert.concert_Name, concert.Theme, COUNT(singer_in_concert.Singer_ID) as Number_of_Singers\nFROM concert\nJOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID\nGROUP BY concert.concert_ID, concert.concert_Name, concert.Theme;",
-    "exec_match": true,
-    "accuracy_so_far": 1.0
-  },
-  {
-    "timestamp": [
-      "2025-11-21T16:28:44.448378"
-    ],
-    "example_index": 33,
-    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 33",
-    "question": "Show the name and theme for all concerts and the number of singers in each concert.",
-    "db_id": "concert_singer",
-    "inputs": {
-      "dataset": "spider",
-      "split": "dev",
-      "start": 33,
-      "max_examples": 1,
-      "planner_temperature": 0.0,
-      "max_tokens": 1200,
-      "skeptic_temperature": 0.2,
-      "reasoner_temperature": 0.0,
-      "log_path": "Exp\\logs\\eval_log.json",
-      "save_schema": false,
-      "skeptic_questions_path": "Exp\\critical_questions.txt",
-      "input_mode": "batch"
-    },
-    "latency": {
-      "planner_sec": 10.968880700063892,
-      "skeptic_sec": 1.7194215999916196,
-      "reasoner_decision_sec": 2.554183500004001,
-      "sqlgen_sec": 2.4748314999742433,
-      "execution_sec": 0.0030664000660181046,
-      "total_sec": 17.727461999980733
-    },
-    "plan": {
-      "tables": [
-        "concert",
-        "singer_in_concert",
-        "singer"
-      ],
-      "columns": [
-        "concert.concert_Name",
-        "concert.Theme",
-        "COUNT(singer.Singer_ID)"
-      ],
-      "joins": [
-        {
-          "left_table": "concert",
-          "right_table": "singer_in_concert",
-          "join_condition": "concert.concert_ID = singer_in_concert.concert_ID"
-        },
-        {
-          "left_table": "singer_in_concert",
-          "right_table": "singer",
-          "join_condition": "singer_in_concert.Singer_ID = singer.Singer_ID"
-        }
-      ],
-      "conditions": [],
-      "aggregations": [
-        {
-          "type": "COUNT",
-          "column": "singer.Singer_ID",
-          "group_by": [
-            "concert.concert_Name",
-            "concert.Theme"
-          ]
-        }
-      ],
-      "order_by": "",
-      "limit": null
-    },
-    "skeptic_feedback": {
-      "verdict": "ok",
-      "issues": [],
-      "recommendations": []
-    },
-    "reasoner_decision": {
-      "verdict": "proceed",
-      "thoughts": "The plan seems to correctly join the necessary tables and count the number of singers for each concert. The skeptic feedback also doesn't point out any issues. Therefore, we can proceed with the current plan.",
-      "adjustments": []
-    },
-    "final_sql": "SELECT concert.concert_Name, concert.Theme, COUNT(singer_in_concert.Singer_ID) as Number_of_Singers\nFROM concert\nJOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID\nGROUP BY concert.concert_ID, concert.concert_Name, concert.Theme;",
-    "exec_match": true,
-    "accuracy_so_far": 1.0
-  },
-  {
-    "timestamp": [
-      "2025-11-21T16:29:27.421075"
-    ],
-    "example_index": 35,
-    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 35",
-    "question": "List singer names and number of concerts for each singer.",
-    "db_id": "concert_singer",
-    "inputs": {
-      "dataset": "spider",
-      "split": "dev",
-      "start": 35,
-      "max_examples": 1,
-      "planner_temperature": 0.0,
-      "max_tokens": 1200,
-      "skeptic_temperature": 0.2,
-      "reasoner_temperature": 0.0,
-      "log_path": "Exp\\logs\\eval_log.json",
-      "save_schema": false,
-      "skeptic_questions_path": "Exp\\critical_questions.txt",
-      "input_mode": "batch"
-    },
-    "latency": {
-      "planner_sec": 5.803611199953593,
-      "skeptic_sec": 0.9908192000584677,
-      "reasoner_decision_sec": 3.584017900051549,
-      "sqlgen_sec": 2.784334999974817,
-      "execution_sec": 0.0025118000339716673,
-      "total_sec": 13.174915299983695
-    },
-    "plan": {
-      "tables": [
-        "singer",
-        "singer_in_concert",
-        "concert"
       ],
       "columns": [
         "singer.Name",
-        "COUNT(concert.concert_ID)"
+        "singer.Song_release_year"
       ],
-      "joins": [
-        {
-          "left_table": "singer",
-          "right_table": "singer_in_concert",
-          "join_on": "singer.Singer_ID = singer_in_concert.Singer_ID"
-        },
-        {
-          "left_table": "singer_in_concert",
-          "right_table": "concert",
-          "join_on": "singer_in_concert.concert_ID = concert.concert_ID"
-        }
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age ASC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The plan correctly identifies the singer table as the sole source for the required information (name and song release year of the youngest singer). The ORDER BY on Age ASC with LIMIT 1 will retrieve the youngest singer, and no joins or additional conditions are needed since all required data is in the singer table.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Name, Song_release_year FROM singer ORDER BY Age ASC LIMIT 1;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T08:55:43.426754",
+    "example_index": 7,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 7 --skeptic_temperature 0.2",
+    "question": "What are the names and release years for all the songs of the youngest singer?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:55:43.388263",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 7,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.8275631999131292,
+      "skeptic_sec": 2.6228455998934805,
+      "reasoner_decision_sec": 1.2398854000493884,
+      "sqlgen_sec": 0.48081009997986257,
+      "execution_sec": 0.0024864000733941793,
+      "total_sec": 5.183895600028336
+    },
+    "plan": {
+      "tables": [
+        "singer"
       ],
+      "columns": [
+        "singer.Name",
+        "singer.Song_release_year"
+      ],
+      "joins": [],
+      "conditions": [
+        "singer.Age = (SELECT MIN(Age) FROM singer)"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "warn",
+      "issues": [
+        "The column 'singer.Song_release_year' is of type TEXT, but the NL question implies it should be treated as a year (numeric context), which may cause formatting or comparison issues if used in downstream processing, though not a SQL syntax error.",
+        "The plan selects 'singer.Name' and 'singer.Song_release_year', but 'singer.Name' refers to the singer's name, not the song's name. The NL question asks for 'the names and release years for all the songs', implying the song names (not singer names) are required. This is a semantic mismatch.",
+        "The query assumes that the youngest singer has only one song, but the schema allows a singer to have multiple songs (Song_Name and Song_release_year are per row). The plan will return all songs by the youngest singer, which is correct, but the selected column 'singer.Name' is mislabeled in intent — it should be 'singer.Song_Name', not 'singer.Name'.",
+        "The filtering condition uses 'MIN(Age)' correctly to find the youngest singer, but the projection incorrectly selects the singer's name instead of the song's name, violating the primary output entity requested in the NLQ."
+      ],
+      "recommendations": [
+        "Change the selected column 'singer.Name' to 'singer.Song_Name' to align with the NLQ's request for 'names of the songs'.",
+        "Ensure that 'singer.Song_release_year' is treated as a string (as per schema), but document that if numeric comparison or formatting is needed later, casting may be required.",
+        "Clarify in documentation or schema that 'singer.Name' = singer's name, 'singer.Song_Name' = song's name, to prevent future misinterpretation."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan incorrectly selects the singer's name instead of the song's name, which is the primary entity requested in the natural language question. Additionally, while the filtering condition for the youngest singer is correct, the column selection misrepresents the required output. The schema confirms that song names are stored in 'Song_Name', not 'Name'. This semantic error must be corrected to align with the question's intent.",
+      "adjustments": [
+        "Change the selected column 'singer.Name' to 'singer.Song_Name' to return the names of the songs, as requested in the question.",
+        "Keep 'singer.Song_release_year' as is, since it matches the schema, but note that it is stored as TEXT and may require casting if numeric operations are needed downstream.",
+        "Ensure the condition 'singer.Age = (SELECT MIN(Age) FROM singer)' remains unchanged, as it correctly identifies the youngest singer."
+      ]
+    },
+    "final_sql": "SELECT singer.Song_Name, singer.Song_release_year\nFROM singer\nWHERE singer.Age = (SELECT MIN(Age) FROM singer);",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:57:26.681894",
+    "example_index": 16,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 16 --skeptic_temperature 0.2",
+    "question": "What is the maximum capacity and the average of all stadiums ?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:57:26.643742",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 16,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.8229372000787407,
+      "skeptic_sec": 0.429376499960199,
+      "reasoner_decision_sec": 0.6845021001063287,
+      "sqlgen_sec": 0.4010377998929471,
+      "execution_sec": 0.002443399978801608,
+      "total_sec": 2.347693799994886
+    },
+    "plan": {
+      "tables": [
+        "stadium"
+      ],
+      "columns": [
+        "stadium.Capacity",
+        "stadium.Average"
+      ],
+      "joins": [],
       "conditions": [],
       "aggregations": [
-        {
-          "type": "COUNT",
-          "column": "concert.concert_ID",
-          "alias": "Number_of_Concerts"
-        }
-      ],
-      "group_by": [
-        "singer.Name"
+        "MAX(stadium.Capacity)",
+        "AVG(stadium.Average)"
       ],
       "order_by": null,
       "limit": null
@@ -239,11 +181,679 @@
     },
     "reasoner_decision": {
       "verdict": "proceed",
-      "thoughts": "The plan correctly joins the necessary tables and counts the number of concerts for each singer. The skeptic feedback also doesn't indicate any issues.",
+      "thoughts": "The query plan correctly identifies the stadium table as the sole source for both maximum capacity and average attendance. The aggregations MAX(Capacity) and AVG(Average) are appropriate for the question, and no joins or filters are needed. The skeptic has confirmed no issues.",
       "adjustments": []
     },
-    "final_sql": "SELECT s.Name, COUNT(c.concert_ID) as Number_of_Concerts\nFROM singer s\nJOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert c ON sic.concert_ID = c.concert_ID\nGROUP BY s.Name;",
+    "final_sql": "SELECT MAX(Capacity), AVG(Average) FROM stadium;",
     "exec_match": false,
     "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:31.975488",
+    "example_index": 26,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "Which year has most number of concerts?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 1.0203617999795824,
+      "skeptic_sec": 0.41837020008824766,
+      "reasoner_decision_sec": 0.8832908000331372,
+      "sqlgen_sec": 0.25346069992519915,
+      "execution_sec": 0.0023925998248159885,
+      "total_sec": 2.585731199942529
+    },
+    "plan": {
+      "tables": [
+        "concert"
+      ],
+      "columns": [
+        "concert.Year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(concert.concert_ID) GROUP BY concert.Year"
+      ],
+      "order_by": "COUNT(concert.concert_ID) DESC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The plan correctly identifies the 'concert' table as the sole source for concert data, groups by 'Year' to count the number of concerts per year, orders by count in descending order, and limits to the top result. No joins or additional conditions are needed since the question only asks for the year with the most concerts. The schema confirms 'Year' is in the concert table and is text-type, which is acceptable for grouping. Skeptic feedback confirms no issues.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:34.764218",
+    "example_index": 27,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "What is the year that had the most concerts?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.6020662998780608,
+      "skeptic_sec": 0.4246659998316318,
+      "reasoner_decision_sec": 0.847970400005579,
+      "sqlgen_sec": 0.3987612999044359,
+      "execution_sec": 0.0019906999077647924,
+      "total_sec": 2.280520999804139
+    },
+    "plan": {
+      "tables": [
+        "concert"
+      ],
+      "columns": [
+        "concert.Year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(concert.concert_ID) GROUP BY concert.Year"
+      ],
+      "order_by": "COUNT(concert.concert_ID) DESC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The plan correctly identifies the 'concert' table as the sole source for concert data, groups by Year to count the number of concerts per year, orders by count in descending order, and limits to the top result. No joins or additional conditions are needed since the question only asks for the year with the most concerts. The schema confirms Year is in the concert table and is text-type, which is acceptable for grouping. Skeptic feedback confirms no issues.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Year FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:37.059696",
+    "example_index": 28,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "Show the stadium names without any concert.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.5134328999556601,
+      "skeptic_sec": 2.3327886001206934,
+      "reasoner_decision_sec": 1.4850009998772293,
+      "sqlgen_sec": 0.3408294999971986,
+      "execution_sec": 0.003088500117883086,
+      "total_sec": 4.681512800278142
+    },
+    "plan": {
+      "tables": [
+        "stadium",
+        "concert"
+      ],
+      "columns": [
+        "stadium.Name"
+      ],
+      "joins": [
+        "stadium INNER JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID"
+      ],
+      "conditions": [
+        "concert.Stadium_ID IS NULL"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The filtering condition 'concert.Stadium_ID IS NULL' is logically incompatible with the INNER JOIN, which excludes all rows where concert.Stadium_ID is NULL. This makes the condition impossible to satisfy and will return zero results.",
+        "The query intent is to find stadiums without any concert, which requires identifying stadiums that do not appear in the concert table — this necessitates a LEFT JOIN (or NOT EXISTS / EXCEPT), not an INNER JOIN.",
+        "The INNER JOIN combined with IS NULL condition violates the semantic intent of the natural language question, which demands exclusion (stadiums without concerts), not intersection.",
+        "The join path incorrectly uses INNER JOIN when the question explicitly requires an anti-join pattern to exclude stadiums with concerts.",
+        "The plan references a non-existent logical outcome: an INNER JOIN cannot produce NULL values in the joined column, so the WHERE clause is semantically invalid."
+      ],
+      "recommendations": [
+        "Replace INNER JOIN with LEFT JOIN between stadium and concert on stadium.Stadium_ID = concert.Stadium_ID.",
+        "Change the condition from 'concert.Stadium_ID IS NULL' to correctly identify stadiums with no matching concert (this will work with LEFT JOIN).",
+        "Alternatively, use NOT EXISTS or EXCEPT for clearer semantic intent: e.g., SELECT Name FROM stadium EXCEPT SELECT s.Name FROM stadium s JOIN concert c ON s.Stadium_ID = c.Stadium_ID.",
+        "Ensure the join condition uses the correct foreign key relationship: concert.Stadium_ID references stadium.Stadium_ID (both are numeric, but concert.Stadium_ID is stored as TEXT — this may cause type mismatch; consider casting or verifying schema consistency)."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan incorrectly uses an INNER JOIN with a NULL condition, which is logically impossible and contradicts the intent of finding stadiums without concerts. The skeptic correctly identifies that an anti-join pattern (LEFT JOIN with NULL check, NOT EXISTS, or EXCEPT) is required. The join condition also has a potential type mismatch (numeric vs. text), which must be addressed for correctness.",
+      "adjustments": [
+        "Replace INNER JOIN with LEFT JOIN between stadium and concert on stadium.Stadium_ID = concert.Stadium_ID.",
+        "Change the condition to 'concert.Stadium_ID IS NULL' to identify stadiums with no matching concert (valid only after switching to LEFT JOIN).",
+        "Alternatively, implement a NOT EXISTS subquery: SELECT Name FROM stadium WHERE NOT EXISTS (SELECT 1 FROM concert WHERE concert.Stadium_ID = stadium.Stadium_ID).",
+        "Verify and resolve the data type mismatch: concert.Stadium_ID is TEXT while stadium.Stadium_ID is NUMBER; cast one to match the other (e.g., CAST(stadium.Stadium_ID AS TEXT) or vice versa) to ensure proper join behavior."
+      ]
+    },
+    "final_sql": "SELECT Name FROM stadium WHERE NOT EXISTS (SELECT 1 FROM concert WHERE CAST(concert.Stadium_ID AS TEXT) = CAST(stadium.Stadium_ID AS TEXT));",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:41.759911",
+    "example_index": 29,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "What are the names of the stadiums without any concerts?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.6443759999237955,
+      "skeptic_sec": 0.4281494999304414,
+      "reasoner_decision_sec": 0.6771658000070602,
+      "sqlgen_sec": 5.983420399948955,
+      "execution_sec": 0.0020169999916106462,
+      "total_sec": 7.740556899923831
+    },
+    "plan": {
+      "tables": [
+        "stadium",
+        "concert"
+      ],
+      "columns": [
+        "stadium.Name"
+      ],
+      "joins": [
+        "stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID"
+      ],
+      "conditions": [
+        "concert.Stadium_ID IS NULL"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies stadiums without concerts using a LEFT JOIN and filtering for NULL concert.Stadium_ID. The schema and relationships are properly utilized, and no issues or recommendations from the skeptic require adjustment.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Name FROM stadium LEFT JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID WHERE concert.Stadium_ID IS NULL;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:49.524414",
+    "example_index": 30,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "Show countries where a singer above age 40 and a singer below 30 are from.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.5666379001922905,
+      "skeptic_sec": 2.368937100050971,
+      "reasoner_decision_sec": 1.5211714999750257,
+      "sqlgen_sec": 0.5587812000885606,
+      "execution_sec": 0.003546799998730421,
+      "total_sec": 5.025425400119275
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Country"
+      ],
+      "joins": [],
+      "conditions": [
+        "singer.Age > 40",
+        "singer.Age < 30"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The filtering condition 'singer.Age > 40 AND singer.Age < 30' is logically impossible — no age can be both greater than 40 and less than 30 simultaneously. This renders the query always returning empty results, contradicting the intent to find countries with at least one singer above 40 and one below 30.",
+        "The query fails to use set-based logic (e.g., INTERSECT or two subqueries) to identify countries that have at least one singer above 40 AND at least one singer below 30. Instead, it incorrectly applies both conditions on the same row.",
+        "The plan does not use any join or subquery to compare two distinct sets of singers (age > 40 and age < 30), which is required to satisfy the semantic intent of the question.",
+        "The plan references only the 'singer' table, but the question requires identifying countries that satisfy two separate conditions across different singer records — implying the need for self-joining or set operations on the same table."
+      ],
+      "recommendations": [
+        "Replace the impossible AND condition with a set-based approach: use two subqueries — one for countries with singers above 40, another for countries with singers below 30 — and intersect the results.",
+        "Alternatively, use a GROUP BY on Country with conditional aggregation (e.g., MAX(CASE WHEN Age > 40 THEN 1 END) = 1 AND MAX(CASE WHEN Age < 30 THEN 1 END) = 1) to ensure both conditions are met across different rows in the same country.",
+        "Do not filter both conditions on the same row; the intent is to find countries that have at least one singer in each age group, not a single singer meeting both impossible criteria."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The current plan incorrectly applies a logically impossible condition (Age > 40 AND Age < 30) on a single row, which cannot be satisfied. The intent is to find countries that have at least one singer above 40 and at least one singer below 30 — requiring a set-based approach. The plan must be revised to use either INTERSECT of two subqueries or conditional aggregation with GROUP BY to capture the presence of both age groups per country.",
+      "adjustments": [
+        "Remove the impossible condition 'singer.Age > 40 AND singer.Age < 30'.",
+        "Use a GROUP BY on singer.Country to group singers by country.",
+        "Apply conditional aggregation: include a condition that checks if MAX(CASE WHEN Age > 40 THEN 1 ELSE 0 END) = 1 AND MAX(CASE WHEN Age < 30 THEN 1 ELSE 0 END) = 1 to ensure both age groups exist in the same country.",
+        "Alternatively, use two subqueries: one selecting countries with singers older than 40, another with singers younger than 30, and use INTERSECT to find common countries."
+      ]
+    },
+    "final_sql": "SELECT Country\nFROM singer\nGROUP BY Country\nHAVING MAX(CASE WHEN Age > 40 THEN 1 ELSE 0 END) = 1 \n   AND MAX(CASE WHEN Age < 30 THEN 1 ELSE 0 END) = 1;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:54.678412",
+    "example_index": 31,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "Show names for all stadiums except for stadiums having a concert in year 2014.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.6342505000066012,
+      "skeptic_sec": 2.659781200112775,
+      "reasoner_decision_sec": 1.4263630001805723,
+      "sqlgen_sec": 0.34992339997552335,
+      "execution_sec": 0.0022054999135434628,
+      "total_sec": 5.07953629991971
+    },
+    "plan": {
+      "tables": [
+        "stadium",
+        "concert"
+      ],
+      "columns": [
+        "stadium.Name"
+      ],
+      "joins": [
+        "stadium INNER JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID"
+      ],
+      "conditions": [
+        "concert.Year != '2014'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The filtering condition 'concert.Year != '2014'' incorrectly excludes only rows where the year is not 2014, but the question asks for stadiums that do NOT have ANY concert in 2014 — this logic fails to exclude stadiums that have both 2014 and non-2014 concerts.",
+        "The plan uses an INNER JOIN, which only returns stadiums with concerts, but the question requires stadiums that have NO concert in 2014 — this requires excluding stadiums that appear in 2014 concerts, which an INNER JOIN cannot achieve.",
+        "The semantic intent of 'except for stadiums having a concert in year 2014' requires set difference (stadiums minus stadiums with 2014 concerts), but the plan uses a simple inequality filter instead of a proper anti-join or EXCEPT operation.",
+        "The column 'concert.Year' is stored as TEXT, and the literal '2014' is correctly quoted, so type compatibility is not the issue — but the logic is semantically wrong.",
+        "The plan does not account for stadiums that have no concerts at all — these should be included in the result, but INNER JOIN excludes them entirely."
+      ],
+      "recommendations": [
+        "Replace the INNER JOIN with a LEFT JOIN from stadium to concert, filtering for concert.Year = '2014' and then using WHERE concert.concert_ID IS NULL to find stadiums without any 2014 concert.",
+        "Alternatively, use a NOT EXISTS subquery or EXCEPT operator to express the set difference: SELECT Name FROM stadium EXCEPT SELECT s.Name FROM stadium s JOIN concert c ON s.Stadium_ID = c.Stadium_ID WHERE c.Year = '2014'.",
+        "Ensure the final result includes stadiums with no concerts at all, as they satisfy the condition of 'not having a concert in 2014'."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The current plan incorrectly uses an INNER JOIN with a simple inequality filter, which fails to capture the intended set difference. It excludes only rows where the year is not 2014, but the question requires excluding any stadium that has even one concert in 2014 — including those with mixed-year concerts. Additionally, INNER JOIN omits stadiums with no concerts at all, which should be included. The logic must be revised to use an anti-join pattern or set difference to correctly identify stadiums without any 2014 concert.",
+      "adjustments": [
+        "Replace INNER JOIN with LEFT JOIN from stadium to concert on stadium.Stadium_ID = concert.Stadium_ID",
+        "Filter for concerts in 2014 using WHERE concert.Year = '2014' and then apply WHERE concert.concert_ID IS NULL to find stadiums with no 2014 concert",
+        "Ensure the SELECT clause only retrieves stadium.Name as required",
+        "Do not use inequality filtering on Year; instead, use anti-join logic to exclude stadiums with any 2014 concert"
+      ]
+    },
+    "final_sql": "SELECT DISTINCT s.Name\nFROM stadium s\nLEFT JOIN concert c ON s.Stadium_ID = c.Stadium_ID AND c.Year = '2014'\nWHERE c.concert_ID IS NULL;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T08:58:59.777252",
+    "example_index": 32,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 7 --start 26 --skeptic_temperature 0.2",
+    "question": "What are the names of all stadiums that did not have a concert in 2014?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T08:58:31.939507",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 26,
+      "max_examples": 7,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.4981603000778705,
+      "skeptic_sec": 2.659638599958271,
+      "reasoner_decision_sec": 1.54730169987306,
+      "sqlgen_sec": 0.354946699924767,
+      "execution_sec": 0.003443799912929535,
+      "total_sec": 5.070968799991533
+    },
+    "plan": {
+      "tables": [
+        "stadium",
+        "concert"
+      ],
+      "columns": [
+        "stadium.Name"
+      ],
+      "joins": [
+        "stadium INNER JOIN concert ON stadium.Stadium_ID = concert.Stadium_ID"
+      ],
+      "conditions": [
+        "concert.Year != '2014'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The filtering condition 'concert.Year != '2014'' incorrectly excludes all concerts not in 2014, but the question asks for stadiums that did NOT have ANY concert in 2014. This logic fails to identify stadiums with no 2014 concerts — it only excludes rows where the concert year is not 2014, leaving stadiums with 2014 concerts still included if they also had non-2014 concerts.",
+        "The plan uses an INNER JOIN, which only returns stadiums that have at least one concert. This omits stadiums with zero concerts in 2014, which are the exact ones the question seeks.",
+        "The semantic intent of 'did not have a concert in 2014' requires set exclusion (stadiums without 2014 concerts), which necessitates a LEFT JOIN with IS NULL or NOT EXISTS — not a simple inequality filter.",
+        "The column 'concert.Year' is stored as TEXT, and the literal '2014' is correctly quoted, so the data type compatibility is acceptable — but the logic is semantically wrong regardless.",
+        "The plan does not account for stadiums that have no concerts at all — they should be included in the result if they never hosted a concert in 2014, but INNER JOIN excludes them entirely."
+      ],
+      "recommendations": [
+        "Replace INNER JOIN with LEFT JOIN from stadium to concert to include all stadiums, even those without concerts.",
+        "Filter for concerts in 2014 using WHERE concert.Year = '2014' and then use IS NULL on concert.Stadium_ID to find stadiums with no 2014 concert.",
+        "Alternatively, use NOT EXISTS or NOT IN with a subquery selecting Stadium_ID from concert where Year = '2014'.",
+        "Ensure the final projection only includes stadium.Name, as requested, and avoid any unnecessary columns or conditions."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The current plan incorrectly uses an INNER JOIN and a negated year filter, which fails to identify stadiums with no concerts in 2014. It excludes stadiums without any concerts entirely and misinterprets the logical requirement of set exclusion. The skeptic correctly identifies that we need to find stadiums that either have no concerts at all or have concerts only in years other than 2014 — which requires a LEFT JOIN and checking for NULL concert records in 2014, or a NOT EXISTS subquery.",
+      "adjustments": [
+        "Replace INNER JOIN with LEFT JOIN from stadium to concert on stadium.Stadium_ID = concert.Stadium_ID.",
+        "Add a condition to filter for concerts in 2014: WHERE concert.Year = '2014'.",
+        "Apply IS NULL on concert.Stadium_ID to select only stadiums that have no concert in 2014.",
+        "Ensure the SELECT clause only includes stadium.Name as requested.",
+        "Alternatively, implement a NOT EXISTS subquery that selects Stadium_ID from concert where Year = '2014' and excludes those from the stadium table."
+      ]
+    },
+    "final_sql": "SELECT DISTINCT s.Name\nFROM stadium s\nLEFT JOIN concert c ON s.Stadium_ID = c.Stadium_ID AND c.Year = '2014'\nWHERE c.Stadium_ID IS NULL;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T10:42:22.833638",
+    "example_index": 6,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 6 --skeptic_temperature 0.2",
+    "question": "Show the name and the release year of the song by the youngest singer.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T10:42:22.786367",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 6,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.625988399842754,
+      "skeptic_sec": 0.2876146000344306,
+      "reasoner_decision_sec": 0.5932088000699878,
+      "sqlgen_sec": 0.26676000002771616,
+      "execution_sec": 0.0025665999855846167,
+      "total_sec": 1.784379499964416
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Song_release_year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age ASC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The plan correctly identifies the singer table as the sole source for the required information (name and song release year of the youngest singer). The ORDER BY on Age ASC with LIMIT 1 will retrieve the youngest singer, and no joins or additional conditions are needed since all required data is in the singer table.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT Name, Song_release_year FROM singer ORDER BY Age ASC LIMIT 1;",
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2025-11-25T10:45:59.783464",
+    "example_index": 6,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 6 --skeptic_temperature 0.2",
+    "question": "Show the name and the release year of the song by the youngest singer.",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T10:45:59.746300",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 6,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.7199301000218838,
+      "skeptic_sec": 2.1255326999817044,
+      "reasoner_decision_sec": 0.9907417001668364,
+      "sqlgen_sec": 0.2503112000413239,
+      "execution_sec": 0.003489400027319789,
+      "total_sec": 4.0972782000899315
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Name",
+        "singer.Song_release_year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "singer.Age ASC",
+      "limit": 1
+    },
+    "skeptic_feedback": {
+      "verdict": "block",
+      "issues": [
+        "The query requests 'the name and the release year of the song', but the plan selects singer.Name and singer.Song_release_year — this incorrectly returns the singer's name, not the song's name.",
+        "The column 'singer.Name' refers to the singer's name, not the song's name; the correct column for the song's name is 'singer.Song_Name', which is not selected.",
+        "The semantic intent of the question is to retrieve song attributes (name and release year), but the plan projects singer-level attributes, misaligning the output with the requested entity.",
+        "The plan does not join with any table that could resolve the song name correctly — even though 'Song_Name' exists in the singer table, it is not selected, and the ambiguous 'Name' column is incorrectly chosen instead.",
+        "The column 'singer.Song_release_year' is correctly named but is being paired with the wrong entity (singer.Name instead of Song_Name), making the result semantically incorrect."
+      ],
+      "recommendations": [
+        "Select 'singer.Song_Name' instead of 'singer.Name' to return the name of the song, as requested.",
+        "Keep 'singer.Song_release_year' as it correctly represents the release year of the song.",
+        "Ensure the projection aligns with the NLQ's explicit request: 'name and release year of the song' — not the singer's name.",
+        "No joins are needed since all required data is in the singer table, but the correct columns must be selected."
+      ]
+    },
+    "reasoner_decision": {
+      "verdict": "revise",
+      "thoughts": "The plan incorrectly selects singer.Name instead of singer.Song_Name, which leads to returning the singer's name rather than the song's name as requested. Although singer.Song_release_year is correctly identified, pairing it with the wrong name field renders the result semantically incorrect. The fix requires only a column correction since all necessary data resides in the singer table.",
+      "adjustments": [
+        "Replace 'singer.Name' with 'singer.Song_Name' in the columns selection to return the name of the song as requested.",
+        "Keep 'singer.Song_release_year' unchanged as it correctly represents the song's release year.",
+        "Ensure the final projection is: ['singer.Song_Name', 'singer.Song_release_year'] to align with the question's intent."
+      ]
+    },
+    "final_sql": "SELECT Song_Name, Song_release_year FROM singer ORDER BY Age ASC LIMIT 1;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2025-11-25T11:09:29.871636",
+    "example_index": 11,
+    "command_line": "Exp/evaluation.py --dataset spider --max_examples 1 --start 11 --skeptic_temperature 0.2",
+    "question": "How many singers are from each country?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2025-11-25T11:09:29.829583",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 11,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 1200,
+      "skeptic_temperature": 0.2,
+      "reasoner_temperature": 0.0,
+      "log_path": "Exp\\logs\\eval_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch"
+    },
+    "latency": {
+      "planner_sec": 0.6489799998234957,
+      "skeptic_sec": 0.4313696001190692,
+      "reasoner_decision_sec": 0.633572000078857,
+      "sqlgen_sec": 0.2856785000767559,
+      "execution_sec": 0.0024962001480162144,
+      "total_sec": 2.009144000010565
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Country"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID) GROUP BY singer.Country"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "skeptic_feedback": {
+      "verdict": "ok",
+      "issues": [],
+      "recommendations": []
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The query plan correctly identifies the 'singer' table as the sole source for determining the number of singers per country. The aggregation COUNT(singer.Singer_ID) GROUP BY singer.Country accurately computes the count of singers grouped by their country. No joins or conditions are needed since all required information is contained within the singer table. The skeptic feedback confirms no issues.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT COUNT(Singer_ID) AS singer_count, Country\nFROM singer\nGROUP BY Country;",
+    "exec_match": true,
+    "accuracy_so_far": 1.0
   }
 ]
