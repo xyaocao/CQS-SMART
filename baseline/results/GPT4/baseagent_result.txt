@@ -1,0 +1,22 @@
+# Evaluate baseagent on slider_dev dataset using model "GPT-4"
+
+# Order sensitive check was used in the evaluation, log is in baseline/logs/gpt4/baseagent_gpt4_osrun_log.json
+Execution Accuracy (1034 ex): 0.7099  (correct: 734)
+
+# Result from the order-insensitive evaluation: Comparing results ignoring order (SQL doesn't guarantee order without ORDER BY)
+
+# 1st run 
+# log is in baseline/logs/gpt4/baseagent_gpt4_run1_log.json
+Execution Accuracy (1034 examples): 0.7331  (correct: 758)
+Average Latencies (s): generation=1.977, execution=0.029, total=2.016
+Total Latencies (s): generation=2044.358, execution=30.387, total=2084.375
+
+# 2nd run
+Execution Accuracy (1034 examples): 0.7292  (correct: 754)
+Average Latencies (s): generation=1.845, execution=0.029, total=1.883
+Total Latencies (s): generation=1907.824, execution=30.182, total=1947.503
+
+# 3nd run
+Execution Accuracy (1034 examples): 0.7292  (correct: 754)
+Average Latencies (s): generation=1.929, execution=0.029, total=1.968
+Total Latencies (s): generation=1994.833, execution=30.191, total=2034.458

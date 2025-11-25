@@ -1,0 +1,12 @@
+# Evaluate planner agent on slider_dev dataset using model "GPT-4"
+
+# Order sensitive check was used in the evaluation, log is in baseline/logs/gpt4/planner_gpt4_osrun_log.json
+Execution Accuracy (1034 ex): 0.5899  (correct: 610)
+
+# Result from the order-insensitive evaluation: Comparing results ignoring order (SQL doesn't guarantee order without ORDER BY)
+
+# 1st run 
+# log is in baseline/logs/gpt4/planner_gpt4_run1_log.json
+Execution Accuracy (1034 examples): 0.6083  (correct: 629)
+Average Latencies (s): generation=6.518, execution=0.037, total=6.564
+Total Latencies (s): generation=6739.229, execution=38.737, total=6787.381

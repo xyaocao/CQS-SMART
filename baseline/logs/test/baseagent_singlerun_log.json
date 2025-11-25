@@ -1,0 +1,22 @@
+[
+  {
+    "timestamp": "2025-11-18T10:12:49.234789",
+    "command_line": "baseline/run_baseagent.py What is the average, minimum, and maximum age of all singers from France? concert_singer --dataset spider --split dev --input_mode single",
+    "inputs": {
+      "question": "What is the average, minimum, and maximum age of all singers from France?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "tables_path": null,
+      "examples_path": null,
+      "temperature": 0.0,
+      "max_tokens": 1200,
+      "log_path": null,
+      "save_schema": false,
+      "input_mode": "single",
+      "start": 0,
+      "num_examples": null
+    },
+    "sql": "SELECT AVG(singer.Age) AS Average_Age, MIN(singer.Age) AS Minimum_Age, MAX(singer.Age) AS Maximum_Age\nFROM singer\nWHERE singer.Country = 'France';"
+  }
+]

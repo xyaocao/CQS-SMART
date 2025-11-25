@@ -1,0 +1,2228 @@
+[
+  {
+    "timestamp": "2025-11-21T19:02:04.949865",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many singers do we have?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 0,
+      "latency": {
+        "generation_sec": 1.3199745999881998,
+        "execution_sec": 0.0027315999614074826,
+        "total_sec": 1.3317365000257269
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) FROM singer",
+    "latency_sec": 1.3199745999881998
+  },
+  {
+    "timestamp": "2025-11-21T19:02:06.680330",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the total number of singers?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 1,
+      "latency": {
+        "generation_sec": 1.519845600007102,
+        "execution_sec": 0.0020079000387340784,
+        "total_sec": 1.5296826000558212
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) AS Total_Singers\nFROM singer",
+    "latency_sec": 1.519845600007102
+  },
+  {
+    "timestamp": "2025-11-21T19:02:07.855166",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 2,
+      "latency": {
+        "generation_sec": 1.1570087000727654,
+        "execution_sec": 0.0030809000600129366,
+        "total_sec": 1.1679965000366792
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name, Country, Age \nFROM singer \nORDER BY Age DESC",
+    "latency_sec": 1.1570087000727654
+  },
+  {
+    "timestamp": "2025-11-21T19:02:08.888307",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names, countries, and ages for every singer in descending order of age?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 3,
+      "latency": {
+        "generation_sec": 1.0124000000068918,
+        "execution_sec": 0.0019244999857619405,
+        "total_sec": 1.0256883000256494
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name, Country, Age \nFROM singer \nORDER BY Age DESC",
+    "latency_sec": 1.0124000000068918
+  },
+  {
+    "timestamp": "2025-11-21T19:02:10.824813",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average, minimum, and maximum age of all singers from France?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 4,
+      "latency": {
+        "generation_sec": 1.824056199984625,
+        "execution_sec": 0.001987900002859533,
+        "total_sec": 1.9291747000534087
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT AVG(Age) AS Average_Age, MIN(Age) AS Minimum_Age, MAX(Age) AS Maximum_Age\nFROM singer\nWHERE Country = 'France'",
+    "latency_sec": 1.824056199984625
+  },
+  {
+    "timestamp": "2025-11-21T19:02:12.404961",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average, minimum, and maximum age for all French singers?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 5,
+      "latency": {
+        "generation_sec": 1.5617392000276595,
+        "execution_sec": 0.0020466999849304557,
+        "total_sec": 1.5717427999479696
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT AVG(Age) AS Average_Age, MIN(Age) AS Minimum_Age, MAX(Age) AS Maximum_Age\nFROM singer\nWHERE Country = 'France'",
+    "latency_sec": 1.5617392000276595
+  },
+  {
+    "timestamp": "2025-11-21T19:02:13.638221",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show the name and the release year of the song by the youngest singer.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 6,
+      "latency": {
+        "generation_sec": 1.2157799999695271,
+        "execution_sec": 0.0021752999164164066,
+        "total_sec": 1.2255237000063062
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Name, Song_release_year \nFROM singer \nWHERE Age = (SELECT MIN(Age) FROM singer)",
+    "latency_sec": 1.2157799999695271
+  },
+  {
+    "timestamp": "2025-11-21T19:02:14.938900",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names and release years for all the songs of the youngest singer?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 7,
+      "latency": {
+        "generation_sec": 1.281948999967426,
+        "execution_sec": 0.0027523000026121736,
+        "total_sec": 1.292256799992174
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Song_Name, Song_release_year\nFROM singer\nWHERE Age = (SELECT MIN(Age) FROM singer)",
+    "latency_sec": 1.281948999967426
+  },
+  {
+    "timestamp": "2025-11-21T19:02:16.164719",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are all distinct countries where singers above age 20 are from?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 8,
+      "latency": {
+        "generation_sec": 1.2064751000143588,
+        "execution_sec": 0.0030231999699026346,
+        "total_sec": 1.2170804999768734
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT Country \nFROM singer \nWHERE Age > 20",
+    "latency_sec": 1.2064751000143588
+  },
+  {
+    "timestamp": "2025-11-21T19:02:19.042185",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are  the different countries with singers above age 20?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 9,
+      "latency": {
+        "generation_sec": 2.857878999901004,
+        "execution_sec": 0.0028837000718340278,
+        "total_sec": 2.8683801000006497
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT Country \nFROM singer \nWHERE Age > 20",
+    "latency_sec": 2.857878999901004
+  },
+  {
+    "timestamp": "2025-11-21T19:02:20.173127",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show all countries and the number of singers in each country.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 10,
+      "latency": {
+        "generation_sec": 1.1108991999644786,
+        "execution_sec": 0.002020500018261373,
+        "total_sec": 1.1216794999781996
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Country, COUNT(*) as Number_of_Singers\nFROM singer\nGROUP BY Country",
+    "latency_sec": 1.1108991999644786
+  },
+  {
+    "timestamp": "2025-11-21T19:02:22.401427",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many singers are from each country?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 11,
+      "latency": {
+        "generation_sec": 2.2089133000699803,
+        "execution_sec": 0.001964599941857159,
+        "total_sec": 2.2187869999324903
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Country, COUNT(*) as Number_of_Singers\nFROM singer\nGROUP BY Country",
+    "latency_sec": 2.2089133000699803
+  },
+  {
+    "timestamp": "2025-11-21T19:02:24.143819",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "List all song names by singers above the average age.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 12,
+      "latency": {
+        "generation_sec": 1.7237890999531373,
+        "execution_sec": 0.002112700021825731,
+        "total_sec": 1.7335661000106484
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Song_Name\nFROM singer s\nWHERE s.Age > (SELECT AVG(Age) FROM singer)",
+    "latency_sec": 1.7237890999531373
+  },
+  {
+    "timestamp": "2025-11-21T19:02:25.431989",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are all the song names by singers who are older than average?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 13,
+      "latency": {
+        "generation_sec": 1.2683743999805301,
+        "execution_sec": 0.0025264000287279487,
+        "total_sec": 1.2788247000426054
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Song_Name\nFROM singer s\nWHERE s.Age > (SELECT AVG(Age) FROM singer)",
+    "latency_sec": 1.2683743999805301
+  },
+  {
+    "timestamp": "2025-11-21T19:02:26.675263",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show location and name for all stadiums with a capacity between 5000 and 10000.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 14,
+      "latency": {
+        "generation_sec": 1.222166100051254,
+        "execution_sec": 0.002718999981880188,
+        "total_sec": 1.2332312000216916
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Location, Name \nFROM stadium \nWHERE Capacity BETWEEN 5000 AND 10000",
+    "latency_sec": 1.222166100051254
+  },
+  {
+    "timestamp": "2025-11-21T19:02:28.614662",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the locations and names of all stations with capacity between 5000 and 10000?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 15,
+      "latency": {
+        "generation_sec": 1.9179534999420866,
+        "execution_sec": 0.0019661999540403485,
+        "total_sec": 1.9290791999083012
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name, Location \nFROM stadium \nWHERE Capacity BETWEEN 5000 AND 10000",
+    "latency_sec": 1.9179534999420866
+  },
+  {
+    "timestamp": "2025-11-21T19:02:29.776812",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the maximum capacity and the average of all stadiums ?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 16,
+      "latency": {
+        "generation_sec": 1.143246499937959,
+        "execution_sec": 0.0019130000146105886,
+        "total_sec": 1.1532391000073403
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT MAX(Capacity) AS Maximum_Capacity, AVG(Capacity) AS Average_Capacity\nFROM stadium",
+    "latency_sec": 1.143246499937959
+  },
+  {
+    "timestamp": "2025-11-21T19:02:31.359427",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average and maximum capacities for all stadiums ?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 17,
+      "latency": {
+        "generation_sec": 1.562802299973555,
+        "execution_sec": 0.0020121000707149506,
+        "total_sec": 1.5724746000487357
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT AVG(Capacity) AS Average_Capacity, MAX(Capacity) AS Maximum_Capacity\nFROM stadium",
+    "latency_sec": 1.562802299973555
+  },
+  {
+    "timestamp": "2025-11-21T19:02:32.525019",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the name and capacity for the stadium with highest average attendance?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 18,
+      "latency": {
+        "generation_sec": 1.1433514999225736,
+        "execution_sec": 0.00199409993365407,
+        "total_sec": 1.155411799903959
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name, Capacity \nFROM stadium \nWHERE Average = (SELECT MAX(Average) FROM stadium)",
+    "latency_sec": 1.1433514999225736
+  },
+  {
+    "timestamp": "2025-11-21T19:02:34.579045",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the name and capacity for the stadium with the highest average attendance?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 19,
+      "latency": {
+        "generation_sec": 2.033027600031346,
+        "execution_sec": 0.002156200003810227,
+        "total_sec": 2.043469100026414
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name, Capacity \nFROM stadium \nWHERE Average = (SELECT MAX(Average) FROM stadium)",
+    "latency_sec": 2.033027600031346
+  },
+  {
+    "timestamp": "2025-11-21T19:02:35.941349",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many concerts are there in year 2014 or 2015?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 20,
+      "latency": {
+        "generation_sec": 1.342094299965538,
+        "execution_sec": 0.0019577000057324767,
+        "total_sec": 1.3520439999410883
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM concert \nWHERE Year IN ('2014', '2015')",
+    "latency_sec": 1.342094299965538
+  },
+  {
+    "timestamp": "2025-11-21T19:02:37.102393",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many concerts occurred in 2014 or 2015?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 21,
+      "latency": {
+        "generation_sec": 1.140323800034821,
+        "execution_sec": 0.0025192999746650457,
+        "total_sec": 1.1507529000518844
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM concert \nWHERE Year IN ('2014', '2015')",
+    "latency_sec": 1.140323800034821
+  },
+  {
+    "timestamp": "2025-11-21T19:02:41.319936",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show the stadium name and the number of concerts in each stadium.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 22,
+      "latency": {
+        "generation_sec": 4.196186500019394,
+        "execution_sec": 0.002081400016322732,
+        "total_sec": 4.206090399995446
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, COUNT(c.concert_ID) as Number_of_Concerts\nFROM stadium s\nJOIN concert c ON s.Stadium_ID = c.Stadium_ID\nGROUP BY s.Name",
+    "latency_sec": 4.196186500019394
+  },
+  {
+    "timestamp": "2025-11-21T19:02:43.632758",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "For each stadium, how many concerts play there?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 23,
+      "latency": {
+        "generation_sec": 2.291184699977748,
+        "execution_sec": 0.0020576000679284334,
+        "total_sec": 2.3021366999018937
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT s.Stadium_ID, s.Name, COUNT(c.concert_ID) as Number_of_Concerts\nFROM stadium s\nLEFT JOIN concert c ON s.Stadium_ID = c.Stadium_ID\nGROUP BY s.Stadium_ID, s.Name",
+    "latency_sec": 2.291184699977748
+  },
+  {
+    "timestamp": "2025-11-21T19:02:46.194069",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show the stadium name and capacity with most number of concerts in year 2014 or after.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 24,
+      "latency": {
+        "generation_sec": 2.5403798000188544,
+        "execution_sec": 0.0021166999358683825,
+        "total_sec": 2.5501475000055507
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, s.Capacity\nFROM stadium s\nJOIN concert c ON s.Stadium_ID = c.Stadium_ID\nWHERE c.Year >= '2014'\nGROUP BY s.Name, s.Capacity\nORDER BY COUNT(*) DESC\nLIMIT 1",
+    "latency_sec": 2.5403798000188544
+  },
+  {
+    "timestamp": "2025-11-21T19:02:48.512127",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the name and capacity of the stadium with the most concerts after 2013 ?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 25,
+      "latency": {
+        "generation_sec": 2.297410300001502,
+        "execution_sec": 0.002098300028592348,
+        "total_sec": 2.307488300022669
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, s.Capacity\nFROM stadium s\nJOIN concert c ON s.Stadium_ID = c.Stadium_ID\nWHERE c.Year > '2013'\nGROUP BY s.Stadium_ID, s.Name, s.Capacity\nORDER BY COUNT(*) DESC\nLIMIT 1",
+    "latency_sec": 2.297410300001502
+  },
+  {
+    "timestamp": "2025-11-21T19:02:49.849013",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Which year has most number of concerts?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 26,
+      "latency": {
+        "generation_sec": 1.3143188999965787,
+        "execution_sec": 0.002055400051176548,
+        "total_sec": 1.3239722000434995
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Year, COUNT(*) as Concert_Count\nFROM concert\nGROUP BY Year\nORDER BY Concert_Count DESC\nLIMIT 1",
+    "latency_sec": 1.3143188999965787
+  },
+  {
+    "timestamp": "2025-11-21T19:02:51.213918",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the year that had the most concerts?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 27,
+      "latency": {
+        "generation_sec": 1.3441949000116438,
+        "execution_sec": 0.0020227000350132585,
+        "total_sec": 1.3538909000344574
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Year, COUNT(*) as Concert_Count\nFROM concert\nGROUP BY Year\nORDER BY Concert_Count DESC\nLIMIT 1",
+    "latency_sec": 1.3441949000116438
+  },
+  {
+    "timestamp": "2025-11-21T19:02:52.330877",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show the stadium names without any concert.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 28,
+      "latency": {
+        "generation_sec": 1.0949037000536919,
+        "execution_sec": 0.0026320000179111958,
+        "total_sec": 1.105375700048171
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name \nFROM stadium \nWHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert)",
+    "latency_sec": 1.0949037000536919
+  },
+  {
+    "timestamp": "2025-11-21T19:02:53.479043",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names of the stadiums without any concerts?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 29,
+      "latency": {
+        "generation_sec": 1.1264490999747068,
+        "execution_sec": 0.0021014000521972775,
+        "total_sec": 1.1364557000342757
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name \nFROM stadium \nWHERE Stadium_ID NOT IN (SELECT DISTINCT Stadium_ID FROM concert)",
+    "latency_sec": 1.1264490999747068
+  },
+  {
+    "timestamp": "2025-11-21T19:02:55.189890",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show countries where a singer above age 40 and a singer below 30 are from.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 30,
+      "latency": {
+        "generation_sec": 1.6879533999599516,
+        "execution_sec": 0.0025283999275416136,
+        "total_sec": 1.6987240999005735
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT s1.Country\nFROM singer s1\nJOIN singer s2 ON s1.Country = s2.Country\nWHERE s1.Age > 40 AND s2.Age < 30",
+    "latency_sec": 1.6879533999599516
+  },
+  {
+    "timestamp": "2025-11-21T19:02:56.946696",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show names for all stadiums except for stadiums having a concert in year 2014.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 31,
+      "latency": {
+        "generation_sec": 1.7339708999497816,
+        "execution_sec": 0.003043100005015731,
+        "total_sec": 1.7447908000322059
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name \nFROM stadium s \nWHERE s.Stadium_ID NOT IN (\n    SELECT c.Stadium_ID \n    FROM concert c \n    WHERE c.Year = '2014'\n)",
+    "latency_sec": 1.7339708999497816
+  },
+  {
+    "timestamp": "2025-11-21T19:02:58.274827",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names of all stadiums that did not have a concert in 2014?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 32,
+      "latency": {
+        "generation_sec": 1.3048539999872446,
+        "execution_sec": 0.0021090999944135547,
+        "total_sec": 1.3144831999670714
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Name \nFROM stadium \nWHERE Stadium_ID NOT IN (\n    SELECT Stadium_ID \n    FROM concert \n    WHERE Year = '2014'\n)",
+    "latency_sec": 1.3048539999872446
+  },
+  {
+    "timestamp": "2025-11-21T19:03:00.297240",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Show the name and theme for all concerts and the number of singers in each concert.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 33,
+      "latency": {
+        "generation_sec": 1.9986558000091463,
+        "execution_sec": 0.0027297999477013946,
+        "total_sec": 2.0097607999341562
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT c.concert_Name, c.Theme, COUNT(sic.Singer_ID) as Number_of_Singers\nFROM concert c\nJOIN singer_in_concert sic ON c.concert_ID = sic.concert_ID\nGROUP BY c.concert_Name, c.Theme",
+    "latency_sec": 1.9986558000091463
+  },
+  {
+    "timestamp": "2025-11-21T19:03:03.810577",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names , themes , and number of singers for every concert ?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 34,
+      "latency": {
+        "generation_sec": 3.489896100014448,
+        "execution_sec": 0.0021727000130340457,
+        "total_sec": 3.4998768999939784
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT c.concert_Name, c.Theme, COUNT(sic.Singer_ID) as Number_of_Singers\nFROM concert c\nJOIN singer_in_concert sic ON c.concert_ID = sic.concert_ID\nGROUP BY c.concert_Name, c.Theme",
+    "latency_sec": 3.489896100014448
+  },
+  {
+    "timestamp": "2025-11-21T19:03:09.212483",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "List singer names and number of concerts for each singer.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 35,
+      "latency": {
+        "generation_sec": 5.378714599995874,
+        "execution_sec": 0.0021615000441670418,
+        "total_sec": 5.388517400017008
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, COUNT(c.concert_ID) as Number_of_Concerts\nFROM singer s\nJOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert c ON sic.concert_ID = c.concert_ID\nGROUP BY s.Name",
+    "latency_sec": 5.378714599995874
+  },
+  {
+    "timestamp": "2025-11-21T19:03:12.940079",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names of the singers and number of concerts for each person?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 36,
+      "latency": {
+        "generation_sec": 3.7048088000155985,
+        "execution_sec": 0.002254400053061545,
+        "total_sec": 3.7146766999503598
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, COUNT(c.concert_ID) as Number_of_Concerts\nFROM singer s\nJOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert c ON sic.concert_ID = c.concert_ID\nGROUP BY s.Name",
+    "latency_sec": 3.7048088000155985
+  },
+  {
+    "timestamp": "2025-11-21T19:03:15.315678",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "List all singer names in concerts in year 2014.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 37,
+      "latency": {
+        "generation_sec": 2.3521294000092894,
+        "execution_sec": 0.002202300005592406,
+        "total_sec": 2.3624450999777764
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name\nFROM singer s\nJOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert c ON sic.concert_ID = c.concert_ID\nWHERE c.Year = '2014'",
+    "latency_sec": 2.3521294000092894
+  },
+  {
+    "timestamp": "2025-11-21T19:03:19.068150",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names of the singers who performed in a concert in 2014?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 38,
+      "latency": {
+        "generation_sec": 3.7289834999246523,
+        "execution_sec": 0.0021132000256329775,
+        "total_sec": 3.7387212000321597
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name\nFROM singer s\nJOIN singer_in_concert sic ON s.Singer_ID = sic.Singer_ID\nJOIN concert c ON sic.concert_ID = c.concert_ID\nWHERE c.Year = '2014'",
+    "latency_sec": 3.7289834999246523
+  },
+  {
+    "timestamp": "2025-11-21T19:03:20.941001",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "what is the name and nation of the singer who have a song having 'Hey' in its name?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 39,
+      "latency": {
+        "generation_sec": 1.8487848000368103,
+        "execution_sec": 0.002753300010226667,
+        "total_sec": 1.8591667000437155
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT singer.Name, singer.Country\nFROM singer\nWHERE singer.Song_Name LIKE '%Hey%'",
+    "latency_sec": 1.8487848000368103
+  },
+  {
+    "timestamp": "2025-11-21T19:03:22.126205",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 40,
+      "latency": {
+        "generation_sec": 1.161653200048022,
+        "execution_sec": 0.0019720999989658594,
+        "total_sec": 1.171395399956964
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT singer.Name, singer.Country\nFROM singer\nWHERE singer.Song_Name LIKE '%Hey%'",
+    "latency_sec": 1.161653200048022
+  },
+  {
+    "timestamp": "2025-11-21T19:03:26.125612",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 41,
+      "latency": {
+        "generation_sec": 3.974193900008686,
+        "execution_sec": 0.003108999924734235,
+        "total_sec": 3.9854877999750897
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, s.Location\nFROM stadium s\nWHERE s.Stadium_ID IN (\n    SELECT c.Stadium_ID\n    FROM concert c\n    WHERE c.Year IN ('2014', '2015')\n    GROUP BY c.Stadium_ID\n    HAVING COUNT(DISTINCT c.Year) = 2\n)",
+    "latency_sec": 3.974193900008686
+  },
+  {
+    "timestamp": "2025-11-21T19:03:29.102137",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 42,
+      "latency": {
+        "generation_sec": 2.946211599977687,
+        "execution_sec": 0.002087599947117269,
+        "total_sec": 2.9601324999239296
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT s.Name, s.Location\nFROM stadium s\nWHERE s.Stadium_ID IN (\n    SELECT c.Stadium_ID\n    FROM concert c\n    WHERE c.Year = '2014'\n) AND s.Stadium_ID IN (\n    SELECT c.Stadium_ID\n    FROM concert c\n    WHERE c.Year = '2015'\n)",
+    "latency_sec": 2.946211599977687
+  },
+  {
+    "timestamp": "2025-11-21T19:03:30.504561",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the number of concerts happened in the stadium with the highest capacity .",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 43,
+      "latency": {
+        "generation_sec": 1.378929500002414,
+        "execution_sec": 0.00202069990336895,
+        "total_sec": 1.3884527999907732
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM concert \nWHERE Stadium_ID = (\n    SELECT Stadium_ID \n    FROM stadium \n    ORDER BY Capacity DESC \n    LIMIT 1\n)",
+    "latency_sec": 1.378929500002414
+  },
+  {
+    "timestamp": "2025-11-21T19:03:32.155299",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the number of concerts that occurred in the stadium with the largest capacity ?",
+      "db_id": "concert_singer",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 44,
+      "latency": {
+        "generation_sec": 1.626712099998258,
+        "execution_sec": 0.0020320999901741743,
+        "total_sec": 1.6364230000181124
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM concert \nWHERE Stadium_ID = (\n    SELECT Stadium_ID \n    FROM stadium \n    ORDER BY Capacity DESC \n    LIMIT 1\n)",
+    "latency_sec": 1.626712099998258
+  },
+  {
+    "timestamp": "2025-11-21T19:03:32.946443",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the number of pets whose weight is heavier than 10.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 45,
+      "latency": {
+        "generation_sec": 0.763919800054282,
+        "execution_sec": 0.00275129999499768,
+        "total_sec": 0.7757714999606833
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Pets \nWHERE weight > 10",
+    "latency_sec": 0.763919800054282
+  },
+  {
+    "timestamp": "2025-11-21T19:03:33.988060",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many pets have a greater weight than 10?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 46,
+      "latency": {
+        "generation_sec": 1.0136718000285327,
+        "execution_sec": 0.00191580003593117,
+        "total_sec": 1.0247130000498146
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Pets \nWHERE weight > 10",
+    "latency_sec": 1.0136718000285327
+  },
+  {
+    "timestamp": "2025-11-21T19:03:36.391354",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the weight of the youngest dog.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 47,
+      "latency": {
+        "generation_sec": 2.377789599937387,
+        "execution_sec": 0.0018836000235751271,
+        "total_sec": 2.3880488999420777
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT weight \nFROM Pets \nWHERE PetType = 'dog' AND pet_age = (SELECT MIN(pet_age) FROM Pets WHERE PetType = 'dog')",
+    "latency_sec": 2.377789599937387
+  },
+  {
+    "timestamp": "2025-11-21T19:03:38.115517",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How much does the youngest dog weigh?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 48,
+      "latency": {
+        "generation_sec": 1.699385500047356,
+        "execution_sec": 0.0018654000014066696,
+        "total_sec": 1.709181600017473
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT weight \nFROM Pets \nWHERE PetType = 'dog' AND pet_age = (SELECT MIN(pet_age) FROM Pets WHERE PetType = 'dog')",
+    "latency_sec": 1.699385500047356
+  },
+  {
+    "timestamp": "2025-11-21T19:03:39.038469",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the maximum weight for each type of pet. List the maximum weight and pet type.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 49,
+      "latency": {
+        "generation_sec": 0.8973740000510588,
+        "execution_sec": 0.0018850000342354178,
+        "total_sec": 0.9071648999815807
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT MAX(weight) AS MaxWeight, PetType\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 0.8973740000510588
+  },
+  {
+    "timestamp": "2025-11-21T19:03:40.695139",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "List the maximum weight and type for each type of pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 50,
+      "latency": {
+        "generation_sec": 1.6305576999438927,
+        "execution_sec": 0.001908999984152615,
+        "total_sec": 1.6413853999692947
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT PetType, MAX(weight) as MaxWeight\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 1.6305576999438927
+  },
+  {
+    "timestamp": "2025-11-21T19:03:44.730059",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find number of pets owned by students who are older than 20.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 51,
+      "latency": {
+        "generation_sec": 4.0092973000137135,
+        "execution_sec": 0.001966899959370494,
+        "total_sec": 4.0193867000052705
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Student s \nJOIN Has_Pet hp ON s.StuID = hp.StuID \nWHERE s.Age > 20",
+    "latency_sec": 4.0092973000137135
+  },
+  {
+    "timestamp": "2025-11-21T19:03:46.702265",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many pets are owned by students that have an age greater than 20?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 52,
+      "latency": {
+        "generation_sec": 1.9452733000507578,
+        "execution_sec": 0.002651499933563173,
+        "total_sec": 1.9567079999251291
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Student s \nJOIN Has_Pet hp ON s.StuID = hp.StuID \nWHERE s.Age > 20",
+    "latency_sec": 1.9452733000507578
+  },
+  {
+    "timestamp": "2025-11-21T19:03:53.287998",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the number of dog pets that are raised by female students (with sex F).",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 53,
+      "latency": {
+        "generation_sec": 6.5557700000936165,
+        "execution_sec": 0.002243699971586466,
+        "total_sec": 6.568128499900922
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Student s \nJOIN Has_Pet hp ON s.StuID = hp.StuID \nJOIN Pets p ON hp.PetID = p.PetID \nWHERE s.Sex = 'F' AND p.PetType = 'dog'",
+    "latency_sec": 6.5557700000936165
+  },
+  {
+    "timestamp": "2025-11-21T19:03:55.404166",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many dog pets are raised by female students?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 54,
+      "latency": {
+        "generation_sec": 2.0908194000367075,
+        "execution_sec": 0.001986999996006489,
+        "total_sec": 2.1005170999560505
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) \nFROM Student s \nJOIN Has_Pet hp ON s.StuID = hp.StuID \nJOIN Pets p ON hp.PetID = p.PetID \nWHERE s.Sex = 'Female' AND p.PetType = 'Dog'",
+    "latency_sec": 2.0908194000367075
+  },
+  {
+    "timestamp": "2025-11-21T19:03:56.263852",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the number of distinct type of pets.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 55,
+      "latency": {
+        "generation_sec": 0.8345870999619365,
+        "execution_sec": 0.0018506000051274896,
+        "total_sec": 0.8445707000792027
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(DISTINCT PetType) FROM Pets",
+    "latency_sec": 0.8345870999619365
+  },
+  {
+    "timestamp": "2025-11-21T19:03:57.033801",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many different types of pet are there?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 56,
+      "latency": {
+        "generation_sec": 0.743334099999629,
+        "execution_sec": 0.002106499974615872,
+        "total_sec": 0.7532271000090986
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(DISTINCT PetType) FROM Pets",
+    "latency_sec": 0.743334099999629
+  },
+  {
+    "timestamp": "2025-11-21T19:03:59.160797",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the first name of students who have cat or dog pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 57,
+      "latency": {
+        "generation_sec": 2.1007133000530303,
+        "execution_sec": 0.00205360003747046,
+        "total_sec": 2.1105217000003904
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Student.Fname\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType IN ('cat', 'dog')",
+    "latency_sec": 2.1007133000530303
+  },
+  {
+    "timestamp": "2025-11-21T19:04:03.403993",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the first names of every student who has a cat or dog as a pet?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 58,
+      "latency": {
+        "generation_sec": 4.213539300020784,
+        "execution_sec": 0.0020031000021845102,
+        "total_sec": 4.2237289000768214
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Fname \nFROM Student \nWHERE StuID IN (\n    SELECT StuID \n    FROM Has_Pet \n    WHERE PetID IN (\n        SELECT PetID \n        FROM Pets \n        WHERE PetType IN ('cat', 'dog')\n    )\n)",
+    "latency_sec": 4.213539300020784
+  },
+  {
+    "timestamp": "2025-11-21T19:04:07.422349",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the first name of students who have both cat and dog pets .",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 59,
+      "latency": {
+        "generation_sec": 3.991556099965237,
+        "execution_sec": 0.002499900059774518,
+        "total_sec": 4.001529999892227
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT S.Fname\nFROM Student S\nWHERE S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'cat'\n) AND S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'dog'\n)",
+    "latency_sec": 3.991556099965237
+  },
+  {
+    "timestamp": "2025-11-21T19:04:10.959104",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the students' first names who have both cats and dogs as pets?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 60,
+      "latency": {
+        "generation_sec": 3.5073775000637397,
+        "execution_sec": 0.0020170999923720956,
+        "total_sec": 3.5177152999676764
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT S.Fname\nFROM Student S\nWHERE S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'cat'\n) AND S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'dog'\n)",
+    "latency_sec": 3.5073775000637397
+  },
+  {
+    "timestamp": "2025-11-21T19:04:13.830362",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the major and age of students who do not have a cat pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 61,
+      "latency": {
+        "generation_sec": 2.845126500003971,
+        "execution_sec": 0.002242799964733422,
+        "total_sec": 2.855002099997364
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Student.Major, Student.Age\nFROM Student\nWHERE Student.StuID NOT IN (\n    SELECT Has_Pet.StuID\n    FROM Has_Pet\n    JOIN Pets ON Has_Pet.PetID = Pets.PetID\n    WHERE Pets.PetType = 'cat'\n)",
+    "latency_sec": 2.845126500003971
+  },
+  {
+    "timestamp": "2025-11-21T19:04:16.556863",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What major is every student who does not own a cat as a pet, and also how old are they?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 62,
+      "latency": {
+        "generation_sec": 2.699227700009942,
+        "execution_sec": 0.0024343999102711678,
+        "total_sec": 2.7091806000098586
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Student.Major, Student.Age\nFROM Student\nWHERE Student.StuID NOT IN (\n    SELECT Has_Pet.StuID\n    FROM Has_Pet\n    JOIN Pets ON Has_Pet.PetID = Pets.PetID\n    WHERE Pets.PetType = 'cat'\n)",
+    "latency_sec": 2.699227700009942
+  },
+  {
+    "timestamp": "2025-11-21T19:04:21.983363",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the id of students who do not have a cat pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 63,
+      "latency": {
+        "generation_sec": 5.398502600030042,
+        "execution_sec": 0.0022016000002622604,
+        "total_sec": 5.408604099997319
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT StuID \nFROM Student \nWHERE StuID NOT IN (\n    SELECT StuID \n    FROM Has_Pet \n    JOIN Pets ON Has_Pet.PetID = Pets.PetID \n    WHERE PetType = 'cat'\n)",
+    "latency_sec": 5.398502600030042
+  },
+  {
+    "timestamp": "2025-11-21T19:04:24.524011",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the ids of the students who do not own cats as pets?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 64,
+      "latency": {
+        "generation_sec": 2.511940299998969,
+        "execution_sec": 0.002079900004900992,
+        "total_sec": 2.5219180999556556
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT StuID \nFROM Student \nWHERE StuID NOT IN (\n    SELECT StuID \n    FROM Has_Pet \n    JOIN Pets ON Has_Pet.PetID = Pets.PetID \n    WHERE PetType = 'cat'\n)",
+    "latency_sec": 2.511940299998969
+  },
+  {
+    "timestamp": "2025-11-21T19:04:28.811127",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the first name and age of students who have a dog but do not have a cat as a pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 65,
+      "latency": {
+        "generation_sec": 4.258807700010948,
+        "execution_sec": 0.002858899999409914,
+        "total_sec": 4.269520299974829
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Student.Fname, Student.Age\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType = 'Dog' AND Student.StuID NOT IN (\n    SELECT Student.StuID\n    FROM Student\n    JOIN Has_Pet ON Student.StuID = Has_Pet.StuID\n    JOIN Pets ON Has_Pet.PetID = Pets.PetID\n    WHERE Pets.PetType = 'Cat'\n)",
+    "latency_sec": 4.258807700010948
+  },
+  {
+    "timestamp": "2025-11-21T19:04:31.718715",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the first name of every student who has a dog but does not have a cat?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 66,
+      "latency": {
+        "generation_sec": 2.8805413000518456,
+        "execution_sec": 0.0020933999912813306,
+        "total_sec": 2.890004300046712
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT S.Fname\nFROM Student S\nWHERE S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'dog'\n) AND S.StuID NOT IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    JOIN Pets P ON H.PetID = P.PetID\n    WHERE P.PetType = 'cat'\n)",
+    "latency_sec": 2.8805413000518456
+  },
+  {
+    "timestamp": "2025-11-21T19:04:33.495407",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the type and weight of the youngest pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 67,
+      "latency": {
+        "generation_sec": 1.7458587000146508,
+        "execution_sec": 0.0019099999917671084,
+        "total_sec": 1.7562220999971032
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT PetType, weight \nFROM Pets \nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets)",
+    "latency_sec": 1.7458587000146508
+  },
+  {
+    "timestamp": "2025-11-21T19:04:34.868790",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What type of pet is the youngest animal, and how much does it weigh?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 68,
+      "latency": {
+        "generation_sec": 1.3457256000256166,
+        "execution_sec": 0.0018910999642685056,
+        "total_sec": 1.3557192999869585
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT PetType, weight\nFROM Pets\nWHERE pet_age = (SELECT MIN(pet_age) FROM Pets)",
+    "latency_sec": 1.3457256000256166
+  },
+  {
+    "timestamp": "2025-11-21T19:04:35.813108",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the id and weight of all pets whose age is older than 1.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 69,
+      "latency": {
+        "generation_sec": 0.9159318000311032,
+        "execution_sec": 0.0018544999184086919,
+        "total_sec": 0.9253960999194533
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT PetID, weight \nFROM Pets \nWHERE pet_age > 1",
+    "latency_sec": 0.9159318000311032
+  },
+  {
+    "timestamp": "2025-11-21T19:04:36.773034",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the id and weight of every pet who is older than 1?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 70,
+      "latency": {
+        "generation_sec": 0.9319814000045881,
+        "execution_sec": 0.0018309999722987413,
+        "total_sec": 0.9413699000142515
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT PetID, weight \nFROM Pets \nWHERE pet_age > 1",
+    "latency_sec": 0.9319814000045881
+  },
+  {
+    "timestamp": "2025-11-21T19:04:39.353824",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the average and maximum age for each type of pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 71,
+      "latency": {
+        "generation_sec": 2.551348799956031,
+        "execution_sec": 0.0024589000968262553,
+        "total_sec": 2.561458000098355
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT PetType, AVG(pet_age) AS AverageAge, MAX(pet_age) AS MaximumAge\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 2.551348799956031
+  },
+  {
+    "timestamp": "2025-11-21T19:04:40.808677",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average and maximum age for each pet type?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 72,
+      "latency": {
+        "generation_sec": 1.4229279999854043,
+        "execution_sec": 0.0018804999999701977,
+        "total_sec": 1.4329283999977633
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT PetType, AVG(pet_age) AS AverageAge, MAX(pet_age) AS MaximumAge\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 1.4229279999854043
+  },
+  {
+    "timestamp": "2025-11-21T19:04:42.365912",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the average weight for each pet type.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 73,
+      "latency": {
+        "generation_sec": 1.5279090999392793,
+        "execution_sec": 0.002175099914893508,
+        "total_sec": 1.537568899919279
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT PetType, AVG(weight) as AverageWeight\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 1.5279090999392793
+  },
+  {
+    "timestamp": "2025-11-21T19:04:43.630847",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average weight for each type of pet?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 74,
+      "latency": {
+        "generation_sec": 1.2333519000094384,
+        "execution_sec": 0.0018829999025911093,
+        "total_sec": 1.243152399896644
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT PetType, AVG(weight) as AverageWeight\nFROM Pets\nGROUP BY PetType",
+    "latency_sec": 1.2333519000094384
+  },
+  {
+    "timestamp": "2025-11-21T19:04:45.196769",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the first name and age of students who have a pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 75,
+      "latency": {
+        "generation_sec": 1.532763099996373,
+        "execution_sec": 0.001959600020200014,
+        "total_sec": 1.544845600030385
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Student.Fname, Student.Age\nFROM Student\nINNER JOIN Has_Pet ON Student.StuID = Has_Pet.StuID",
+    "latency_sec": 1.532763099996373
+  },
+  {
+    "timestamp": "2025-11-21T19:04:46.620248",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the different first names and ages of the students who do have pets?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 76,
+      "latency": {
+        "generation_sec": 1.3927217000164092,
+        "execution_sec": 0.001941199996508658,
+        "total_sec": 1.403259800048545
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT Student.Fname, Student.Age\nFROM Student\nINNER JOIN Has_Pet ON Student.StuID = Has_Pet.StuID",
+    "latency_sec": 1.3927217000164092
+  },
+  {
+    "timestamp": "2025-11-21T19:04:49.722077",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the id of the pet owned by student whose last name is ‘Smith’.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 77,
+      "latency": {
+        "generation_sec": 3.070736800087616,
+        "execution_sec": 0.0019123000092804432,
+        "total_sec": 3.0808038000250235
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Has_Pet.PetID \nFROM Student \nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID \nWHERE Student.LName = 'Smith'",
+    "latency_sec": 3.070736800087616
+  },
+  {
+    "timestamp": "2025-11-21T19:04:51.729267",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the id of the pet owned by the student whose last name is 'Smith'?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 78,
+      "latency": {
+        "generation_sec": 1.9765601999824867,
+        "execution_sec": 0.00204030005261302,
+        "total_sec": 1.9866937999613583
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Has_Pet.PetID \nFROM Student \nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID \nWHERE Student.LName = 'Smith'",
+    "latency_sec": 1.9765601999824867
+  },
+  {
+    "timestamp": "2025-11-21T19:04:54.770818",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the number of pets for each student who has any pet and student id.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 79,
+      "latency": {
+        "generation_sec": 3.0102868999820203,
+        "execution_sec": 0.0020480999955907464,
+        "total_sec": 3.020044600008987
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT Student.StuID, COUNT(Has_Pet.PetID) as NumberOfPets\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nGROUP BY Student.StuID\nHAVING COUNT(Has_Pet.PetID) > 0",
+    "latency_sec": 3.0102868999820203
+  },
+  {
+    "timestamp": "2025-11-21T19:04:57.559118",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "For students who have pets , how many pets does each student have ? list their ids instead of names .",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 80,
+      "latency": {
+        "generation_sec": 2.753372799954377,
+        "execution_sec": 0.001991399913094938,
+        "total_sec": 2.764610599959269
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT StuID, COUNT(PetID) as NumberOfPets\nFROM Has_Pet\nGROUP BY StuID",
+    "latency_sec": 2.753372799954377
+  },
+  {
+    "timestamp": "2025-11-21T19:05:00.891106",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the first name and gender of student who have more than one pet.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 81,
+      "latency": {
+        "generation_sec": 3.3005738999927416,
+        "execution_sec": 0.002190199913457036,
+        "total_sec": 3.3111797999590635
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT S.Fname, S.Sex\nFROM Student S\nWHERE S.StuID IN (\n    SELECT H.StuID\n    FROM Has_Pet H\n    GROUP BY H.StuID\n    HAVING COUNT(H.PetID) > 1\n)",
+    "latency_sec": 3.3005738999927416
+  },
+  {
+    "timestamp": "2025-11-21T19:05:03.060284",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the first name and gender of the all the students who have more than one pet?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 82,
+      "latency": {
+        "generation_sec": 2.1329467999748886,
+        "execution_sec": 0.002133500063791871,
+        "total_sec": 2.145622199983336
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Student.Fname, Student.Sex\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nGROUP BY Student.StuID, Student.Fname, Student.Sex\nHAVING COUNT(Has_Pet.PetID) > 1",
+    "latency_sec": 2.1329467999748886
+  },
+  {
+    "timestamp": "2025-11-21T19:05:05.374929",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the last name of the student who has a cat that is age 3.",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 83,
+      "latency": {
+        "generation_sec": 2.2842887999722734,
+        "execution_sec": 0.0022249999456107616,
+        "total_sec": 2.2941114999121055
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Student.LName\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType = 'cat' AND Pets.pet_age = 3",
+    "latency_sec": 2.2842887999722734
+  },
+  {
+    "timestamp": "2025-11-21T19:05:07.506697",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the last name of the student who has a cat that is 3 years old?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 84,
+      "latency": {
+        "generation_sec": 2.100381699972786,
+        "execution_sec": 0.0019620999228209257,
+        "total_sec": 2.110249700024724
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT Student.LName\nFROM Student\nJOIN Has_Pet ON Student.StuID = Has_Pet.StuID\nJOIN Pets ON Has_Pet.PetID = Pets.PetID\nWHERE Pets.PetType = 'cat' AND Pets.pet_age = 3",
+    "latency_sec": 2.100381699972786
+  },
+  {
+    "timestamp": "2025-11-21T19:05:08.558913",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the average age of students who do not have any pet .",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 85,
+      "latency": {
+        "generation_sec": 1.0188489999854937,
+        "execution_sec": 0.0023759000468999147,
+        "total_sec": 1.0298565999837592
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT AVG(Age) \nFROM Student \nWHERE StuID NOT IN (SELECT StuID FROM Has_Pet)",
+    "latency_sec": 1.0188489999854937
+  },
+  {
+    "timestamp": "2025-11-21T19:05:10.528886",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the average age for all students who do not own any pets ?",
+      "db_id": "pets_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 86,
+      "latency": {
+        "generation_sec": 1.9340911000035703,
+        "execution_sec": 0.0019304999150335789,
+        "total_sec": 1.945364399929531
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT AVG(Age) \nFROM Student \nWHERE StuID NOT IN (SELECT StuID FROM Has_Pet)",
+    "latency_sec": 1.9340911000035703
+  },
+  {
+    "timestamp": "2025-11-21T19:05:11.140680",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many continents are there?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 87,
+      "latency": {
+        "generation_sec": 0.5791501000057906,
+        "execution_sec": 0.0019283000146970153,
+        "total_sec": 0.5887350999983028
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) FROM continents",
+    "latency_sec": 0.5791501000057906
+  },
+  {
+    "timestamp": "2025-11-21T19:05:11.865710",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the number of continents?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 88,
+      "latency": {
+        "generation_sec": 0.6936430999776348,
+        "execution_sec": 0.0025951999705284834,
+        "total_sec": 0.7043124999618158
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) FROM continents",
+    "latency_sec": 0.6936430999776348
+  },
+  {
+    "timestamp": "2025-11-21T19:05:13.580158",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many countries does each continent have? List the continent id, continent name and the number of countries.",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 89,
+      "latency": {
+        "generation_sec": 1.681710199918598,
+        "execution_sec": 0.0020436999620869756,
+        "total_sec": 1.6914041000418365
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT c.ContId, c.Continent, COUNT(*) as NumberOfCountries\nFROM continents c\nJOIN countries co ON c.ContId = co.Continent\nGROUP BY c.ContId, c.Continent",
+    "latency_sec": 1.681710199918598
+  },
+  {
+    "timestamp": "2025-11-21T19:05:15.647105",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "For each continent, list its id, name, and how many countries it has?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 90,
+      "latency": {
+        "generation_sec": 2.034449000027962,
+        "execution_sec": 0.002168399980291724,
+        "total_sec": 2.0443195999832824
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT c.ContId, c.Continent, COUNT(*) as NumberOfCountries\nFROM continents c\nJOIN countries co ON c.ContId = co.Continent\nGROUP BY c.ContId, c.Continent",
+    "latency_sec": 2.034449000027962
+  },
+  {
+    "timestamp": "2025-11-21T19:05:16.563708",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many countries are listed?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 91,
+      "latency": {
+        "generation_sec": 0.8849209999898449,
+        "execution_sec": 0.0020381000358611345,
+        "total_sec": 0.8945479000685737
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) FROM countries",
+    "latency_sec": 0.8849209999898449
+  },
+  {
+    "timestamp": "2025-11-21T19:05:18.425531",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many countries exist?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 92,
+      "latency": {
+        "generation_sec": 1.8296162000624463,
+        "execution_sec": 0.0019219000823795795,
+        "total_sec": 1.8395836000563577
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT COUNT(*) FROM countries",
+    "latency_sec": 1.8296162000624463
+  },
+  {
+    "timestamp": "2025-11-21T19:05:22.134292",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many models does each car maker produce? List maker full name, id and the number.",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 93,
+      "latency": {
+        "generation_sec": 3.6755754000041634,
+        "execution_sec": 0.002805399941280484,
+        "total_sec": 3.685860199970193
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT car_makers.FullName, car_makers.Id, COUNT(model_list.Model) as NumberOfModels\nFROM car_makers\nJOIN model_list ON car_makers.Id = model_list.Maker\nGROUP BY car_makers.FullName, car_makers.Id",
+    "latency_sec": 3.6755754000041634
+  },
+  {
+    "timestamp": "2025-11-21T19:05:24.703284",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the full name of each car maker, along with its id and how many models it produces?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 94,
+      "latency": {
+        "generation_sec": 2.533876100089401,
+        "execution_sec": 0.0025426000356674194,
+        "total_sec": 2.544706500018947
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT car_makers.Id, car_makers.FullName, COUNT(model_list.ModelId) as NumberOfModels\nFROM car_makers\nJOIN model_list ON car_makers.Id = model_list.Maker\nGROUP BY car_makers.Id, car_makers.FullName",
+    "latency_sec": 2.533876100089401
+  },
+  {
+    "timestamp": "2025-11-21T19:05:28.639099",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Which model of the car has the minimum horsepower?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 95,
+      "latency": {
+        "generation_sec": 3.900046000024304,
+        "execution_sec": 0.003726899973116815,
+        "total_sec": 3.911890699993819
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Horsepower = (SELECT MIN(Horsepower) FROM cars_data)",
+    "latency_sec": 3.900046000024304
+  },
+  {
+    "timestamp": "2025-11-21T19:05:32.794954",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the model of the car with the smallest amount of horsepower?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 96,
+      "latency": {
+        "generation_sec": 4.118058799998835,
+        "execution_sec": 0.0025601000525057316,
+        "total_sec": 4.129748000064865
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Horsepower = (SELECT MIN(Horsepower) FROM cars_data)",
+    "latency_sec": 4.118058799998835
+  },
+  {
+    "timestamp": "2025-11-21T19:05:36.898630",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the model of the car whose weight is below the average weight.",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 97,
+      "latency": {
+        "generation_sec": 4.066373900044709,
+        "execution_sec": 0.004029700066894293,
+        "total_sec": 4.079586100066081
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Weight < (SELECT AVG(Weight) FROM cars_data)",
+    "latency_sec": 4.066373900044709
+  },
+  {
+    "timestamp": "2025-11-21T19:05:39.138372",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the model for the car with a weight smaller than the average?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 98,
+      "latency": {
+        "generation_sec": 2.205304199946113,
+        "execution_sec": 0.004272800055332482,
+        "total_sec": 2.2171301000053063
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Weight < (SELECT AVG(Weight) FROM cars_data)",
+    "latency_sec": 2.205304199946113
+  },
+  {
+    "timestamp": "2025-11-21T19:05:41.863656",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the name of the makers that produced some cars in the year of 1970?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 99,
+      "latency": {
+        "generation_sec": 2.6895763999782503,
+        "execution_sec": 0.0035738999722525477,
+        "total_sec": 2.7010215999325737
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT car_makers.Maker\nFROM car_makers\nJOIN model_list ON car_makers.Id = model_list.Maker\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Year = 1970",
+    "latency_sec": 2.6895763999782503
+  },
+  {
+    "timestamp": "2025-11-21T19:05:44.463263",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the name of the different car makers who produced a car in 1970?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 100,
+      "latency": {
+        "generation_sec": 2.563791200052947,
+        "execution_sec": 0.003283499972894788,
+        "total_sec": 2.5755419000051916
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT car_makers.Maker\nFROM car_makers\nJOIN model_list ON car_makers.Id = model_list.Maker\nJOIN car_names ON model_list.Model = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Year = 1970",
+    "latency_sec": 2.563791200052947
+  },
+  {
+    "timestamp": "2025-11-21T19:05:48.650447",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Find the make and production time of the cars that were produced in the earliest year?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 101,
+      "latency": {
+        "generation_sec": 4.145176599966362,
+        "execution_sec": 0.0030940999276936054,
+        "total_sec": 4.159644600003958
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT car_names.Make, cars_data.Year\nFROM car_names\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Year = (SELECT MIN(Year) FROM cars_data)",
+    "latency_sec": 4.145176599966362
+  },
+  {
+    "timestamp": "2025-11-21T19:05:51.826478",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What is the maker of the carr produced in the earliest year and what year was it?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 102,
+      "latency": {
+        "generation_sec": 3.1371179999550804,
+        "execution_sec": 0.002855299971997738,
+        "total_sec": 3.1497065000003204
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT car_makers.Maker, MIN(cars_data.Year) as Earliest_Year\nFROM cars_data\nJOIN car_names ON cars_data.Id = car_names.MakeId\nJOIN model_list ON car_names.Model = model_list.Model\nJOIN car_makers ON model_list.Maker = car_makers.Id\nGROUP BY car_makers.Maker\nORDER BY Earliest_Year ASC\nLIMIT 1",
+    "latency_sec": 3.1371179999550804
+  },
+  {
+    "timestamp": "2025-11-21T19:05:53.433192",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "Which distinct car models are the produced after 1980?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 103,
+      "latency": {
+        "generation_sec": 1.5657501999521628,
+        "execution_sec": 0.003257300006225705,
+        "total_sec": 1.5781579000176862
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT model_list.Model\nFROM model_list\nJOIN cars_data ON model_list.ModelId = cars_data.Id\nWHERE cars_data.Year > 1980",
+    "latency_sec": 1.5657501999521628
+  },
+  {
+    "timestamp": "2025-11-21T19:05:55.535433",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "What are the different models for the cards produced after 1980?",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 104,
+      "latency": {
+        "generation_sec": 2.0642764000222087,
+        "execution_sec": 0.003199599916115403,
+        "total_sec": 2.076171400025487
+      },
+      "exec_match": false
+    },
+    "plan": {},
+    "sql": "SELECT DISTINCT model_list.Model\nFROM model_list\nJOIN car_names ON model_list.ModelId = car_names.Model\nJOIN cars_data ON car_names.MakeId = cars_data.Id\nWHERE cars_data.Year > 1980",
+    "latency_sec": 2.0642764000222087
+  },
+  {
+    "timestamp": "2025-11-21T19:05:58.107918",
+    "command_line": "baseline/evaluation.py --baseline baseagent --split dev --max_examples 999999 --log_path baseline/logs/gpt4/baseagent_gpt4_oirun2_log.json",
+    "inputs": {
+      "question": "How many car makers are there in each continents? List the continent name and the count.",
+      "db_id": "car_1",
+      "dataset": "spider",
+      "split": "dev",
+      "baseline": "baseagent",
+      "example_index": 105,
+      "latency": {
+        "generation_sec": 2.531611999962479,
+        "execution_sec": 0.002544300048612058,
+        "total_sec": 2.545155700063333
+      },
+      "exec_match": true
+    },
+    "plan": {},
+    "sql": "SELECT c.Continent, COUNT(DISTINCT cm.Maker) as CarMakers\nFROM continents c\nJOIN countries co ON c.ContId = co.Continent\nJOIN car_makers cm ON co.CountryId = cm.Country\nGROUP BY c.Continent",
+    "latency_sec": 2.531611999962479
+  }
+]
