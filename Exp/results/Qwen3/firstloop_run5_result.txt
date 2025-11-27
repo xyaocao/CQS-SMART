@@ -1,0 +1,13 @@
+# Evaluate multi-agent firstloop on slider_dev dataset using model ""Qwen/Qwen3-Next-80B-A3B-Instruct"
+
+# Result from ignoring both orders of rows and columns 
+
+Final Execution Accuracy: 825/1034 = 0.7979
+
+Latency summary (total | avg per example | examples):
+  Planner           :   574.25s |     0.56s | 1034
+  Skeptic           :   968.27s |     0.94s | 1034
+  Reasoner decision :   961.07s |     0.93s | 1034
+  SQL generation    :   371.94s |     0.36s | 1034
+  Execution         :    39.67s |     0.04s | 1034
+  Whole system      :  2921.72s |     2.83s | 1034
