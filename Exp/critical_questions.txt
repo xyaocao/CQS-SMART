@@ -1,22 +1,25 @@
 Critical Questions for Skeptic Agent:
 - Does the plan violate fundamental SQL grammar or operator placement rules?
 - Are aliases correctly used and unique for self-references or nested components?
+- If a table is aliased in the FROM or JOIN clauses (e.g., stadium s), is that alias used consistently throughout all references to the table, including the final SELECT projection (e.g., s.Name instead of stadium.Name)? 
 - Does the plan reference any table that does not exist in the schema?
+- If a plan is flagged for Structural Redundancy (extra_table) based on filtering columns (e.g., Pets.PetType), is the simplified structure feasible? That is, can the filtering column name (PetType) be successfully resolved (e.g., via Has_Pet.PetType or a self-join) without introducing a new column name that does not exist in the schema? 
 - Does the plan reference any column that does not exist in the selected tables?
 - Is the primary analytical goal (e.g., ranking, comparison, trend) accurately reflected in the plan's proposed logic?   
 - Is the chosen column the unique, canonically intended mapping for the NL entity (e.g., resolving ambiguous_col via schema description)?
-- Given the context of the query ("youngest singer" vs. "song name"), does the ambiguous column (Name) require explicit disambiguation against schema definitions to ensure the intended entity attribute is selected?
 - If the schema provides clearer, specific attributes (e.g., Song_Name, Singer_Name), why was the ambiguous column (Name) selected?
 - Is the filtering condition applied to the correct column based on the semantic intent of the NL question?
+- Does the projected column list (Student.StuID) align with the primary entity requested by the NLQ ("id of the pet")? 
 - Is a selected column (in SELECT/JOIN/FILTER) semantically irrelevant to the NL question's focus?
+- Does the projected column list (e.g., SELECT Name, ReleaseYear) align with the primary output entity requested in the NLQ (e.g., "the name and release year of the song means the name of the song and the release year of the song")? The Skeptic must verify that each selected attribute resolves to the attribute of the intended entity, not a secondary entity and be careful about those ambiguous columns.
 - Does the final projection include columns not explicitly needed to answer the question?
-- Does the projected column list (e.g., SELECT Name, ReleaseYear) align with the primary output entity requested in the NLQ (e.g., "the name and release year of the song")? The Skeptic must verify that each selected attribute resolves to the attribute of the intended entity, not a secondary entity.
-- Does the projected column list (SELECT Name,...) align with the primary entity requested by the NLQ ("song name and release year")? 
+- Does the projected column list (SELECT Name,...) align with the primary entity requested by the NLQ ("song name and release year" means select the song's name not the singer's name")?
 - If a projected column name is generic (e.g., Name, ID), does the schema provide a clearer, descriptive column (e.g., Song_Name, Singer_Name) that better matches the NL entity requested, mandating its use?
 - Does the projected column list align with the primary output entity requested in the NLQ, verifying that each selected attribute resolves to the attribute of the intended entity?
 - Is the projected/filtered column semantically relevant to the NL question's focus? 
 - Is there a complete defined (FK or soft-linked) transitive path connecting all tables required by the question?
 - Does the proposed join path use an incorrect linking column, violating a Primary/Foreign Key relationship?
+- Does the NLQ (e.g., "do not own cats") require excluding an entire entity (Student) if any related condition is met (PetType = 'cat')? If yes, standard conditional logic (WHERE!=) is insufficient and MUST be replaced by EXCEPT, NOT IN (subquery), or NOT EXISTS.
 - Does the question's intent (e.g., "list all X, including those without Y") require a non-INNER join type (LEFT, RIGHT, FULL)?
 - Does the chosen join pattern correctly reflect the required row inclusion rules, and is the current pattern (LEFT JOIN... IS NULL) the most appropriate structural fit for the semantic exclusion requested?
 - Does the plan include tables (e.g., battle, ship) that are redundant because none of their columns are used for projection or filtering? If YES, this violates minimal retrieval (extra_table) and requires IMMEDIATE pruning BEFORE aggregation logic is finalized.
@@ -42,4 +45,6 @@ Critical Questions for Skeptic Agent:
 - Is the chosen aggregation function semantically incorrect for the quantitative intent (e.g., using AVG for total count)?
 - Does the NL request imply a ranking or presentation constraint (e.g., "highest", "top three") that requires ORDER BY and/or LIMIT clauses?
 - Is the same column or calculation duplicated in the final output?
+- When the plan involves a one-to-many join (e.g., Student → Has_Pet) and the projection lists attributes solely from the 'one' side (e.g., Student.Fname, Student.Age), is there an inherent risk of duplicate result rows for a single logical entity? 
+- If the NLQ implies a unique list (e.g., "Find the first name and age of students who have a pet"), does the plan require the use of DISTINCT to prevent row redundancy?
 - When the NLQ explicitly asks for a ranked result ("youngest" / MIN/MAX), is the proposed structure unnecessarily complex (e.g., subquery comparison) when a simpler and potentially more efficient ORDER BY... LIMIT 1 pattern is available?

@@ -1,6 +1,6 @@
 # Evaluate multi-agent firstloop on slider_dev dataset using model ""Qwen/Qwen3-Next-80B-A3B-Instruct"
 
-# Result from ignoring both orders of rows and columns
+# Result from ignoring both orders of rows and columns 
 Final Execution Accuracy: 806/1034 = 0.7795
 
 Latency summary (total | avg per example | examples):
