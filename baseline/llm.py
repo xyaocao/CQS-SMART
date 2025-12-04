@@ -5,8 +5,8 @@ from langchain_openai import ChatOpenAI
 
 @dataclass
 class LLMConfig:
-    model: str = "Qwen/Qwen3-Next-80B-A3B-Instruct"
-    # model: str = "swissai/Apertus-70B-Instruct"
+    # model: str = "Qwen/Qwen3-Next-80B-A3B-Instruct"
+    model: str = "Qwen/Qwen3-32B"
     # model: str = "gpt-4"
     temperature: float = 0.0
     max_tokens: int = 1000

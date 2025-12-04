@@ -10,3 +10,4 @@ Latency summary (total | avg per example | examples):
   SQL generation    :   371.32s |     0.36s | 1034
   Execution         :    46.62s |     0.05s | 1034
   Whole system      :  2779.52s |     2.69s | 1034
+  
