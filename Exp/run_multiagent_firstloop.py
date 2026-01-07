@@ -13,6 +13,7 @@ def parse_args() -> PipelineConfig:
     parser = argparse.ArgumentParser(description="Run the multi-agent first-loop pipeline.")
     parser.add_argument("question", nargs="?", help="Natural language question (required for single mode)")
     parser.add_argument("db_id", nargs="?", help="Database id (required for single mode)")
+    parser.add_argument("--loop_mode", type=str, choices=["firstloop", "BaseMAD"], help="Choose a loop mode. Choices: firstloop, BaseMAD.")
     parser.add_argument("--input_mode", choices=["single", "batch"], help="Run a single question or a batch loop. Choices: single, batch.")
     parser.add_argument("--dataset", default="spider", choices=["spider", "bird"], help="Choose the dataset to use. Choices: spider, bird.")
     parser.add_argument("--split", default="dev", choices=["dev", "test"], help="Dataset split to use. Choices: dev, test.")
@@ -25,7 +26,6 @@ def parse_args() -> PipelineConfig:
     parser.add_argument("--examples_path", type=str, help="Override path to dataset examples JSON (batch mode).")
     parser.add_argument("--tables_path", type=str, help="Override path to tables metadata JSON.")
     parser.add_argument("--db_root", type=str, help="Override path to database root folder.")
-    parser.add_argument("--gold_sql_path", type=str, help="Override path to split_gold.sql (batch mode).")
     parser.add_argument("--log_path", type=str, help="Path to JSONL log output.")
     parser.add_argument( "--skeptic_questions_path", type=str, default="Exp/critical_questions.txt", help="Path to the skeptic critical-questions text file.")
     parser.add_argument("--save_schema", action="store_true", help="Persist schema text for each example in the log.")
@@ -62,16 +62,16 @@ def parse_args() -> PipelineConfig:
         save_schema=args.save_schema,
         skeptic_questions_path=Path(args.skeptic_questions_path),
         input_mode=args.input_mode,
+        loop_mode="first",
         question=args.question,
         db_id=args.db_id,
         examples_path=examples_path,
         tables_path=tables_path,
         db_root=db_root,
-        gold_sql_path=gold_sql_path,
     )
 
 
-def main() -> None:
+def main():
     config = parse_args()
     if config.input_mode == "single":
         runner = SinglerunPipeline(config)
