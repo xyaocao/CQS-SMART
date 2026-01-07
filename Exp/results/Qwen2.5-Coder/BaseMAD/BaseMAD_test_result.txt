@@ -1,0 +1,12 @@
+#E:/Anaconda/envs/langchain_env/python.exe Exp/evaluation.py --dataset spider --split dev --loop_mode BaseMAD --start 0  --max_examples 100 --max_tokens 2000 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_debate_rounds 3 --min_debate_rounds 2 --log_path Exp/logs/Qwen2.5-Coder/BaseMAD_test_log.json
+Final Execution Accuracy: 83/100 = 0.8300
+
+Latency summary (total | avg per example | examples):
+  Planner           :   260.92s |     2.61s | 100
+  Defender (total)  :   797.21s |     7.97s | 100
+  Skeptic (total)   :   776.74s |     7.77s | 100
+  Debate (total)    :  1573.95s |    15.74s | 100
+  Reasoner decision :   256.31s |     2.56s | 100
+  SQL generation    :    95.51s |     0.96s | 100
+  Execution         :     0.29s |     0.00s | 100
+  Whole system      :  2188.75s |    21.89s | 100

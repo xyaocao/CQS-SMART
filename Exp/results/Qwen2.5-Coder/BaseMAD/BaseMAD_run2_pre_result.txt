@@ -1,0 +1,13 @@
+# stopped at 1028
+
+Final Execution Accuracy: 751/1028 = 0.7305
+
+Latency summary (total | avg per example | examples):
+  Planner           :  2596.85s |     2.52s | 1029
+  Defender (total)  :  5661.44s |     5.51s | 1028
+  Skeptic (total)   :  3824.54s |     3.72s | 1028
+  Debate (total)    :  9485.98s |     9.23s | 1028
+  Reasoner decision :  2128.17s |     2.07s | 1028
+  SQL generation    :   944.16s |     0.92s | 1028
+  Execution         :    29.07s |     0.03s | 1028
+  Whole system      : 15258.96s |    14.76s | 1034

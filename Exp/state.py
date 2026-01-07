@@ -1,22 +1,24 @@
 from dataclasses import dataclass, field
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
+
 
 @dataclass
 class PlannerAgentState:
-   """State passed through the planner.
+    """State passed through the planner.
     - question: natural language question
     - db_id: database identifier (Spider_dev db name)
     - schema_text: textual schema description for the db_id
     - plan: structured query plan produced by the planner node
-    - raw: raw output from the planner LLM
     - latency: time taken by the planner LLM
     """
-   question: str
-   db_id: Optional[str] = None
-   schema_text: Optional[str] = None
-   plan: Dict[str, Any] = field(default_factory=dict)
-   raw: str = ""
-   latency: float = 0.0
+
+    question: str
+    db_id: Optional[str] = None
+    schema_text: Optional[str] = None
+    plan: Dict[str, Any] = field(default_factory=dict)
+    raw: str = ""
+    latency: float = 0.0
+
 
 @dataclass
 class SkepticAgentState:
@@ -25,17 +27,21 @@ class SkepticAgentState:
     - schema_text: textual schema description for the db_id
     - plan: textual representation of the plan to critique
     - critical: critical questions to consider during critique
+    - execution_feedback: JSON text with context from another agent
+      (e.g., Executor feedback in second loop or Defender viewpoint in BaseMAD)
     - feedback: structured feedback produced by the skeptic
-    - raw: raw output from the skeptic LLM
     - latency: time taken by the skeptic LLM
     """
+
     question: str
     schema_text: Optional[str] = None
     plan: str = ""
     critical: str = ""
+    execution_feedback: str = ""
     feedback: Dict[str, Any] = field(default_factory=dict)
     raw: str = ""
     latency: float = 0.0
+
 
 @dataclass
 class ReasonerAgentState:
@@ -43,21 +49,40 @@ class ReasonerAgentState:
     - question: natural language question
     - schema_text: textual schema description for the db_id
     - plan: textual representation of the plan to reason about
-    - feedback: textual representation of the skeptic's feedback
+    - feedback: textual representation of the skeptic's feedback or debate summary
+    - execution_feedback: JSON text with result-based or debate feedback from other agents
     - decision: structured decision produced by the reasoner
-    - decision_raw: raw output from the reasoner LLM
     - decision_latency: time taken by the reasoner LLM
     - sql: final SQL produced by the sql-generation node
-    - sql_raw: raw output from the SQL generation LLM
     - sql_latency: time taken by the SQL generation LLM
     """
+
     question: str
     schema_text: Optional[str] = None
     plan: str = ""
     feedback: str = ""
+    execution_feedback: str = ""
     decision: Dict[str, Any] = field(default_factory=dict)
-    decision_raw: str = ""
     decision_latency: float = 0.0
-    sql: str= ""
-    sql_raw: str = ""
+    sql: str = ""
     sql_latency: float = 0.0
+
+
+@dataclass
+class DefenderAgentState:
+    """State passed through the defender agent in the BaseMAD pipeline.
+    - question: natural language question
+    - schema_text: textual schema description for the db_id
+    - plan: textual representation of the plan being defended
+    - skeptic_feedback: textual representation of the skeptic's latest feedback
+    - feedback: structured defense produced by the defender
+    - latency: time taken by the defender LLM
+    """
+
+    question: str
+    schema_text: Optional[str] = None
+    plan: str = ""
+    skeptic_feedback: str = ""
+    feedback: Dict[str, Any] = field(default_factory=dict)
+    latency: float = 0.0
+

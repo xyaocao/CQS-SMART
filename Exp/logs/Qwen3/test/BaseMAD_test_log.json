@@ -1,0 +1,135 @@
+[
+  {
+    "timestamp": "2026-01-05T22:51:01.006323",
+    "example_index": 0,
+    "command_line": "Exp/evaluation.py --dataset spider --split dev --loop_mode BaseMAD --start 0 --max_examples 1 --max_tokens 2000 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_debate_rounds 3 --min_debate_rounds 1 --log_path Exp/logs/Qwen3/test/BaseMAD_test_log.json",
+    "question": "How many singers do we have?",
+    "db_id": "concert_singer",
+    "inputs": {
+      "timestamp": "2026-01-05T22:51:00.957482",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 0,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "BaseMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen3\\test\\BaseMAD_test_log.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 0.6754481999960262,
+      "defender_total_sec": 0.6078209999977844,
+      "skeptic_total_sec": 0.42627890000585467,
+      "debate_total_sec": 1.034099900003639,
+      "reasoner_decision_sec": 0.661665699997684,
+      "sqlgen_sec": 0.29919829999562353,
+      "execution_sec": 0.0031088999967323616,
+      "total_sec": 2.68172219999542
+    },
+    "plan": {
+      "tables": [
+        "singer"
+      ],
+      "columns": [
+        "singer.Singer_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(singer.Singer_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "verdict": "proceed",
+      "thoughts": "The planner correctly identifies that the singer table contains one row per singer with Singer_ID as primary key. COUNT(Singer_ID) accurately counts all singers without needing joins, filters, or additional columns. No schema, value, or semantic issues exist. Is_male type ('others') is irrelevant for count. All conditions align with NLQ.",
+      "adjustments": []
+    },
+    "final_sql": "SELECT COUNT(Singer_ID) FROM singer;",
+    "debate_summary": {
+      "consensus_reached": true,
+      "final_defender_viewpoint": "Count of singers is correctly derived from singer table using Singer_ID.",
+      "final_defender_stance": "support_plan",
+      "final_skeptic_position": "accept",
+      "final_skeptic_verdict": "ok",
+      "critical_issues": [],
+      "key_recommendations": [
+        "No implicit conditions; all singers are included regardless of country or song.",
+        "Is_male is 'others' type but irrelevant for count of singers."
+      ],
+      "has_structural_issues": false,
+      "debate_rounds_count": 1,
+      "final_defender_full": {
+        "stance": "support_plan",
+        "viewpoint": "Count of singers is correctly derived from singer table using Singer_ID.",
+        "justification": [
+          "singer table contains one row per singer; Singer_ID is primary key.",
+          "COUNT(Singer_ID) accurately counts unique singers as requested.",
+          "No joins or filters needed since question asks for total count."
+        ],
+        "notes_for_reasoner": [
+          "No implicit conditions; all singers are included regardless of country or song.",
+          "Is_male is 'others' type but irrelevant for count of singers."
+        ]
+      },
+      "final_skeptic_full": {
+        "position": "accept",
+        "consensus": true,
+        "verdict": "ok",
+        "issues": [],
+        "recommendations": []
+      }
+    },
+    "basemad_debug": {
+      "debate_rounds": [
+        {
+          "round": 1,
+          "defender_view": {
+            "stance": "support_plan",
+            "viewpoint": "Count of singers is correctly derived from singer table using Singer_ID.",
+            "justification": [
+              "singer table contains one row per singer; Singer_ID is primary key.",
+              "COUNT(Singer_ID) accurately counts unique singers as requested.",
+              "No joins or filters needed since question asks for total count."
+            ],
+            "notes_for_reasoner": [
+              "No implicit conditions; all singers are included regardless of country or song.",
+              "Is_male is 'others' type but irrelevant for count of singers."
+            ]
+          },
+          "skeptic_view": {
+            "position": "accept",
+            "consensus": true,
+            "verdict": "ok",
+            "issues": [],
+            "recommendations": []
+          },
+          "consensus": true,
+          "defender_latency_sec": 0.6078209999977844,
+          "skeptic_latency_sec": 0.42627890000585467,
+          "evaluation_mode": "parallel_independent"
+        }
+      ],
+      "max_debate_rounds": 3,
+      "consensus_reached": true,
+      "early_terminated": false,
+      "termination_reason": "consensus_reached_parallel_evaluation",
+      "actual_rounds": 1
+    },
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  }
+]
