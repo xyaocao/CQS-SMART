@@ -1,0 +1,12 @@
+# Evaluating with prompts_improvedMAD_new and history_advisor_q3.jsonl on the original new engine which didn't use validator, chooser judge, hereustics.
+
+Final Execution Accuracy: 818/1034 = 0.7911
+
+Latency summary (total | avg per example | examples):
+  Planner           :  1785.42s |     1.73s | 1034
+  Debate            :     0.00s |     0.00s | 1034
+  Contract reasoner :  1516.70s |     1.47s | 1034
+  SQLGen (contract) :   387.33s |     0.37s | 1034
+  SQLGen (oneshot)  :   332.46s |     0.32s | 1034
+  Execution         :    16.66s |     0.02s | 1034
+  Whole system      :  8064.41s |     3.90s | 2068

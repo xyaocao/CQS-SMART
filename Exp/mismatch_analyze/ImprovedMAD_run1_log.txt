@@ -1,0 +1,23 @@
+# Prompt:  E:/Anaconda/envs/langchain_env/python.exe Exp\mismatch_analyze\inspect_log.py Exp/logs/Qwen2.5-Coder/ImprovedMad_run1_log.json --topn 15
+total: 1034, success: 824, flag_counts: {'exec_match': 824}
+
+Top failing dbs:
+ - car_1: 44
+ - world_1: 35
+ - student_transcripts_tracking: 27
+ - dog_kennels: 21
+ - wta_1: 14
+ - cre_Doc_Template_Mgt: 13
+ - flight_2: 10
+ - network_1: 8
+ - tvshow: 7
+ - orchestra: 6
+ - pets_1: 5
+ - battle_death: 5
+ - course_teach: 4
+ - concert_singer: 3
+ - poker_player: 2
+
+Chosen distribution (success/fail):
+ success: ['contract: 555', 'oneshot: 269']
+ fail   : ['contract: 137', 'oneshot: 73']

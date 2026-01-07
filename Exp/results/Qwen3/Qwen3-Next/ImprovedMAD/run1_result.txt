@@ -1,0 +1,41 @@
+# Evaluate ImprovedMAD on slider_dev dataset using model ""Qwen/Qwen3-Next-80B-A3B-Instruct"
+Final Execution Accuracy: 825/1034 = 0.7979
+
+Latency summary (total | avg per example | examples):
+  Planner           :   420.34s |     0.41s | 1034
+  Debate            :  3404.26s |     3.29s | 1034
+  Contract reasoner :   986.26s |     0.95s | 1034
+  Contract validate :     0.10s |     0.00s | 1034
+  SQLGen (contract) :   319.20s |     0.31s | 1034
+  SQLGen (oneshot)  :   310.86s |     0.30s | 1034
+  Choose (judge)    :   214.86s |     0.21s | 1011
+  Execution         :    30.82s |     0.03s | 1034
+  Whole system      : 11484.40s |     5.55s | 2068
+
+# 940-1033
+Final Execution Accuracy: 75/94 = 0.7979
+
+Latency summary (total | avg per example | examples):
+  Planner           :    38.00s |     0.40s |  94
+  Debate            :   224.25s |     2.39s |  94
+  Contract reasoner :    85.20s |     0.91s |  94
+  Contract validate :     0.01s |     0.00s |  94
+  SQLGen (contract) :    27.15s |     0.29s |  94
+  SQLGen (oneshot)  :    26.54s |     0.28s |  94
+  Choose (judge)    :    19.94s |     0.21s |  94
+  Execution         :     0.24s |     0.00s |  94
+  Whole system      :   843.22s |     4.49s | 188
+
+# 130-409
+Final Execution Accuracy: 228/280 = 0.8143
+
+Latency summary (total | avg per example | examples):
+  Planner           :   124.71s |     0.45s | 280
+  Debate            :  1034.39s |     3.69s | 280
+  Contract reasoner :   269.64s |     0.96s | 280
+  Contract validate :     0.02s |     0.00s | 280
+  SQLGen (contract) :    75.92s |     0.27s | 280
+  SQLGen (oneshot)  :    81.03s |     0.29s | 280
+  Choose (judge)    :    53.85s |     0.20s | 271
+  Execution         :     0.79s |     0.00s | 280
+  Whole system      :  3282.57s |     5.86s | 560

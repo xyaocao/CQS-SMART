@@ -1,0 +1,3335 @@
+[
+  {
+    "timestamp": "2026-01-06T22:39:57.148897",
+    "example_index": 439,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the highest rank of losers in all matches.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.8355419999861624,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.164269599976251,
+      "sqlgen_contract_sec": 0.49937850001151673,
+      "sqlgen_oneshot_sec": 0.49768060000496916,
+      "total_sec": 5.200375200016424,
+      "execution_sec": 0.1981771000137087
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.loser_rank"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "MAX",
+          "column": "matches.loser_rank"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT MAX(loser_rank) AS highest_loser_rank\nFROM matches;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  },
+  {
+    "timestamp": "2026-01-06T22:40:02.424174",
+    "example_index": 440,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the best rank of losers across all matches?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.5893737000005785,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.244611900008749,
+      "sqlgen_contract_sec": 0.5412268999789376,
+      "sqlgen_oneshot_sec": 0.5385154999967199,
+      "total_sec": 4.918873099988559,
+      "execution_sec": 0.0024842999991960824
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.loser_rank"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "MIN",
+          "column": "matches.loser_rank"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT MIN(loser_rank) AS best_rank_of_losers\nFROM matches;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.5
+  },
+  {
+    "timestamp": "2026-01-06T22:40:07.372696",
+    "example_index": 441,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "find the number of distinct country codes of all players.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2765638999990188,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.2127221999980975,
+      "sqlgen_contract_sec": 0.41719340000418015,
+      "sqlgen_oneshot_sec": 0.41966450001928024,
+      "total_sec": 4.359150000003865,
+      "execution_sec": 0.030510200012940913
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(DISTINCT players.country_code)"
+      ],
+      "order_by": "",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(DISTINCT country_code) FROM players;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.6666666666666666
+  },
+  {
+    "timestamp": "2026-01-06T22:40:11.842201",
+    "example_index": 442,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many distinct countries do players come from?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.27558789998875,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.192504900012864,
+      "sqlgen_contract_sec": 0.43435879997559823,
+      "sqlgen_oneshot_sec": 0.4216881000029389,
+      "total_sec": 4.347730699984822,
+      "execution_sec": 0.021067399997264147
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(DISTINCT players.country_code)"
+      ],
+      "order_by": "",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(DISTINCT country_code) FROM players;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.75
+  },
+  {
+    "timestamp": "2026-01-06T22:40:16.209525",
+    "example_index": 443,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the number of distinct name of losers.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.7115629999898374,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.2020910999854095,
+      "sqlgen_contract_sec": 0.4201096000033431,
+      "sqlgen_oneshot_sec": 0.42204929998843,
+      "total_sec": 4.7617320000135805,
+      "execution_sec": 0.0037660000089090317
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.loser_name"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "distinct": true,
+          "column": "matches.loser_name"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(DISTINCT loser_name) FROM matches;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8
+  },
+  {
+    "timestamp": "2026-01-06T22:40:20.996222",
+    "example_index": 444,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many different loser names are there?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.7081451999838464,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.2632643000106327,
+      "sqlgen_contract_sec": 0.4196689999953378,
+      "sqlgen_oneshot_sec": 0.42091879999497905,
+      "total_sec": 4.817423799977405,
+      "execution_sec": 0.002945099986391142
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.loser_name"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.loser_name",
+          "distinct": true
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(DISTINCT loser_name) FROM matches;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8333333333333334
+  },
+  {
+    "timestamp": "2026-01-06T22:40:25.833893",
+    "example_index": 445,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the name of tourney that has more than 10 matches.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.953699300007429,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.5246388999803457,
+      "sqlgen_contract_sec": 0.6599343999987468,
+      "sqlgen_oneshot_sec": 0.6538948000234086,
+      "total_sec": 5.797366600017995,
+      "execution_sec": 0.002810900012264028
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.tourney_name"
+      ],
+      "joins": [],
+      "conditions": [
+        "matches.match_num > 10"
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.match_num",
+          "group_by": "matches.tourney_name"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT tourney_name\nFROM matches\nGROUP BY tourney_name\nHAVING COUNT(*) > 10;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8571428571428571
+  },
+  {
+    "timestamp": "2026-01-06T22:40:31.651127",
+    "example_index": 446,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the names of tournaments that have more than 10 matches?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.984922200004803,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4392536000232212,
+      "sqlgen_contract_sec": 0.6599409999907948,
+      "sqlgen_oneshot_sec": 0.6562369000166655,
+      "total_sec": 5.7451576000021305,
+      "execution_sec": 0.002781699993647635
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.tourney_name"
+      ],
+      "joins": [],
+      "conditions": [
+        "matches.match_num > 10"
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.match_num",
+          "group_by": "matches.tourney_name"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT tourney_name\nFROM matches\nGROUP BY tourney_name\nHAVING COUNT(*) > 10;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.875
+  },
+  {
+    "timestamp": "2026-01-06T22:40:37.416687",
+    "example_index": 447,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "List the names of all winners who played in both 2013 and 2016.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.4232122999965213,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 10.930061499995645,
+      "sqlgen_contract_sec": 1.4827502999978606,
+      "sqlgen_oneshot_sec": 1.484201999992365,
+      "total_sec": 17.32628899998963,
+      "execution_sec": 0.0037349000049289316
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2013
+        },
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2016
+        }
+      ],
+      "aggregations": [
+        {
+          "type": "INTERSECT"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT DISTINCT p.first_name, p.last_name\nFROM players p\nJOIN matches m1 ON p.player_id = m1.winner_id\nJOIN matches m2 ON p.player_id = m2.winner_id\nWHERE m1.year = 2013 AND m2.year = 2016;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7777777777777778
+  },
+  {
+    "timestamp": "2026-01-06T22:40:54.768513",
+    "example_index": 448,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the names of players who won in both 2013 and 2016?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.960398199997144,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 5.639609199977713,
+      "sqlgen_contract_sec": 1.4792880000022706,
+      "sqlgen_oneshot_sec": 1.4767357000091579,
+      "total_sec": 12.563217299990356,
+      "execution_sec": 0.004192499996861443
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "matches.year"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2013
+        },
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2016
+        }
+      ],
+      "aggregations": [
+        {
+          "type": "GROUP BY",
+          "columns": [
+            "players.first_name",
+            "players.last_name"
+          ]
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT DISTINCT p.first_name, p.last_name\nFROM players p\nJOIN matches m1 ON p.player_id = m1.winner_id\nJOIN matches m2 ON p.player_id = m2.winner_id\nWHERE m1.year = 2013 AND m2.year = 2016;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7
+  },
+  {
+    "timestamp": "2026-01-06T22:41:07.353382",
+    "example_index": 449,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "List the number of all matches who played in years of 2013 or 2016.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.8671916000021156,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.55870560000767,
+      "sqlgen_contract_sec": 0.6366144999919925,
+      "sqlgen_oneshot_sec": 0.6333558000042103,
+      "total_sec": 7.700595200032694,
+      "execution_sec": 0.002402900019660592
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.match_num"
+      ],
+      "joins": [],
+      "conditions": [
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2013
+        },
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2016
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.match_num",
+          "alias": "number_of_matches"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(*) \nFROM matches \nWHERE year IN (2013, 2016);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7272727272727273
+  },
+  {
+    "timestamp": "2026-01-06T22:41:15.076606",
+    "example_index": 450,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many matches were played in 2013 or 2016?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.613457400002517,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.4088917000044603,
+      "sqlgen_contract_sec": 0.6335742000082973,
+      "sqlgen_oneshot_sec": 0.6358644000138156,
+      "total_sec": 7.29682769998908,
+      "execution_sec": 0.0028744000010192394
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.year"
+      ],
+      "joins": [],
+      "conditions": [
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2013
+        },
+        {
+          "column": "matches.year",
+          "operator": "=",
+          "value": 2016
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "*"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(*) \nFROM matches \nWHERE year IN (2013, 2016);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.75
+  },
+  {
+    "timestamp": "2026-01-06T22:41:22.402552",
+    "example_index": 451,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the country code and first name of the players who won in both tourney WTA Championships and Australian Open?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.123532300000079,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 4.198655900021549,
+      "sqlgen_contract_sec": 1.5239713000191841,
+      "sqlgen_oneshot_sec": 1.5200188999879174,
+      "total_sec": 10.373093200003495,
+      "execution_sec": 0.004392200004076585
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.country_code",
+        "players.first_name"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "WTA Championships"
+        },
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "Australian Open"
+        }
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT DISTINCT p.country_code, p.first_name\nFROM players p\nJOIN matches m1 ON p.player_id = m1.winner_id\nJOIN matches m2 ON p.player_id = m2.winner_id\nWHERE m1.tourney_name = 'WTA Championships' AND m2.tourney_name = 'Australian Open';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7692307692307693
+  },
+  {
+    "timestamp": "2026-01-06T22:41:32.801835",
+    "example_index": 452,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the first names and country codes for players who won both the WTA Championships and the Australian Open?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.1254750000080094,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 4.594241499988129,
+      "sqlgen_contract_sec": 1.518416699982481,
+      "sqlgen_oneshot_sec": 1.5236870000080671,
+      "total_sec": 10.767642099963268,
+      "execution_sec": 0.0028173999744467437
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.country_code"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "WTA Championships"
+        },
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "Australian Open"
+        }
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT DISTINCT p.first_name, p.country_code\nFROM players p\nJOIN matches m1 ON p.player_id = m1.winner_id\nJOIN matches m2 ON p.player_id = m2.winner_id\nWHERE m1.tourney_name = 'WTA Championships' AND m2.tourney_name = 'Australian Open';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7857142857142857
+  },
+  {
+    "timestamp": "2026-01-06T22:41:43.593998",
+    "example_index": 453,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the first name and country code of the oldest player.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.314920400007395,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.331584900006419,
+      "sqlgen_contract_sec": 0.6001611000101548,
+      "sqlgen_oneshot_sec": 0.5959356999956071,
+      "total_sec": 4.856353999988642,
+      "execution_sec": 0.011868499976117164
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date ASC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, country_code\nFROM players\nORDER BY birth_date ASC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8
+  },
+  {
+    "timestamp": "2026-01-06T22:41:48.474829",
+    "example_index": 454,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the first name and country code of the oldest player?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3142503999988548,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.330916499980958,
+      "sqlgen_contract_sec": 0.6041925000026822,
+      "sqlgen_oneshot_sec": 0.5969743999885395,
+      "total_sec": 4.8602845999994315,
+      "execution_sec": 0.011931999993976206
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date ASC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, country_code \nFROM players \nORDER BY birth_date ASC \nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8125
+  },
+  {
+    "timestamp": "2026-01-06T22:41:53.360060",
+    "example_index": 455,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "List the first and last name of all players in the order of birth date.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2775622000044677,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3748794999846723,
+      "sqlgen_contract_sec": 0.49560170000768267,
+      "sqlgen_oneshot_sec": 0.49606459998176433,
+      "total_sec": 4.764563600008842,
+      "execution_sec": 0.11828230001265183
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, last_name\nFROM players\nORDER BY birth_date;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8235294117647058
+  },
+  {
+    "timestamp": "2026-01-06T22:41:58.238038",
+    "example_index": 456,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the full names of all players, sorted by birth date?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.375310300005367,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.28524979998474,
+      "sqlgen_contract_sec": 0.49385490000713617,
+      "sqlgen_oneshot_sec": 0.4957423000014387,
+      "total_sec": 4.768365400028415,
+      "execution_sec": 0.11630160000640899
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "players.birth_date"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, last_name\nFROM players\nORDER BY birth_date;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8333333333333334
+  },
+  {
+    "timestamp": "2026-01-06T22:42:03.117582",
+    "example_index": 457,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "List the first and last name of all players who are left / L hand in the order of birth date.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.4176079999888316,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.5593289000098594,
+      "sqlgen_contract_sec": 0.6144294000114314,
+      "sqlgen_oneshot_sec": 0.6163325999805238,
+      "total_sec": 5.222852700011572,
+      "execution_sec": 0.012797500006854534
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name"
+      ],
+      "joins": [],
+      "conditions": [
+        "players.hand = 'L'"
+      ],
+      "aggregations": [],
+      "order_by": "players.birth_date",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, last_name\nFROM players\nWHERE hand = 'L'\nORDER BY birth_date;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8421052631578947
+  },
+  {
+    "timestamp": "2026-01-06T22:42:08.370686",
+    "example_index": 458,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the full names of all left handed players, in order of birth date?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.5143890000181273,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.463920499983942,
+      "sqlgen_contract_sec": 0.6391741999832448,
+      "sqlgen_oneshot_sec": 0.6157322000071872,
+      "total_sec": 5.247079799999483,
+      "execution_sec": 0.011553200019989163
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "players.birth_date"
+      ],
+      "joins": [],
+      "conditions": [
+        "players.hand = 'L'"
+      ],
+      "aggregations": [],
+      "order_by": "players.birth_date",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, last_name\nFROM players\nWHERE hand = 'L'\nORDER BY birth_date ASC;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.85
+  },
+  {
+    "timestamp": "2026-01-06T22:42:13.647906",
+    "example_index": 459,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the first name and country code of the player who did the most number of tours.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6697186999954283,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.212102799996501,
+      "sqlgen_contract_sec": 1.0190167999826372,
+      "sqlgen_oneshot_sec": 0.9117928000050597,
+      "total_sec": 9.537624699994922,
+      "execution_sec": 1.7223732999991626
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.country_code",
+        "rankings.tours"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "type": "MAX",
+          "column": "rankings.tours"
+        }
+      ],
+      "order_by": "rankings.tours DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, p.country_code\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.player_id\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.8095238095238095
+  },
+  {
+    "timestamp": "2026-01-06T22:42:23.215040",
+    "example_index": 460,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the first name and country code of the player with the most tours?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6755317999923136,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.0723142999922857,
+      "sqlgen_contract_sec": 0.9223990000027698,
+      "sqlgen_oneshot_sec": 0.9070909000001848,
+      "total_sec": 8.369146899989573,
+      "execution_sec": 0.7895080999878701
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.country_code",
+        "rankings.tours"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "type": "MAX",
+          "column": "rankings.tours"
+        }
+      ],
+      "order_by": "rankings.tours DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, p.country_code\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nORDER BY r.tours DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8181818181818182
+  },
+  {
+    "timestamp": "2026-01-06T22:42:31.612740",
+    "example_index": 461,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the year that has the most number of matches.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.9277442999882624,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.2673163000144996,
+      "sqlgen_contract_sec": 0.5997621999995317,
+      "sqlgen_oneshot_sec": 0.5931369000172708,
+      "total_sec": 5.393850699998438,
+      "execution_sec": 0.0027775999915320426
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.year",
+          "alias": "match_count"
+        }
+      ],
+      "group_by": [
+        "matches.year"
+      ],
+      "order_by": "match_count DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT year\nFROM matches\nGROUP BY year\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8260869565217391
+  },
+  {
+    "timestamp": "2026-01-06T22:42:37.040571",
+    "example_index": 462,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Which year had the most matches?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.9280242000240833,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.2283483000064734,
+      "sqlgen_contract_sec": 0.5997276999987662,
+      "sqlgen_oneshot_sec": 0.5963959000073373,
+      "total_sec": 5.357909099984681,
+      "execution_sec": 0.0027329000004101545
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.year"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.year",
+          "alias": "match_count"
+        }
+      ],
+      "group_by": [
+        "matches.year"
+      ],
+      "order_by": "match_count DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT year\nFROM matches\nGROUP BY year\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8333333333333334
+  },
+  {
+    "timestamp": "2026-01-06T22:42:42.430861",
+    "example_index": 463,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the name and rank points of the winner who won the most times.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.9061656999983825,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.727055900002597,
+      "sqlgen_contract_sec": 0.7922611999965739,
+      "sqlgen_oneshot_sec": 0.7162790000147652,
+      "total_sec": 8.147815900010755,
+      "execution_sec": 0.0036828000156674534
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "matches.winner_rank_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.winner_id",
+          "alias": "win_count"
+        }
+      ],
+      "order_by": "win_count DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT winner_name, winner_rank_points\nFROM matches\nGROUP BY winner_name, winner_rank_points\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.8
+  },
+  {
+    "timestamp": "2026-01-06T22:42:50.613623",
+    "example_index": 464,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the name of the winner who has won the most matches, and how many rank points does this player have?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.048136400000658,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 4.711975199985318,
+      "sqlgen_contract_sec": 1.2450228000234347,
+      "sqlgen_oneshot_sec": 1.4019557000137866,
+      "total_sec": 10.412672099977499,
+      "execution_sec": 0.0031814999820198864
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "matches.winner_id",
+        "matches.winner_rank_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "matches.winner_id",
+          "alias": "win_count"
+        }
+      ],
+      "order_by": "win_count DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, p.last_name, MAX(w.winner_rank_points) AS rank_points\nFROM players p\nJOIN matches w ON p.player_id = w.winner_id\nGROUP BY p.player_id\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7692307692307693
+  },
+  {
+    "timestamp": "2026-01-06T22:43:01.054911",
+    "example_index": 465,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the name of the winner who has the highest rank points and participated in the Australian Open tourney.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.946380900015356,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.512701300001936,
+      "sqlgen_contract_sec": 0.7508937000238802,
+      "sqlgen_oneshot_sec": 0.732334100001026,
+      "total_sec": 7.947025600034976,
+      "execution_sec": 0.002506800025003031
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "matches.winner_rank_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "Australian Open"
+        }
+      ],
+      "aggregations": [],
+      "order_by": "matches.winner_rank_points DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT winner_name \nFROM matches \nWHERE tourney_name = 'Australian Open' \nORDER BY winner_rank_points DESC \nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7777777777777778
+  },
+  {
+    "timestamp": "2026-01-06T22:43:09.034826",
+    "example_index": 466,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the name of the winner with the most rank points who participated in the Australian Open tournament?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.5541465999849606,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 5.223574500007089,
+      "sqlgen_contract_sec": 1.323309600003995,
+      "sqlgen_oneshot_sec": 0.8897213999880478,
+      "total_sec": 10.996739499998512,
+      "execution_sec": 0.0032407999970018864
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.first_name",
+        "players.last_name",
+        "matches.winner_rank_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "Australian Open"
+        }
+      ],
+      "aggregations": [
+        {
+          "type": "SUM",
+          "column": "matches.winner_rank_points",
+          "alias": "total_rank_points"
+        }
+      ],
+      "order_by": "total_rank_points DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT first_name, last_name\nFROM players\nWHERE player_id = (\n    SELECT winner_id\n    FROM matches\n    WHERE tourney_name = 'Australian Open'\n    GROUP BY winner_id\n    ORDER BY SUM(winner_rank_points) DESC\n    LIMIT 1\n);",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.75
+  },
+  {
+    "timestamp": "2026-01-06T22:43:20.063657",
+    "example_index": 467,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "find the names of loser and winner who played in the match with greatest number of minutes.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.417035799997393,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.520661199989263,
+      "sqlgen_contract_sec": 0.5717223999963608,
+      "sqlgen_oneshot_sec": 0.5716982999874745,
+      "total_sec": 5.087342600018019,
+      "execution_sec": 0.0040840000146999955
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.minutes",
+        "matches.loser_name",
+        "matches.winner_name"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "matches.minutes DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT loser_name, winner_name\nFROM matches\nORDER BY minutes DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7586206896551724
+  },
+  {
+    "timestamp": "2026-01-06T22:43:25.182569",
+    "example_index": 468,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the names of the winner and loser who played in the longest match?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.4161365999898408,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4222059000167064,
+      "sqlgen_contract_sec": 0.5818768000171985,
+      "sqlgen_oneshot_sec": 0.5782338000135496,
+      "total_sec": 5.003453999990597,
+      "execution_sec": 0.002701999997952953
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.minutes",
+        "matches.winner_name",
+        "matches.loser_name"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "matches.minutes DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT winner_name, loser_name\nFROM matches\nORDER BY minutes DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7666666666666667
+  },
+  {
+    "timestamp": "2026-01-06T22:43:30.219961",
+    "example_index": 469,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the average ranking for each player and their first name.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6693165999895427,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.136983499978669,
+      "sqlgen_contract_sec": 0.9346323999925517,
+      "sqlgen_oneshot_sec": 1.0039486000023317,
+      "total_sec": 9.894066300010309,
+      "execution_sec": 2.147020300006261
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "rankings.ranking"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "AVG",
+          "column": "rankings.ranking",
+          "group_by": "players.first_name"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, AVG(r.ranking) AS average_ranking\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.first_name;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7741935483870968
+  },
+  {
+    "timestamp": "2026-01-06T22:43:40.167847",
+    "example_index": 470,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the first names of all players, and their average rankings?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.8520320000243373,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.1378827999869827,
+      "sqlgen_contract_sec": 0.9300453000178095,
+      "sqlgen_oneshot_sec": 0.9298148000088986,
+      "total_sec": 10.012322200025665,
+      "execution_sec": 2.1600483000220265
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "rankings.ranking"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "AVG",
+          "column": "rankings.ranking",
+          "alias": "average_ranking"
+        }
+      ],
+      "group_by": [
+        "players.first_name"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, AVG(r.ranking) AS average_ranking\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.first_name;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.78125
+  },
+  {
+    "timestamp": "2026-01-06T22:43:50.233310",
+    "example_index": 471,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the total ranking points for each player and their first name.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.1091351000068244,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.175123499997426,
+      "sqlgen_contract_sec": 1.0477997999987565,
+      "sqlgen_oneshot_sec": 1.0478275999776088,
+      "total_sec": 10.786202500021318,
+      "execution_sec": 2.4039970000158064
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "rankings.ranking_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "SUM",
+          "column": "rankings.ranking_points",
+          "alias": "total_ranking_points"
+        },
+        {
+          "column": "players.first_name",
+          "alias": "first_name"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, SUM(r.ranking_points) AS total_ranking_points\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.player_id, p.first_name;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7575757575757576
+  },
+  {
+    "timestamp": "2026-01-06T22:44:01.071148",
+    "example_index": 472,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the first names of all players, and their total ranking points?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6965314999979455,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.176268999988679,
+      "sqlgen_contract_sec": 0.9736410999903455,
+      "sqlgen_oneshot_sec": 1.0445912999857683,
+      "total_sec": 10.111019900010433,
+      "execution_sec": 2.217707200004952
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "rankings"
+      ],
+      "columns": [
+        "players.first_name",
+        "rankings.ranking_points"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "rankings",
+          "condition": "players.player_id = rankings.player_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "SUM",
+          "column": "rankings.ranking_points",
+          "alias": "total_ranking_points"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT p.first_name, SUM(r.ranking_points) AS total_ranking_points\nFROM players p\nJOIN rankings r ON p.player_id = r.player_id\nGROUP BY p.first_name;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7647058823529411
+  },
+  {
+    "timestamp": "2026-01-06T22:44:11.233641",
+    "example_index": 473,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "find the number of players for each country.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.913103200000478,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3096994000079576,
+      "sqlgen_contract_sec": 0.5613975000160281,
+      "sqlgen_oneshot_sec": 0.5596304000064265,
+      "total_sec": 5.377465600002324,
+      "execution_sec": 0.03074470002320595
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code",
+        "COUNT(players.player_id)"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "aggregation": "COUNT",
+          "column": "players.player_id",
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code, COUNT(*) AS player_count\nFROM players\nGROUP BY country_code;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7714285714285715
+  },
+  {
+    "timestamp": "2026-01-06T22:44:16.647439",
+    "example_index": 474,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many players are from each country?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.885903300018981,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.306082700000843,
+      "sqlgen_contract_sec": 0.5584476000221912,
+      "sqlgen_oneshot_sec": 0.5602045000123326,
+      "total_sec": 5.353738899983,
+      "execution_sec": 0.0411465999786742
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code",
+        "COUNT(players.player_id)"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "players.player_id",
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code, COUNT(*) AS player_count\nFROM players\nGROUP BY country_code;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7777777777777778
+  },
+  {
+    "timestamp": "2026-01-06T22:44:22.040275",
+    "example_index": 475,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "find the code of the country where has the greatest number of players.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.8869937999988906,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.407641700003296,
+      "sqlgen_contract_sec": 0.6340189000184182,
+      "sqlgen_oneshot_sec": 0.6364436000003479,
+      "total_sec": 5.603465799998958,
+      "execution_sec": 0.035533900023438036
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "players.player_id",
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": "COUNT(players.player_id) DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code\nFROM players\nGROUP BY country_code\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7837837837837838
+  },
+  {
+    "timestamp": "2026-01-06T22:44:27.687767",
+    "example_index": 476,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What is the code of the country with the most players?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.9072146999824326,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3703734000155237,
+      "sqlgen_contract_sec": 0.6394005999900401,
+      "sqlgen_oneshot_sec": 0.6360731000022497,
+      "total_sec": 5.603929300006712,
+      "execution_sec": 0.04719549999572337
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "aggregation": "COUNT",
+          "column": "players.player_id",
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": "COUNT(players.player_id) DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code\nFROM players\nGROUP BY country_code\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7894736842105263
+  },
+  {
+    "timestamp": "2026-01-06T22:44:33.336115",
+    "example_index": 477,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the codes of countries that have more than 50 players.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6921968999959063,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4685243999992963,
+      "sqlgen_contract_sec": 0.6162825000064913,
+      "sqlgen_oneshot_sec": 0.6115860999852885,
+      "total_sec": 6.427008399972692,
+      "execution_sec": 0.03546559999813326
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [
+        {
+          "column": "player_count",
+          "operator": ">",
+          "value": 50
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "players.player_id",
+          "alias": "player_count"
+        },
+        {
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code\nFROM players\nGROUP BY country_code\nHAVING COUNT(*) > 50;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7948717948717948
+  },
+  {
+    "timestamp": "2026-01-06T22:44:39.808202",
+    "example_index": 478,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the codes of countries with more than 50 players?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.7705712000024505,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4433781999978237,
+      "sqlgen_contract_sec": 0.6157986000180244,
+      "sqlgen_oneshot_sec": 0.6140030000242405,
+      "total_sec": 5.48346620000666,
+      "execution_sec": 0.03704150000703521
+    },
+    "plan": {
+      "tables": [
+        "players"
+      ],
+      "columns": [
+        "players.country_code"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "aggregation": "COUNT",
+          "column": "players.player_id",
+          "group_by": "players.country_code"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT country_code\nFROM players\nGROUP BY country_code\nHAVING COUNT(*) > 50;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.8
+  },
+  {
+    "timestamp": "2026-01-06T22:44:45.337049",
+    "example_index": 479,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the total number of tours for each ranking date.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.9824349000118673,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.551134599983925,
+      "sqlgen_contract_sec": 0.5788857000006828,
+      "sqlgen_oneshot_sec": 0.6196303000033367,
+      "total_sec": 6.8060317000199575,
+      "execution_sec": 1.0711966000089888
+    },
+    "plan": {
+      "tables": [
+        "rankings"
+      ],
+      "columns": [
+        "rankings.ranking_date",
+        "rankings.tours"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "SUM",
+          "column": "rankings.tours",
+          "group_by": "rankings.ranking_date"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT ranking_date, COUNT(*) AS total_tours\nFROM rankings\nGROUP BY ranking_date;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7804878048780488
+  },
+  {
+    "timestamp": "2026-01-06T22:44:52.195584",
+    "example_index": 480,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many total tours were there for each ranking date?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.9880821999977343,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.481283400004031,
+      "sqlgen_contract_sec": 0.5814790999866091,
+      "sqlgen_oneshot_sec": 0.6168850999965798,
+      "total_sec": 6.66510779998498,
+      "execution_sec": 0.9936027999792714
+    },
+    "plan": {
+      "tables": [
+        "rankings"
+      ],
+      "columns": [
+        "rankings.ranking_date",
+        "rankings.tours"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "SUM",
+          "column": "rankings.tours",
+          "group_by": "rankings.ranking_date"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT ranking_date, COUNT(*) AS total_tours\nFROM rankings\nGROUP BY ranking_date;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.7619047619047619
+  },
+  {
+    "timestamp": "2026-01-06T22:44:58.913576",
+    "example_index": 481,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the number of matches happened in each year.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.6377902000094764,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.208883799990872,
+      "sqlgen_contract_sec": 0.520704399998067,
+      "sqlgen_oneshot_sec": 0.5185057999915443,
+      "total_sec": 4.891448299982585,
+      "execution_sec": 0.0032688000064808875
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.year",
+        "COUNT(*)"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT(*)",
+          "group_by": "matches.year"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT year, COUNT(*) AS num_matches\nFROM matches\nGROUP BY year;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7674418604651163
+  },
+  {
+    "timestamp": "2026-01-06T22:45:03.851206",
+    "example_index": 482,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many matches were played in each year?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.6292856999789365,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.218035800004145,
+      "sqlgen_contract_sec": 0.540410299989162,
+      "sqlgen_oneshot_sec": 0.5353203999984544,
+      "total_sec": 4.92893880000338,
+      "execution_sec": 0.0034730000188574195
+    },
+    "plan": {
+      "tables": [
+        "matches"
+      ],
+      "columns": [
+        "matches.year",
+        "COUNT(*)"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT(*)",
+          "group_by": "matches.year"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT year, COUNT(*) AS matches_played\nFROM matches\nGROUP BY year;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7727272727272727
+  },
+  {
+    "timestamp": "2026-01-06T22:45:08.818612",
+    "example_index": 483,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the name and rank of the 3 youngest winners across all matches.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.203536599990912,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.096742900001118,
+      "sqlgen_contract_sec": 0.5988103999989107,
+      "sqlgen_oneshot_sec": 0.5931489000213332,
+      "total_sec": 6.4978810000175145,
+      "execution_sec": 0.0031387000053655356
+    },
+    "plan": {
+      "tables": [
+        "matches",
+        "players"
+      ],
+      "columns": [
+        "matches.winner_name",
+        "matches.winner_rank",
+        "players.birth_date"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date DESC",
+      "limit": 3
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT winner_name, winner_rank\nFROM matches\nORDER BY winner_age ASC\nLIMIT 3;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7777777777777778
+  },
+  {
+    "timestamp": "2026-01-06T22:45:15.358849",
+    "example_index": 484,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "What are the names and ranks of the three youngest winners across all matches?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.1979100999888033,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.0755419000051916,
+      "sqlgen_contract_sec": 0.5939888999855611,
+      "sqlgen_oneshot_sec": 0.5961289000115357,
+      "total_sec": 6.468430500011891,
+      "execution_sec": 0.00271430000429973
+    },
+    "plan": {
+      "tables": [
+        "matches",
+        "players"
+      ],
+      "columns": [
+        "matches.winner_name",
+        "matches.winner_rank",
+        "players.birth_date"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": "players.birth_date DESC",
+      "limit": 3
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT winner_name, winner_rank\nFROM matches\nORDER BY winner_age ASC\nLIMIT 3;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.782608695652174
+  },
+  {
+    "timestamp": "2026-01-06T22:45:21.869547",
+    "example_index": 485,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "How many different winners both participated in the WTA Championships and were left handed?",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 4.027193499990972,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 4.536207099998137,
+      "sqlgen_contract_sec": 1.7125447999860626,
+      "sqlgen_oneshot_sec": 1.67657819998567,
+      "total_sec": 11.963573600020027,
+      "execution_sec": 0.008530899998731911
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.player_id",
+        "matches.winner_id"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "matches",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "table": "players",
+          "column": "hand",
+          "operator": "=",
+          "value": "'left'"
+        },
+        {
+          "table": "matches",
+          "column": "tourney_name",
+          "operator": "=",
+          "value": "'WTA Championships'"
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "players.player_id",
+          "alias": "distinct_winners"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(DISTINCT p.player_id) \nFROM players p \nJOIN matches m1 ON p.player_id = m1.winner_id \nJOIN matches m2 ON p.player_id = m2.winner_id \nWHERE p.hand = 'L' \nAND m1.tourney_name = 'WTA Championships' \nAND m2.tourney_name = 'WTA Championships';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7872340425531915
+  },
+  {
+    "timestamp": "2026-01-06T22:45:33.873903",
+    "example_index": 486,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --start 439 --max_examples 48 --dataset spider --split dev --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_wta_1.json",
+    "question": "Find the number of left handed winners who participated in the WTA Championships.",
+    "db_id": "wta_1",
+    "inputs": {
+      "timestamp": "2026-01-06T22:39:57.111424",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 439,
+      "max_examples": 48,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_wta_1.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.9692164000007324,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.3929426000104286,
+      "sqlgen_contract_sec": 0.9863702000002377,
+      "sqlgen_oneshot_sec": 0.9277965999790467,
+      "total_sec": 9.281450699985726,
+      "execution_sec": 0.0025402999890502542
+    },
+    "plan": {
+      "tables": [
+        "players",
+        "matches"
+      ],
+      "columns": [
+        "players.player_id",
+        "players.hand",
+        "matches.winner_id",
+        "matches.tourney_name"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "players",
+          "condition": "players.player_id = matches.winner_id"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "players.hand",
+          "operator": "=",
+          "value": "'left'"
+        },
+        {
+          "column": "matches.tourney_name",
+          "operator": "=",
+          "value": "'WTA Championships'"
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "players.player_id",
+          "alias": "number_of_left_handed_winners"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise"
+    },
+    "final_sql": "SELECT COUNT(*) \nFROM players \nWHERE hand = 'L' \nAND player_id IN (\n    SELECT winner_id \n    FROM matches \n    WHERE tourney_name = 'WTA Championships'\n);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7916666666666666
+  }
+]

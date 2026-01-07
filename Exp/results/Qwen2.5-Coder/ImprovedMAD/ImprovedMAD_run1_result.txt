@@ -1,0 +1,25 @@
+''' 
+ImprovedMAD run1 (adds contract-based reasoner, validator, 2 SQL candidates, and a chooser with history_hints + heuristics 
+                  on top of the BaseMAD debate flow):
+-- Loop: ImprovedMAD; always debates (planner + defender + skeptic from BaseMAD); min_rounds=1, max_rounds=3; early-stop on consensus/stability; 
+         temps=0.0; max_tokens=2000.
+-- Reasoner: contract-only JSON via prompts_improvedmad ContractReasoner; strict SQL contract fields (select/from/joins/where/...).
+-- Validator: schema-grounding filter for tables/columns/joins; forces contract_verdict=revise if select is empty (adds select_missing_output note).
+-- SQL candidates: (A) contract -> ContractSQLGen; (B) one-shot -> OneShotSQLGen; code fences stripped before exec.
+-- Chooser: execute both; if only one runs, pick it; if both run, apply heuristics (history_hints, plan_conditions, car1_model, population_sum, 
+            both_languages, distinct_regions, question_target, question_literals, unquoted_literals), then LLM judge fallback; default to contract on judge failure. Heuristics applied are logged.
+-- Logging: per example includes contract_validated, both SQL candidates, exec_ok/err, heuristics_applied, chosen, final_sql, debate summary, 
+            and latencies (planner, debate, contract_reasoner, contract_validate, sqlgen_contract, sqlgen_oneshot, choose, execution, total). 
+'''
+Final Execution Accuracy: 824/1034 = 0.7969
+
+Latency summary (total | avg per example | examples):
+  Planner           :  2542.15s |     2.46s | 1034
+  Debate            : 14146.58s |    13.68s | 1034
+  Contract reasoner :  4227.50s |     4.09s | 1034
+  Contract validate :     0.11s |     0.00s | 1034
+  SQLGen (contract) :   864.67s |     0.84s | 1034
+  SQLGen (oneshot)  :   793.85s |     0.77s | 1034
+  Choose (judge)    :   143.00s |     0.15s | 968
+  Execution         :    22.97s |     0.02s | 1034
+  Whole system      : 45514.44s |    22.01s | 2068
