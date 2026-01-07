@@ -6,7 +6,7 @@ from langchain_openai import ChatOpenAI
 @dataclass
 class LLMConfig:
     # model: str = "Qwen/Qwen3-Next-80B-A3B-Instruct"
-    model: str = "Qwen/Qwen3-32B"
+    model: str = "Qwen/Qwen2.5-Coder-14B-Instruct"
     # model: str = "gpt-4"
     temperature: float = 0.0
     max_tokens: int = 1000

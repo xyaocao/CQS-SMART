@@ -1,0 +1,744 @@
+[
+  {
+    "timestamp": "2026-01-07T13:53:13.885488",
+    "example_index": 862,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "How many high schoolers are there?",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.5419723000086378,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.053179500013357,
+      "sqlgen_contract_sec": 0.33576020001783036,
+      "sqlgen_oneshot_sec": 0.3369879999954719,
+      "contract_validate_sec": 0.0002852999896276742,
+      "choose_judge_sec": 0.1299398000119254,
+      "total_sec": 4.411006299982546,
+      "execution_sec": 0.002575299993623048
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(Highschooler.ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT COUNT(*) FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:53:18.316677",
+    "example_index": 863,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "Count the number of high schoolers.",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3523736000061035,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.0508943000168074,
+      "sqlgen_contract_sec": 0.3366125999891665,
+      "sqlgen_oneshot_sec": 0.33179999998537824,
+      "contract_validate_sec": 4.7900015488266945e-05,
+      "choose_judge_sec": 0.12641149997944012,
+      "total_sec": 4.206461399997352,
+      "execution_sec": 0.0021859999978914857
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(Highschooler.ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT COUNT(*) FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:53:22.558335",
+    "example_index": 864,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "Show the names and grades of each high schooler.",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2757285000116099,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3885945999936666,
+      "sqlgen_contract_sec": 0.35360750000108965,
+      "sqlgen_oneshot_sec": 0.35501319999457337,
+      "contract_validate_sec": 5.8399979025125504e-05,
+      "choose_judge_sec": 0.12993049999931827,
+      "total_sec": 4.512218900024891,
+      "execution_sec": 0.0037428000068757683
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.name",
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT name, grade FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT name, grade FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT name, grade FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:53:27.211162",
+    "example_index": 865,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "What are the names and grades for each high schooler?",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2729250999982469,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.267713300010655,
+      "sqlgen_contract_sec": 0.3518417000013869,
+      "sqlgen_oneshot_sec": 0.3582687000161968,
+      "contract_validate_sec": 3.680001827888191e-05,
+      "choose_judge_sec": 0.12963529999251477,
+      "total_sec": 4.3872589000093285,
+      "execution_sec": 0.002268200012622401
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.name",
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT name, grade FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT name, grade FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT name, grade FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:53:31.622680",
+    "example_index": 866,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "Show all the grades of the high schoolers.",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.1552372000005562,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.136911500012502,
+      "sqlgen_contract_sec": 0.3366808000137098,
+      "sqlgen_oneshot_sec": 0.3323903000273276,
+      "contract_validate_sec": 4.650000482797623e-05,
+      "choose_judge_sec": 0.1206499999971129,
+      "total_sec": 4.089428400009638,
+      "execution_sec": 0.0023762000200804323
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT DISTINCT grade FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT DISTINCT grade FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT DISTINCT grade FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.8
+  },
+  {
+    "timestamp": "2026-01-07T13:53:35.734992",
+    "example_index": 867,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "What is the grade of each high schooler?",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2743605000141542,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4460569999937434,
+      "sqlgen_contract_sec": 0.33256099998834543,
+      "sqlgen_oneshot_sec": 0.3520753000047989,
+      "contract_validate_sec": 4.2400002712383866e-05,
+      "choose_judge_sec": 0.1447821999900043,
+      "total_sec": 4.557844999973895,
+      "execution_sec": 0.0024256999895442277
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.name",
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "oneshot",
+      "candidate_sql_contract": "SELECT DISTINCT grade FROM Highschooler;",
+      "candidate_sql_oneshot": "SELECT name, grade FROM Highschooler;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT name, grade FROM Highschooler;",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.6666666666666666
+  },
+  {
+    "timestamp": "2026-01-07T13:53:40.318446",
+    "example_index": 868,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "What grade is Kyle in?",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3327573999995366,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3274037999799475,
+      "sqlgen_contract_sec": 0.4179545000079088,
+      "sqlgen_oneshot_sec": 0.41037929998128675,
+      "contract_validate_sec": 4.1099992813542485e-05,
+      "choose_judge_sec": 0.1289600000018254,
+      "total_sec": 4.625709999992978,
+      "execution_sec": 0.002310699986992404
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [
+        "Highschooler.name = 'Kyle'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+      "candidate_sql_oneshot": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7142857142857143
+  },
+  {
+    "timestamp": "2026-01-07T13:53:44.968136",
+    "example_index": 869,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "Return the grade for the high schooler named Kyle.",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.332428699999582,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3308483000146225,
+      "sqlgen_contract_sec": 0.41752529999939725,
+      "sqlgen_oneshot_sec": 0.4146185999852605,
+      "contract_validate_sec": 6.10999995842576e-05,
+      "choose_judge_sec": 0.1285234999959357,
+      "total_sec": 4.633733999973629,
+      "execution_sec": 0.004077599995071068
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.grade"
+      ],
+      "joins": [],
+      "conditions": [
+        "Highschooler.name = 'Kyle'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+      "candidate_sql_oneshot": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT grade FROM Highschooler WHERE name = 'Kyle';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.75
+  },
+  {
+    "timestamp": "2026-01-07T13:53:49.632960",
+    "example_index": 870,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 862 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_network_1_missing.json",
+    "question": "Show the names of all high schoolers in grade 10.",
+    "db_id": "network_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:53:13.840975",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 862,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_network_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3351039000262972,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3528736000007484,
+      "sqlgen_contract_sec": 0.4358823999937158,
+      "sqlgen_oneshot_sec": 0.4298672000004444,
+      "contract_validate_sec": 4.67000063508749e-05,
+      "choose_judge_sec": 0.1256555000145454,
+      "total_sec": 4.688306299998658,
+      "execution_sec": 0.003055299981497228
+    },
+    "plan": {
+      "tables": [
+        "Highschooler"
+      ],
+      "columns": [
+        "Highschooler.name"
+      ],
+      "joins": [],
+      "conditions": [
+        "Highschooler.grade = 10"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT name FROM Highschooler WHERE grade = 10;",
+      "candidate_sql_oneshot": "SELECT name FROM Highschooler WHERE grade = 10;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT name FROM Highschooler WHERE grade = 10;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 0.7777777777777778
+  }
+]

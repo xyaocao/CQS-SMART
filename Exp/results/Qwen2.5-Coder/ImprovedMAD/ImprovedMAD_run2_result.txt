@@ -1,0 +1,15 @@
+'''
+Evaluating the latest version of improvedmad_engine with history_advisor(not complete version) with prompts_improvedMAD_new.
+'''
+Final Execution Accuracy: 841/1034 = 0.8133
+
+Latency summary (total | avg per example | examples):
+  Planner           :  2674.96s |     2.59s | 1034
+  Debate            :     0.00s |     0.00s | 1034
+  Contract reasoner :  3217.15s |     3.11s | 1034
+  Contract validate :     0.08s |     0.00s | 1034
+  SQLGen (contract) :   773.93s |     0.75s | 1034
+  SQLGen (oneshot)  :   774.36s |     0.75s | 1034
+  Choose (judge)    :   147.27s |     0.15s | 1011
+  Execution         :    16.80s |     0.02s | 1034
+  Whole system      : 15234.53s |     7.37s | 2068

@@ -1,0 +1,778 @@
+[
+  {
+    "timestamp": "2026-01-07T13:45:45.237358",
+    "example_index": 297,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "How many documents do we have?",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.4699717999901623,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.143384499999229,
+      "sqlgen_contract_sec": 0.30639870002050884,
+      "sqlgen_oneshot_sec": 0.30588349999743514,
+      "contract_validate_sec": 0.00023780000628903508,
+      "choose_judge_sec": 0.1335630000103265,
+      "total_sec": 4.370771199988667,
+      "execution_sec": 0.002601099986350164
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(Documents.Document_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) FROM Documents;",
+      "candidate_sql_oneshot": "SELECT COUNT(*) FROM Documents;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) FROM Documents;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:45:49.628496",
+    "example_index": 298,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "Count the number of documents.",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.2604814999795053,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.083692799991695,
+      "sqlgen_contract_sec": 0.30666300002485514,
+      "sqlgen_oneshot_sec": 0.31348300000536256,
+      "contract_validate_sec": 6.989997928030789e-05,
+      "choose_judge_sec": 0.13506229998893104,
+      "total_sec": 4.106956200033892,
+      "execution_sec": 0.002176800015149638
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        "COUNT(Documents.Document_ID)"
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) FROM Documents;",
+      "candidate_sql_oneshot": "SELECT COUNT(*) FROM Documents;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) FROM Documents;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:45:53.767034",
+    "example_index": 299,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "List document IDs, document names, and document descriptions for all documents.",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.29910590001964,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.3762414999946486,
+      "sqlgen_contract_sec": 0.4510983999934979,
+      "sqlgen_oneshot_sec": 0.4413159999821801,
+      "contract_validate_sec": 5.210001836530864e-05,
+      "choose_judge_sec": 0.12844559998484328,
+      "total_sec": 4.704173200007062,
+      "execution_sec": 0.0021558000007644296
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_ID",
+        "Documents.Document_Name",
+        "Documents.Document_Description"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_ID, Document_Name, Document_Description \nFROM Documents;",
+      "candidate_sql_oneshot": "SELECT Document_ID, Document_Name, Document_Description\nFROM Documents;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_ID, Document_Name, Document_Description \nFROM Documents;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:45:58.593783",
+    "example_index": 300,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "What are the ids, names, and descriptions for all documents?",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3044058999803383,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.312767499999609,
+      "sqlgen_contract_sec": 0.45445019999169745,
+      "sqlgen_oneshot_sec": 0.445961499994155,
+      "contract_validate_sec": 5.140001303516328e-05,
+      "choose_judge_sec": 0.13094629999250174,
+      "total_sec": 4.656928699958371,
+      "execution_sec": 0.003284799982793629
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_ID",
+        "Documents.Document_Name",
+        "Documents.Document_Description"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_ID, Document_Name, Document_Description \nFROM Documents;",
+      "candidate_sql_oneshot": "SELECT Document_ID, Document_Name, Document_Description\nFROM Documents;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_ID, Document_Name, Document_Description \nFROM Documents;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:46:03.273294",
+    "example_index": 301,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "What is the document name and template id for document with description with the letter 'w' in it?",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3638501000241376,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.421669000003021,
+      "sqlgen_contract_sec": 0.5405226000002585,
+      "sqlgen_oneshot_sec": 0.5397616999980528,
+      "contract_validate_sec": 5.2700022934004664e-05,
+      "choose_judge_sec": 0.1292379000224173,
+      "total_sec": 5.002684400038561,
+      "execution_sec": 0.0026328000240027905
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_Name",
+        "Documents.Template_ID"
+      ],
+      "joins": [],
+      "conditions": [
+        "Documents.Document_Description LIKE '%w%'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_Name, Template_ID \nFROM Documents \nWHERE Document_Description LIKE '%w%';",
+      "candidate_sql_oneshot": "SELECT Document_Name, Template_ID\nFROM Documents\nWHERE Document_Description LIKE '%w%';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_Name, Template_ID \nFROM Documents \nWHERE Document_Description LIKE '%w%';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:46:08.300310",
+    "example_index": 302,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "Return the names and template ids for documents that contain the letter w in their description.",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.3671394000120927,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.460780099994736,
+      "sqlgen_contract_sec": 0.5431662000191864,
+      "sqlgen_oneshot_sec": 0.5419378999795299,
+      "contract_validate_sec": 8.019999950192869e-05,
+      "choose_judge_sec": 0.127885400026571,
+      "total_sec": 5.049470400001155,
+      "execution_sec": 0.0033078999840654433
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_Name",
+        "Documents.Template_ID"
+      ],
+      "joins": [],
+      "conditions": [
+        "Documents.Document_Description LIKE '%w%'"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_Name, Template_ID \nFROM Documents \nWHERE Document_Description LIKE '%w%';",
+      "candidate_sql_oneshot": "SELECT Document_Name, Template_ID\nFROM Documents\nWHERE Document_Description LIKE '%w%';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_Name, Template_ID \nFROM Documents \nWHERE Document_Description LIKE '%w%';",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:46:13.373743",
+    "example_index": 303,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "What is the document id, template id and description for document named \"Robbin CV\"?",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.5932365999906324,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.4452185000118334,
+      "sqlgen_contract_sec": 0.6834012999897823,
+      "sqlgen_oneshot_sec": 0.6159272000077181,
+      "contract_validate_sec": 5.23999915458262e-05,
+      "choose_judge_sec": 0.13022759999148548,
+      "total_sec": 7.475095700006932,
+      "execution_sec": 0.0022800000151619315
+    },
+    "plan": {
+      "tables": [
+        "Documents",
+        "Templates"
+      ],
+      "columns": [
+        "Documents.Document_ID",
+        "Templates.Template_ID",
+        "Documents.Document_Description"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "Templates",
+          "condition": "Documents.Template_ID = Templates.Template_ID"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "Documents.Document_Name",
+          "operator": "=",
+          "value": "'Robbin CV'"
+        }
+      ],
+      "aggregations": [],
+      "order_by": "",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_ID, Template_ID, Document_Description \nFROM Documents \nWHERE LOWER(Document_Name) = LOWER('Robbin CV');",
+      "candidate_sql_oneshot": "SELECT Document_ID, Template_ID, Document_Description\nFROM Documents\nWHERE Document_Name = 'Robbin CV';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_ID, Template_ID, Document_Description \nFROM Documents \nWHERE LOWER(Document_Name) = LOWER('Robbin CV');",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:46:20.871222",
+    "example_index": 304,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "Return the document id, template id, and description for the document with the name Robbin CV.",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 1.4789920000184793,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.618704599997727,
+      "sqlgen_contract_sec": 0.6789461000007577,
+      "sqlgen_oneshot_sec": 0.6153100999945309,
+      "contract_validate_sec": 7.37000082153827e-05,
+      "choose_judge_sec": 0.1422063000209164,
+      "total_sec": 5.5430067000270355,
+      "execution_sec": 0.003480600018519908
+    },
+    "plan": {
+      "tables": [
+        "Documents"
+      ],
+      "columns": [
+        "Documents.Document_ID",
+        "Documents.Template_ID",
+        "Documents.Document_Description"
+      ],
+      "joins": [],
+      "conditions": [
+        "Documents.Document_Name = 'Robbin CV'"
+      ],
+      "aggregations": [],
+      "order_by": "",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Document_ID, Template_ID, Document_Description \nFROM Documents \nWHERE LOWER(Document_Name) = LOWER('Robbin CV');",
+      "candidate_sql_oneshot": "SELECT Document_ID, Template_ID, Document_Description\nFROM Documents\nWHERE Document_Name = 'Robbin CV';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Document_ID, Template_ID, Document_Description \nFROM Documents \nWHERE LOWER(Document_Name) = LOWER('Robbin CV');",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:46:26.439027",
+    "example_index": 305,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 297 --max_examples 9 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+    "question": "How many different templates do all document use?",
+    "db_id": "cre_Doc_Template_Mgt",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:45.195065",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 297,
+      "max_examples": 9,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_cre_Doc_Template_Mgt_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.5131642000051215,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.917333099991083,
+      "sqlgen_contract_sec": 0.40263849997427315,
+      "sqlgen_oneshot_sec": 0.39886139999725856,
+      "contract_validate_sec": 6.200000643730164e-05,
+      "choose_judge_sec": 0.13088479998987168,
+      "total_sec": 6.37062820000574,
+      "execution_sec": 0.002347800007555634
+    },
+    "plan": {
+      "tables": [
+        "Documents",
+        "Templates"
+      ],
+      "columns": [
+        "Documents.Template_ID",
+        "Templates.Template_Type_Code"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "Templates",
+          "condition": "Documents.Template_ID = Templates.Template_ID"
+        }
+      ],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "Templates.Template_Type_Code",
+          "distinct": true
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(DISTINCT Template_ID) FROM Documents;",
+      "candidate_sql_oneshot": "SELECT COUNT(DISTINCT Template_ID) FROM Documents;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(DISTINCT Template_ID) FROM Documents;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  }
+]

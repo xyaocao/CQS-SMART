@@ -1,0 +1,122 @@
+[
+  {
+    "timestamp": "2026-01-07T13:45:14.268681",
+    "example_index": 178,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 178 --max_examples 1 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_car_1_missing.json",
+    "question": "What are the ids and names of all countries that either have more than 3 car makers or produce fiat model ?",
+    "db_id": "car_1",
+    "inputs": {
+      "timestamp": "2026-01-07T13:45:14.222166",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 178,
+      "max_examples": 1,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_car_1_missing.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 6.052145399997244,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 5.497606599994469,
+      "sqlgen_contract_sec": 2.038412399997469,
+      "sqlgen_oneshot_sec": 2.105708599992795,
+      "contract_validate_sec": 0.0005118999979458749,
+      "choose_judge_sec": 0.1835103000048548,
+      "total_sec": 15.891495799995027,
+      "execution_sec": 0.002838399988831952
+    },
+    "plan": {
+      "tables": [
+        "countries",
+        "car_makers",
+        "model_list"
+      ],
+      "columns": [
+        "countries.CountryId",
+        "countries.CountryName",
+        "car_makers.Id",
+        "model_list.Model"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "car_makers",
+          "condition": "countries.CountryId = car_makers.Country"
+        },
+        {
+          "type": "INNER JOIN",
+          "table": "model_list",
+          "condition": "car_makers.Id = model_list.Maker"
+        }
+      ],
+      "conditions": [
+        {
+          "type": "OR",
+          "conditions": [
+            {
+              "type": "GROUP BY",
+              "column": "countries.CountryId",
+              "having": "COUNT(car_makers.Id) > 3"
+            },
+            {
+              "type": "WHERE",
+              "condition": "model_list.Model = 'fiat'"
+            }
+          ]
+        }
+      ],
+      "aggregations": [
+        {
+          "type": "GROUP BY",
+          "columns": [
+            "countries.CountryId",
+            "countries.CountryName"
+          ]
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "oneshot",
+      "candidate_sql_contract": "SELECT CountryId, CountryName \nFROM countries \nWHERE CountryId IN (\n    SELECT Country \n    FROM car_makers \n    GROUP BY Country \n    HAVING COUNT(*) > 3\n) \nUNION \nSELECT CountryId, CountryName \nFROM countries \nWHERE CountryId IN (\n    SELECT Country \n    FROM car_makers \n    WHERE Id IN (\n        SELECT Maker \n        FROM model_list \n        WHERE Model = 'Fiat'\n    )\n);",
+      "candidate_sql_oneshot": "SELECT c.CountryId, c.CountryName\nFROM countries c\nWHERE c.CountryId IN (\n    SELECT cm.Country\n    FROM car_makers cm\n    GROUP BY cm.Country\n    HAVING COUNT(cm.Id) > 3\n)\nUNION\nSELECT c.CountryId, c.CountryName\nFROM countries c\nJOIN car_makers cm ON c.CountryId = cm.Country\nJOIN model_list ml ON cm.Id = ml.Maker\nWHERE ml.Model = 'Fiat';",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT c.CountryId, c.CountryName\nFROM countries c\nWHERE c.CountryId IN (\n    SELECT cm.Country\n    FROM car_makers cm\n    GROUP BY cm.Country\n    HAVING COUNT(cm.Id) > 3\n)\nUNION\nSELECT c.CountryId, c.CountryName\nFROM countries c\nJOIN car_makers cm ON c.CountryId = cm.Country\nJOIN model_list ml ON cm.Id = ml.Maker\nWHERE ml.Model = 'Fiat';",
+    "skeptic_feedback": {},
+    "exec_match": false,
+    "accuracy_so_far": 0.0
+  }
+]

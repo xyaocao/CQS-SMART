@@ -1,0 +1,918 @@
+[
+  {
+    "timestamp": "2026-01-07T13:56:18.663065",
+    "example_index": 852,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "List the record company shared by the most number of orchestras.",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.481077800010098,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.4858122000005096,
+      "sqlgen_contract_sec": 0.6681280999910086,
+      "sqlgen_oneshot_sec": 0.6600014999858104,
+      "contract_validate_sec": 0.00032259998260997236,
+      "choose_judge_sec": 0.1452893999812659,
+      "total_sec": 6.452995999978157,
+      "execution_sec": 0.002933399984613061
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Record_Company"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "orchestra.Record_Company",
+          "alias": "record_company_count"
+        }
+      ],
+      "group_by": [
+        "orchestra.Record_Company"
+      ],
+      "order_by": "record_company_count DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "candidate_sql_oneshot": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:56:25.139053",
+    "example_index": 853,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "What is the record company used by the greatest number of orchestras?",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.3405631000059657,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 2.600881400023354,
+      "sqlgen_contract_sec": 0.6615663999982644,
+      "sqlgen_oneshot_sec": 0.6575428000069223,
+      "contract_validate_sec": 8.800000068731606e-05,
+      "choose_judge_sec": 0.14147240002057515,
+      "total_sec": 6.411742900003446,
+      "execution_sec": 0.0033722000080160797
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Record_Company",
+        "orchestra.Orchestra_ID"
+      ],
+      "joins": [],
+      "conditions": [],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "orchestra.Orchestra_ID",
+          "group_by": "orchestra.Record_Company"
+        }
+      ],
+      "order_by": "COUNT(orchestra.Orchestra_ID) DESC",
+      "limit": 1
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "candidate_sql_oneshot": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Record_Company\nFROM orchestra\nGROUP BY Record_Company\nORDER BY COUNT(*) DESC\nLIMIT 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:56:31.597875",
+    "example_index": 854,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "List the names of orchestras that have no performance.",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.4697295000078157,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.1113063000084367,
+      "sqlgen_contract_sec": 0.5483154999965336,
+      "sqlgen_oneshot_sec": 0.5394431999884546,
+      "contract_validate_sec": 9.589997353032231e-05,
+      "choose_judge_sec": 0.14143629997852258,
+      "total_sec": 6.820429499988677,
+      "execution_sec": 0.0030439000111073256
+    },
+    "plan": {
+      "tables": [
+        "orchestra",
+        "performance"
+      ],
+      "columns": [
+        "orchestra.Orchestra"
+      ],
+      "joins": [
+        {
+          "type": "LEFT JOIN",
+          "table": "performance",
+          "on": "orchestra.Orchestra_ID = performance.Orchestra_ID"
+        }
+      ],
+      "conditions": [
+        {
+          "type": "IS NULL",
+          "column": "performance.Performance_ID"
+        }
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+      "candidate_sql_oneshot": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:56:38.557113",
+    "example_index": 855,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "What are the orchestras that do not have any performances?",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.5665645000117365,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.035227300017141,
+      "sqlgen_contract_sec": 0.5416243999789003,
+      "sqlgen_oneshot_sec": 0.5454598999931477,
+      "contract_validate_sec": 9.089999366551638e-05,
+      "choose_judge_sec": 0.14329139998881146,
+      "total_sec": 6.841174500004854,
+      "execution_sec": 0.0028534000157378614
+    },
+    "plan": {
+      "tables": [
+        "orchestra",
+        "performance"
+      ],
+      "columns": [
+        "orchestra.Orchestra"
+      ],
+      "joins": [
+        {
+          "type": "LEFT JOIN",
+          "table": "performance",
+          "on": "orchestra.Orchestra_ID = performance.Orchestra_ID"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "performance.Performance_ID",
+          "operator": "IS",
+          "value": "NULL"
+        }
+      ],
+      "aggregations": [],
+      "order_by": "",
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+      "candidate_sql_oneshot": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Orchestra\nFROM orchestra\nWHERE Orchestra_ID NOT IN (SELECT Orchestra_ID FROM performance);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:56:45.422529",
+    "example_index": 856,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "Show the record companies shared by orchestras founded before 2003 and after 2003.",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.1144844999944326,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.3093343999935314,
+      "sqlgen_contract_sec": 1.0544472000037786,
+      "sqlgen_oneshot_sec": 1.052999000006821,
+      "contract_validate_sec": 9.190000128000975e-05,
+      "choose_judge_sec": 0.14573719998588786,
+      "total_sec": 7.685218300000997,
+      "execution_sec": 0.003057599999010563
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Record_Company"
+      ],
+      "joins": [],
+      "conditions": [
+        "orchestra.Year_of_Founded < 2003",
+        "orchestra.Record_Company IN (SELECT Record_Company FROM orchestra WHERE Year_of_Founded > 2003)"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded < 2003\nINTERSECT\nSELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded > 2003;",
+      "candidate_sql_oneshot": "SELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded < 2003\nINTERSECT\nSELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded > 2003;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded < 2003\nINTERSECT\nSELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded > 2003;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:56:53.134458",
+    "example_index": 857,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "What are the record companies that are used by both orchestras founded before 2003 and those founded after 2003?",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.1184253999963403,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.292275400017388,
+      "sqlgen_contract_sec": 1.0554986000061035,
+      "sqlgen_oneshot_sec": 1.0521027000213508,
+      "contract_validate_sec": 8.820000221021473e-05,
+      "choose_judge_sec": 0.14483519998611882,
+      "total_sec": 7.672317799995653,
+      "execution_sec": 0.002968999993754551
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Record_Company"
+      ],
+      "joins": [],
+      "conditions": [
+        "orchestra.Year_of_Founded < 2003",
+        "orchestra.Record_Company IN (SELECT Record_Company FROM orchestra WHERE Year_of_Founded > 2003)"
+      ],
+      "aggregations": [],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT Record_Company \nFROM orchestra \nWHERE Year_of_Founded < 2003 \nINTERSECT \nSELECT Record_Company \nFROM orchestra \nWHERE Year_of_Founded >= 2003;",
+      "candidate_sql_oneshot": "SELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded < 2003\nINTERSECT\nSELECT Record_Company\nFROM orchestra\nWHERE Year_of_Founded >= 2003;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT Record_Company \nFROM orchestra \nWHERE Year_of_Founded < 2003 \nINTERSECT \nSELECT Record_Company \nFROM orchestra \nWHERE Year_of_Founded >= 2003;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:57:00.830626",
+    "example_index": 858,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "Find the number of orchestras whose record format is \"CD\" or \"DVD\".",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.6242221999855246,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.6657049000205006,
+      "sqlgen_contract_sec": 0.54115649999585,
+      "sqlgen_oneshot_sec": 0.5397220999875572,
+      "contract_validate_sec": 5.740000051446259e-05,
+      "choose_judge_sec": 0.1486295000067912,
+      "total_sec": 7.526442700036569,
+      "execution_sec": 0.0023421000223606825
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Orchestra_ID"
+      ],
+      "joins": [],
+      "conditions": [
+        "orchestra.Major_Record_Format = 'CD'",
+        "orchestra.Major_Record_Format = 'DVD'"
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "orchestra.Orchestra_ID",
+          "alias": "number_of_orchestras"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+      "candidate_sql_oneshot": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:57:08.382629",
+    "example_index": 859,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "Count the number of orchestras that have CD or DVD as their record format.",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 2.25298560000374,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.471204300003592,
+      "sqlgen_contract_sec": 0.5426215000043157,
+      "sqlgen_oneshot_sec": 0.5395862000004854,
+      "contract_validate_sec": 0.00011930000619031489,
+      "choose_judge_sec": 0.14890159998321906,
+      "total_sec": 6.964211000013165,
+      "execution_sec": 0.0026031000015791506
+    },
+    "plan": {
+      "tables": [
+        "orchestra"
+      ],
+      "columns": [
+        "orchestra.Orchestra_ID"
+      ],
+      "joins": [],
+      "conditions": [
+        "orchestra.Major_Record_Format = 'CD'",
+        "orchestra.Major_Record_Format = 'DVD'"
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "orchestra.Orchestra_ID"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+      "candidate_sql_oneshot": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT COUNT(*) \nFROM orchestra \nWHERE Major_Record_Format IN ('CD', 'DVD');",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:57:15.372009",
+    "example_index": 860,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "Show the years in which orchestras that have given more than one performance are founded.",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.471438400010811,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.4672321999969427,
+      "sqlgen_contract_sec": 0.995318800007226,
+      "sqlgen_oneshot_sec": 1.0708953999856021,
+      "contract_validate_sec": 6.049999501556158e-05,
+      "choose_judge_sec": 0.16147380002075806,
+      "total_sec": 9.174827300012112,
+      "execution_sec": 0.0026562999992165715
+    },
+    "plan": {
+      "tables": [
+        "orchestra",
+        "performance"
+      ],
+      "columns": [
+        "orchestra.Year_of_Founded"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "performance",
+          "on": "orchestra.Orchestra_ID = performance.Orchestra_ID"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "performance.Orchestra_ID",
+          "operator": "GROUP BY",
+          "value": "HAVING COUNT(performance.Performance_ID) > 1"
+        }
+      ],
+      "aggregations": [
+        {
+          "column": "performance.Orchestra_ID",
+          "function": "COUNT",
+          "alias": "performance_count"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "oneshot",
+      "candidate_sql_contract": "SELECT DISTINCT o.Year_of_Founded\nFROM orchestra o\nJOIN performance p ON o.Orchestra_ID = p.Orchestra_ID\nGROUP BY o.Orchestra_ID\nHAVING COUNT(*) > 1;",
+      "candidate_sql_oneshot": "SELECT DISTINCT o.Year_of_Founded\nFROM orchestra o\nJOIN performance p ON o.Orchestra_ID = p.Orchestra_ID\nGROUP BY o.Orchestra_ID\nHAVING COUNT(p.Performance_ID) > 1;",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT DISTINCT o.Year_of_Founded\nFROM orchestra o\nJOIN performance p ON o.Orchestra_ID = p.Orchestra_ID\nGROUP BY o.Orchestra_ID\nHAVING COUNT(p.Performance_ID) > 1;",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  },
+  {
+    "timestamp": "2026-01-07T13:57:24.572361",
+    "example_index": 861,
+    "command_line": "Exp/evaluation.py --loop_mode ImprovedMAD --dataset spider --split dev --start 852 --max_examples 10 --planner_temperature 0.0 --skeptic_temperature 0.0 --reasoner_temperature 0.0 --max_tokens 2000 --max_debate_rounds 3 --min_debate_rounds 1 --enable_early_termination --log_path Exp/logs/Qwen2.5-Coder/test/improvedmad_new_orchestra_missing_tail.json",
+    "question": "What are years of founding for orchestras that have had more than a single performance?",
+    "db_id": "orchestra",
+    "inputs": {
+      "timestamp": "2026-01-07T13:56:18.616254",
+      "dataset": "spider",
+      "split": "dev",
+      "start": 852,
+      "max_examples": 10,
+      "planner_temperature": 0.0,
+      "max_tokens": 2000,
+      "skeptic_temperature": 0.0,
+      "reasoner_temperature": 0.0,
+      "loop_mode": "ImprovedMAD",
+      "max_debate_rounds": 3,
+      "enable_early_termination": true,
+      "min_debate_rounds": 1,
+      "log_path": "Exp\\logs\\Qwen2.5-Coder\\test\\improvedmad_new_orchestra_missing_tail.json",
+      "save_schema": false,
+      "skeptic_questions_path": "Exp\\critical_questions.txt",
+      "input_mode": "batch",
+      "planner_max_tokens": null,
+      "skeptic_max_tokens": null,
+      "defender_max_tokens": null,
+      "reasoner_max_tokens": null
+    },
+    "latency": {
+      "planner_sec": 3.6829545999935362,
+      "debate_sec": 0.0,
+      "contract_reasoner_sec": 3.444056600012118,
+      "sqlgen_contract_sec": 0.9720952000061516,
+      "sqlgen_oneshot_sec": 0.9494170999969356,
+      "contract_validate_sec": 5.91999851167202e-05,
+      "choose_judge_sec": 0.14473239998915233,
+      "total_sec": 9.20333139997092,
+      "execution_sec": 0.0037444999907165766
+    },
+    "plan": {
+      "tables": [
+        "orchestra",
+        "performance"
+      ],
+      "columns": [
+        "orchestra.Year_of_Founded"
+      ],
+      "joins": [
+        {
+          "type": "INNER JOIN",
+          "table": "performance",
+          "on": "orchestra.Orchestra_ID = performance.Orchestra_ID"
+        }
+      ],
+      "conditions": [
+        {
+          "column": "performance.Performance_ID",
+          "operator": ">",
+          "value": 1
+        }
+      ],
+      "aggregations": [
+        {
+          "function": "COUNT",
+          "column": "performance.Performance_ID",
+          "alias": "performance_count"
+        },
+        {
+          "function": "GROUP BY",
+          "column": "orchestra.Orchestra_ID"
+        }
+      ],
+      "order_by": null,
+      "limit": null
+    },
+    "reasoner_decision": {
+      "contract_verdict": "revise",
+      "contract_validated": {
+        "contract_verdict": "revise",
+        "from": [],
+        "select": [],
+        "where": [],
+        "having": [],
+        "group_by": [],
+        "joins": [],
+        "notes": [
+          "select_missing_output"
+        ]
+      },
+      "chosen": "contract",
+      "candidate_sql_contract": "SELECT DISTINCT Year_of_Founded\nFROM orchestra\nWHERE Orchestra_ID IN (\n    SELECT Orchestra_ID\n    FROM performance\n    GROUP BY Orchestra_ID\n    HAVING COUNT(*) > 1\n);",
+      "candidate_sql_oneshot": "SELECT Year_of_Founded\nFROM orchestra\nWHERE Orchestra_ID IN (\n    SELECT Orchestra_ID\n    FROM performance\n    GROUP BY Orchestra_ID\n    HAVING COUNT(*) > 1\n);",
+      "exec_ok_contract": true,
+      "exec_ok_oneshot": true,
+      "exec_err_contract": null,
+      "exec_err_oneshot": null,
+      "heuristics_applied": []
+    },
+    "final_sql": "SELECT DISTINCT Year_of_Founded\nFROM orchestra\nWHERE Orchestra_ID IN (\n    SELECT Orchestra_ID\n    FROM performance\n    GROUP BY Orchestra_ID\n    HAVING COUNT(*) > 1\n);",
+    "skeptic_feedback": {},
+    "exec_match": true,
+    "accuracy_so_far": 1.0
+  }
+]
