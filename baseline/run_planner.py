@@ -14,7 +14,8 @@ if str(baseline_dir) not in sys.path:
 from baseline.dataloader import load_spider, get_schema_from_spider, load_bird, get_schema_from_bird
 from baseline.planneragent import PlannerGraph
 from baseline.state import PlannerState
-from baseline.llm import LLMConfig
+from baseline.llm import LLMConfig, get_ollama_config
+from baseline.exec_match import exec_sql, exec_match
 
 def project_root() -> str:
     """Get the root directory of the project."""
@@ -80,24 +81,45 @@ def build_schema_resolver(dataset: str, tables_meta_path: str | None) -> Callabl
     return resolver
 
 
-def save_log(log_path: str, command_line: str, inputs: dict, plan: dict, sql: str, schema_text: str = None, latency_sec: float | None = None):
+def get_db_root(dataset: str, split: str) -> Path:
+    """Get the database root directory for a dataset."""
+    root = project_root()
+    if dataset == "spider":
+        return Path(root) / "Data" / "spider_data" / "database"
+    elif dataset == "bird":
+        return Path(root) / "Data" / "BIRD" / split / "databases"
+    else:
+        raise ValueError(f"Unsupported dataset: {dataset}")
+
+
+def save_log(log_path: str, command_line: str, inputs: dict, plan: dict, sql: str, schema_text: str = None,
+             latency_sec: float | None = None, is_match: bool | None = None, accuracy_so_far: float | None = None,
+             gold_sql: str = None, execution_error: str = None):
     """Save the execution log to a JSON file."""
     log_entry = {
         "timestamp": datetime.now().isoformat(),
         "command_line": command_line,
         "inputs": inputs,
-        # "question": question,
-        # "db_id": db_id,
-        # "dataset": dataset,
-        # "split": split,
         "plan": plan,
         "sql": sql,
     }
     if latency_sec is not None:
         log_entry["latency_sec"] = latency_sec
-    
+
     if schema_text:
         log_entry["schema_text"] = schema_text
+
+    if is_match is not None:
+        log_entry["exec_match"] = is_match
+
+    if accuracy_so_far is not None:
+        log_entry["accuracy_so_far"] = accuracy_so_far
+
+    if gold_sql is not None:
+        log_entry["gold_sql"] = gold_sql
+
+    if execution_error is not None:
+        log_entry["execution_error"] = execution_error
     
     # Create log directory if it doesn't exist
     log_file = Path(log_path)
@@ -136,14 +158,28 @@ def main():
     parser.add_argument("--input_mode", choices=["single", "batch"], default="single", help="Control how inputs are provided to the planner",)
     parser.add_argument("--start", type=int, default=0, help="Start index when running in batch mode (0-based)",)
     parser.add_argument("--num_examples", type=int, default=None, help="Number of examples to run in batch mode (processes all remaining if omitted or <= 0)",)
+    # Ollama (local inference)
+    parser.add_argument("--use_ollama", action="store_true",
+                        help="Use local Ollama instead of SwissAI API")
+    parser.add_argument("--ollama_model", type=str, default="ticlazau/qwen2.5-coder-7b-instruct",
+                        help="Ollama model name (default: ticlazau/qwen2.5-coder-7b-instruct)")
     args = parser.parse_args()
 
     tables_meta_path = get_table_paths(args.dataset, args.split, args.tables_path)
     schema_resolver = build_schema_resolver(args.dataset, tables_meta_path)
 
-    graph = PlannerGraph(
-        LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
-    )
+    # Setup LLM config
+    if args.use_ollama:
+        llm_config = get_ollama_config(
+            model=args.ollama_model,
+            temperature=args.temperature,
+            max_tokens=args.max_tokens
+        )
+        print(f"Using Ollama with model: {args.ollama_model}")
+    else:
+        llm_config = LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
+
+    graph = PlannerGraph(llm_config)
     command_line = " ".join(sys.argv)
 
     if args.log_path:
@@ -196,32 +232,66 @@ def main():
     else:
         end = min(len(examples), start + args.num_examples)
 
+    # Get database root for execution
+    db_root = get_db_root(args.dataset, args.split)
+
     base_inputs = vars(args).copy()
     processed = 0
+    correct = 0
+    total = 0
+
+    print(f"\nRunning batch mode: {args.dataset}/{args.split}")
+    print(f"Examples: {start} to {end - 1}")
+    print(f"Log path: {log_path}")
+    print("-" * 50)
 
     for idx in range(start, end):
         example = examples[idx]
         question = example.get("question", "")
         db_id = example.get("db_id")
+        gold_sql = example.get("query", example.get("sql", ""))
         if not db_id:
             print(f"[WARN] Example {idx} missing db_id; skipping.")
             continue
 
         schema_text = schema_resolver(db_id)
         state = PlannerState(question=question, db_id=db_id, schema_text=schema_text)
+
+        execution_error = None
+        is_match = False
+        plan = {}
+        final_sql = ""
+
         try:
             start_time = time.perf_counter()
             out_dict = graph.invoke(state)
             latency = time.perf_counter() - start_time
             out = PlannerState(**out_dict)
+            plan = out.plan
+            final_sql = out.sql
         except Exception as exc:
             print(f"[ERROR] Failed to invoke planner for example {idx} ({db_id}): {exc}")
-            continue
+            latency = time.perf_counter() - start_time if 'start_time' in locals() else 0
+            execution_error = str(exc)
 
-        print(f"\n=== Example {idx} | db_id={db_id} ===")
-        print("Question:", question)
-        print("Plan:", out.plan)
-        print("SQL:", out.sql)
+        # Evaluate execution match
+        db_path = db_root / db_id / f"{db_id}.sqlite"
+        try:
+            gen_rows = exec_sql(str(db_path), final_sql)
+            gold_rows = exec_sql(str(db_path), gold_sql)
+            is_match, _ = exec_match(gen_rows, gold_rows, order_matters=False, match_mode="hard")
+        except Exception as e:
+            is_match = False
+            execution_error = str(e)
+
+        if is_match:
+            correct += 1
+        total += 1
+        accuracy = correct / total if total > 0 else 0.0
+
+        # Progress output
+        status = "+" if is_match else "X"
+        print(f"[{idx:4d}] {status} Acc: {accuracy:.2%} | {question[:60]}...")
 
         log_inputs = base_inputs.copy()
         log_inputs.update({"question": question, "db_id": db_id, "example_index": idx})
@@ -229,17 +299,24 @@ def main():
             log_path=log_path,
             command_line=command_line,
             inputs=log_inputs,
-            plan=out.plan,
-            sql=out.sql,
+            plan=plan,
+            sql=final_sql,
             schema_text=schema_text if args.save_schema else None,
             latency_sec=latency,
+            is_match=is_match,
+            accuracy_so_far=accuracy,
+            gold_sql=gold_sql,
+            execution_error=execution_error
         )
         processed += 1
 
-    if processed == 0:
-        print("No examples were successfully processed.")
-    else:
-        print(f"\nProcessed {processed} examples from index {start} to {end - 1}.")
+    # Final summary
+    print("\n" + "=" * 50)
+    print(f"Final Results:")
+    print(f"  Total: {total}")
+    print(f"  Correct: {correct}")
+    print(f"  Accuracy: {correct/total:.2%}" if total > 0 else "  Accuracy: N/A")
+    print(f"  Log: {log_path}")
 
 
 if __name__ == "__main__":

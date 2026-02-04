@@ -1,0 +1,5 @@
+""" Evaluate planner agent on slider_dev dataset using model "Qwen/Qwen2.5-Coder-14B-Instruct" """
+
+Execution Accuracy (1034 examples): 0.7186  (correct: 743)
+Average Latencies (s): generation=3.561, execution=0.014, total=3.584
+Total Latencies (s): generation=3682.292, execution=14.734, total=3705.863

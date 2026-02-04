@@ -1,0 +1,6 @@
+""" Evaluate baseagent on slider_dev dataset using model "Qwen/Qwen3-Next-80B-A3B-Instruct" """
+
+# Result from comparing execution results ignoring both orders of rows and columns
+Execution Accuracy (1034 examples): 0.8162  (correct: 844)
+Average Latencies (s): generation=0.301, execution=0.015, total=0.326
+Total Latencies (s): generation=311.268, execution=15.897, total=337.466

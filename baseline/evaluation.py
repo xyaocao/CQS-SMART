@@ -14,146 +14,21 @@ from baseline.planneragent import PlannerGraph
 from baseline.baseagent import BaseGraph
 from baseline.state import PlannerState, BaseState
 from baseline.llm import LLMConfig
-
+from baseline.exec_match import canonicalize_rows, get_spider_paths, get_dataset_paths, read_examples, parse_gold_sql, resolve_db_path, exec_sql
 # Reuse utilities from run_planner to get schema text and write logs
 from baseline.run_planner import get_table_paths 
 from baseline.run_planner import load_schema_text 
 from baseline.run_planner import save_log 
 from collections import Counter
 
-def project_root() -> str:
-    return os.path.dirname(os.path.dirname(__file__))
-
-def ignore_errors_decode(b: bytes) -> str:
-    return b.decode(errors='ignore')
-
-def exec_sql(db_path: str, sql: str) -> List[Tuple[Any, ...]]:
-    conn = sqlite3.connect(db_path)
-    conn.text_factory = ignore_errors_decode
-    cur = conn.cursor()
-    cur.execute(sql)
-    rows = cur.fetchall()
-    conn.close()
-    return rows
-
-def normalize_cell(value: Any) -> Any:
-    """
-    Bring SQL cell values to a comparable form.
-    Floats are rounded to reduce tiny precision diffs; bytes decode to str.
-    """
-    if isinstance(value, float):
-        # Spider answers rarely need >6 decimals; rounding avoids noise
-        return round(value, 6)
-    if isinstance(value, (bytes, bytearray)):
-        return value.decode(errors="ignore")
-    return value
-
-def canonicalize_row(row: Iterable[Any]) -> Tuple[Any, ...]:
-    """
-    Sort row values so column ordering differences do not impact equality.
-    """
-    normalized = [normalize_cell(v) for v in row]
-    try:
-        return tuple(sorted(normalized))
-    except TypeError:
-        # As a last resort compare via str() to keep determinism
-        return tuple(sorted(str(v) for v in normalized))
-
-def canonicalize_rows(rows: Iterable[Tuple[Any, ...]]) -> Counter:
-    """
-    Convert a sequence of SQL rows to a multiset representation that
-    ignores both row order and column order.
-    """
-    return Counter(canonicalize_row(row) for row in rows)
-
-def read_examples(path: str) -> list[dict]:
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-def parse_gold_sql(path: str) -> List[Tuple[str, str]]:
-    """
-    Parse dev_gold.sql lines as-is, preserving duplicates:
-      <SQL><TAB><db_id>
-    Returns a list of (sql, db_id) tuples.
-    """
-    if not os.path.exists(path):
-        raise FileNotFoundError(f"Gold SQL file not found: {path}")
-
-    pairs: List[Tuple[str, str]] = []
-    with open(path, "r", encoding="utf-8") as f:
-        for raw in f:
-            line = raw.rstrip("\n\r")
-            if not line:
-                continue
-            if "\t" in line:
-                sql, db_id = line.rsplit("\t", 1)
-            else:
-                # Fallback for lines without tabs: assume last token is db_id
-                parts = line.split()
-                if len(parts) < 2:
-                    continue
-                db_id = parts[-1]
-                sql = line[: line.rfind(db_id)].rstrip()
-            sql_clean = sql.strip().rstrip(";")
-            db_id_clean = db_id.strip()
-            if not sql_clean or not db_id_clean:
-                continue
-            pairs.append((sql_clean, db_id_clean))
-
-    if not pairs:
-        raise ValueError(
-            f"No gold SQL rows parsed from {path}. "
-            "Verify the file format uses tab separators (<SQL>\\t<db_id>)."
-        )
-    return pairs
-
-def get_spider_paths(split: str) -> tuple[str, str, str, str]:
-    root = project_root()
-    examples = os.path.join(root, "Data", "spider_data", f"{split}.json")
-    tables = os.path.join(
-        root, "Data", "spider_data", "test_tables.json" if split == "test" else "tables.json"
-    )
-    db_root = os.path.join(
-        root, "Data", "spider_data", "test_database" if split == "test" else "database"
-    )
-    gold = os.path.join(root, "Data", "spider_data", f"{split}_gold.sql")
-    return examples, tables, db_root, gold
-
-def resolve_db_path(db_root: str, db_id: str, split: str) -> str | None:
-    """
-    Try multiple common layouts to locate the SQLite file for a db_id.
-    Priority:
-      1) db_root/db_id/db_id.sqlite
-      2) db_root/db_id.sqlite
-      3) <project>/Data/spider_data/test_database/db_id/db_id.sqlite
-      4) <project>/Data/spider_data/database/db_id/db_id.sqlite
-    Returns the first existing path or None.
-    """
-    candidates: list[str] = []
-
-    # As provided by args
-    candidates.append(os.path.join(db_root, db_id, f"{db_id}.sqlite"))
-    candidates.append(os.path.join(db_root, f"{db_id}.sqlite"))
-
-    # Standard Spider locations by split
-    root = project_root()
-    split_pref = ["test_database", "database"] if split == "test" else ["database", "test_database"]
-    for folder in split_pref:
-        base = os.path.join(root, "Data", "spider_data", folder)
-        candidates.append(os.path.join(base, db_id, f"{db_id}.sqlite"))
-        candidates.append(os.path.join(base, f"{db_id}.sqlite"))
-
-    for path in candidates:
-        if os.path.exists(path):
-            return path
-    return None
 
 def main():
-    parser = argparse.ArgumentParser(description="Compute execution accuracy against Spider gold SQL.")
-    parser.add_argument("--split", type=str, default="test", help="Spider split: test or dev")
-    parser.add_argument("--examples_path", type=str, help="Override path to Spider examples JSON")
-    parser.add_argument("--tables_path", type=str, help="Override path to Spider tables JSON")
-    parser.add_argument("--db_root", type=str, help="Override path to Spider DB root folder")
+    parser = argparse.ArgumentParser(description="Compute execution accuracy against gold SQL.")
+    parser.add_argument("--dataset", type=str, default="spider", choices=["spider", "bird", "BIRD"], help="Dataset to evaluate: spider or bird")
+    parser.add_argument("--split", type=str, default="test", help="Dataset split: test or dev")
+    parser.add_argument("--examples_path", type=str, help="Override path to examples JSON")
+    parser.add_argument("--tables_path", type=str, help="Override path to tables JSON")
+    parser.add_argument("--db_root", type=str, help="Override path to DB root folder")
     parser.add_argument("--gold_sql_path", type=str, help="Override path to split_gold.sql")
     parser.add_argument("--start", type=int, default=0)
     parser.add_argument("--max_examples", type=int, default=10**9)
@@ -165,14 +40,17 @@ def main():
     parser.add_argument("--save_schema", action="store_true", help="Include schema_text in the log file")
     args = parser.parse_args()
 
+    # Normalize dataset name
+    dataset = args.dataset.lower()
+
     # Resolve paths
-    default_examples, default_tables, default_db_root, default_gold = get_spider_paths(args.split)
+    default_examples, default_tables, default_db_root, default_gold = get_dataset_paths(dataset, args.split)
     examples_path = args.examples_path or default_examples
     db_root = args.db_root or default_db_root
     gold_sql_path = args.gold_sql_path or default_gold
 
     # Use run_planner's table path resolver to match its behavior
-    tables_path = get_table_paths("spider", args.split, args.tables_path)
+    tables_path = get_table_paths(dataset, args.split, args.tables_path)
 
     # Load data
     print("=== Resolved Paths ===")
@@ -198,7 +76,10 @@ def main():
         gold_pairs = gold_pairs[:min_len]
 
     # Load schema metadata (for run_planner.load_schema_text)
-    spider_tables = load_spider(tables_path)  # not strictly needed here, but kept for parity
+    # Note: This is kept for parity but not strictly needed for evaluation
+    if dataset == "spider":
+        spider_tables = load_spider(tables_path)
+    # BIRD tables loading is handled by load_schema_text when needed
 
     # Select baseline agent
     config = LLMConfig(temperature=args.temperature, max_tokens=args.max_tokens)
@@ -229,6 +110,13 @@ def main():
     exec_latency_sum = 0.0
     total_latency_sum = 0.0
 
+    print(f"\n=== Starting Evaluation ===")
+    print(f"Processing examples from index {start} to {end-1} (total: {end-start} examples)")
+    print(f"Baseline: {args.baseline}")
+    print(f"Log path: {log_path}")
+    print(f"Progress will be printed every 10 examples")
+    print(f"Note: Each LLM call may take up to 120 seconds (timeout). Please be patient...\n")
+
     for idx in range(start, end):
         total_start = time.perf_counter()
         ex = examples[idx]
@@ -240,20 +128,29 @@ def main():
         active_db_id = db_id or gold_db_id
 
         # Get schema text via run_planner utility (to match planner usage)
-        schema_text = load_schema_text("spider", active_db_id, tables_path)
+        schema_text = load_schema_text(dataset, active_db_id, tables_path)
 
         # Invoke selected agent to generate SQL for the current question
+        if (idx - start) % 10 == 0 or idx == start:
+            print(f"[{idx+1}/{end}] Processing example {idx} (db_id: {active_db_id})...", flush=True)
+        
         state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
         out_state = None
         gen_latency = 0.0
         try:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → Calling LLM to generate SQL...", flush=True)
             start_time = time.perf_counter()
             out_dict = graph.invoke(state)
             gen_latency = time.perf_counter() - start_time
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → LLM call completed in {gen_latency:.2f}s", flush=True)
             out_state = state_cls(**out_dict)
             gen_sql = (out_state.sql or "").strip().rstrip(";")
         except Exception as e:
-            print(f"[ERROR] Failed to generate plan/SQL for question '{question[:50]}...': {e}")
+            print(f"[ERROR] Failed to generate plan/SQL for question '{question[:50]}...': {e}", flush=True)
+            import traceback
+            print(f"[ERROR] Traceback: {traceback.format_exc()}", flush=True)
             gen_sql = ""
             out_state = state_cls(question=question, db_id=active_db_id, schema_text=schema_text)
 
@@ -261,7 +158,7 @@ def main():
         log_inputs = {
             "question": question,
             "db_id": active_db_id,
-            "dataset": "spider",
+            "dataset": dataset,
             "split": args.split,
             "baseline": args.baseline,
             "example_index": idx,
@@ -271,13 +168,15 @@ def main():
         }
 
         # Execute both queries
-        db_path = resolve_db_path(db_root, active_db_id, args.split)
+        db_path = resolve_db_path(db_root, active_db_id, args.split, dataset)
         if not db_path:
-            print(f"[WARN] SQLite not found for db_id '{active_db_id}'. Checked '{db_root}' and standard Spider locations.")
+            print(f"[WARN] SQLite not found for db_id '{active_db_id}'. Checked '{db_root}' and standard Spider locations.", flush=True)
             total_latency = time.perf_counter() - total_start
             log_inputs["latency"]["execution_sec"] = 0.0
             log_inputs["latency"]["total_sec"] = total_latency
             try:
+                if (idx - start) % 10 == 0 or idx == start:
+                    print(f"  → Saving log...", flush=True)
                 save_log(
                     log_path=log_path,
                     command_line=command_line,
@@ -287,26 +186,48 @@ def main():
                     schema_text=schema_text if args.save_schema else None,
                     latency_sec=gen_latency,
                 )
+                if (idx - start) % 10 == 0 or idx == start:
+                    print(f"  → Log saved", flush=True)
             except Exception as e:
-                print(f"[ERROR] Failed to save log: {e}")
+                print(f"[ERROR] Failed to save log: {e}", flush=True)
             total += 1
             continue
 
         gold_sql_clean = (gold_sql or "").strip().rstrip(";")
+        if (idx - start) % 10 == 0 or idx == start:
+            print(f"  → Executing SQL queries...", flush=True)
         exec_start = time.perf_counter()
         try:
             gen_rows = exec_sql(db_path, gen_sql) if gen_sql else []
-        except Exception:
+        except TimeoutError as e:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → TIMEOUT: Generated SQL execution exceeded 30s timeout: {e}", flush=True)
+                print(f"  → Generated SQL: {gen_sql[:200]}...", flush=True)
+            gen_rows = []
+        except Exception as e:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → Warning: Generated SQL execution failed: {e}", flush=True)
+                print(f"  → Generated SQL: {gen_sql[:200]}...", flush=True)
             gen_rows = []
         try:
             gold_rows = exec_sql(db_path, gold_sql_clean) if gold_sql_clean else []
-        except Exception:
+        except TimeoutError as e:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → TIMEOUT: Gold SQL execution exceeded 30s timeout: {e}", flush=True)
+                print(f"  → Gold SQL: {gold_sql_clean[:200]}...", flush=True)
+            gold_rows = []
+        except Exception as e:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → Warning: Gold SQL execution failed: {e}", flush=True)
+                print(f"  → Gold SQL: {gold_sql_clean[:200]}...", flush=True)
             gold_rows = []
 
         exec_latency = time.perf_counter() - exec_start
         total_latency = time.perf_counter() - total_start
         log_inputs["latency"]["execution_sec"] = exec_latency
         log_inputs["latency"]["total_sec"] = total_latency
+        if (idx - start) % 10 == 0 or idx == start:
+            print(f"  → SQL execution completed in {exec_latency:.2f}s", flush=True)
 
         # Compare results ignoring order (SQL doesn't guarantee order without ORDER BY)
         # and column positions (agent might alias/select columns in different order)
@@ -317,6 +238,8 @@ def main():
         log_inputs["exec_match"] = hit
 
         try:
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → Saving log...", flush=True)
             save_log(
                 log_path=log_path,
                 command_line=command_line,
@@ -326,8 +249,10 @@ def main():
                 schema_text=schema_text if args.save_schema else None,
                 latency_sec=gen_latency,
             )
+            if (idx - start) % 10 == 0 or idx == start:
+                print(f"  → Example {idx} completed (match: {hit}, total time: {total_latency:.2f}s)", flush=True)
         except Exception as e:
-            print(f"[ERROR] Failed to save log: {e}")
+            print(f"[ERROR] Failed to save log: {e}", flush=True)
 
         total += 1
         gen_latency_sum += gen_latency

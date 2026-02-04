@@ -1,0 +1,5 @@
+""" Evaluate baseagent on slider_dev dataset using model "Qwen/Qwen2.5-Coder-14B-Instruct" """
+
+Execution Accuracy (1034 examples): 0.8124  (correct: 840)
+Average Latencies (s): generation=0.818, execution=0.021, total=0.848
+Total Latencies (s): generation=845.993, execution=21.699, total=876.615

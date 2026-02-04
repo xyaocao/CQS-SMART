@@ -10,6 +10,7 @@ if str(baseline_dir) not in sys.path:
 from baseline.state import BaseState
 from baseline.prompts_baseagent import SQLGen_system_prompt, SQLGen_human
 from baseline.llm import get_llm_chat_model, LLMConfig
+from baseline.parse import extract_sql
 
 class BaseGraph:
     """Graph for the baseline baseagent."""
@@ -33,16 +34,7 @@ class BaseGraph:
             )
             response = self.model.invoke(prompt_value.to_messages())
             sql_text = response.content if hasattr(response, 'content') else str(response)
-           # Extract just SQL if fenced
-            if "```" in sql_text:
-                lower = sql_text.lower()
-                if "```sql" in lower:
-                    sql_text = sql_text[lower.find("```sql") + 6:]
-                else:
-                    sql_text = sql_text[lower.find("```") + 3:]
-                if "```" in sql_text:
-                    sql_text = sql_text[:sql_text.find("```")]
-            state.sql = sql_text.strip()
+            state.sql = extract_sql(sql_text)
             return state
     
     def invoke(self, state: BaseState) -> BaseState:
