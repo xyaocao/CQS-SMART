@@ -1,5 +1,0 @@
-{"db_id": "car_1", "pattern": "model with a weight smaller than the average", "hint": {"preferred_select": ["car_names.model"], "preserve_literals": []}, "source": {"example_index": 98, "split": "dev"}}
-{"db_id": "car_1", "pattern": "car models are produced in the usa", "hint": {"preferred_select": ["count(*)", "model_list"], "preserve_literals": ["usa"]}, "source": {"example_index": 115, "split": "dev"}}
-{"db_id": "world_1", "pattern": "english and dutch", "hint": {"preferred_select": [], "preserve_literals": ["english", "dutch"]}, "source": {"example_index": 745, "split": "dev"}}
-{"db_id": "world_1", "pattern": "how many people", "hint": {"preferred_select": ["population"], "preserve_literals": ["population"]}, "source": {"example_index": 728, "split": "dev"}}
-
