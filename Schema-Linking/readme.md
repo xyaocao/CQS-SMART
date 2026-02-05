@@ -7,7 +7,9 @@ Credit to RSL-SQL: Robust Schema Linking in Text-to-SQL Generation, https://arxi
 
 - Download `pytorch_model.bin` and place it in the `few_shot/sentence_transformers/` folder. Download address: https://huggingface.co/sentence-transformers/all-mpnet-base-v2/tree/main
 
-- Download the `column_meaning.json` file and place it in the `data/` folder. Download address: https://github.com/quge2023/TA-SQL/blob/master/outputs/column_meaning.json
+- Download the `column_meaning.json` file and place it in the `Data/BIRD/dev` folder. Download address: https://github.com/quge2023/TA-SQL/blob/master/outputs/column_meaning.json
+
+- Download the `spider_dev_samples.json` file and place it in the `Data/spider_data/` folder. Download address: https://huggingface.co/datasets/griffith-bigdata/GRAST-SQL-Spider/blob/main/spider_dev_samples.json
 
 - Download the `dev.json` file and `dev_tables.json` file of the development set in the `data/` folder. Download address: https://bird-bench.github.io/
 
@@ -26,7 +28,7 @@ RSL-SQL/
 ├── README.md
 ├── requirements.txt
 │
-├── data/
+├── Data/BIRD/dev
 │   ├── column_meaning.json
 │   ├── dev.json
 │   └── dev_tables.json
@@ -112,6 +114,7 @@ python src/step_2_information_augmentation.py --ppl_file src/information/ppl_dev
 python src/information/add_augmentation.py
 ```
 
+```
 ### 4. SQL selection
 ```bash
 # step 3: sql selection
@@ -119,14 +122,14 @@ python src/information/add_augmentation.py
 # If an error occurs, you need to save these two files in time, then continue running and save the subsequent results.
 python src/step_3_binary_selection.py --ppl_file src/information/ppl_dev.json --sql_3_output src/sql_log/step_3_binary.txt --sql_1 src/sql_log/preliminary_sql.txt --sql_2 src/sql_log/step_2_information_augmentation.txt --start_index 0
 ```
-
+```
 ### 5. SQL refinement
 ```bash
 # step 4: sql refinement
 # There is one output files in this step, one is `src/sql_log/final_sql.txt`.
 python src/step_4_self_correction.py --ppl_file src/information/ppl_dev.json --sql_4_output src/sql_log/final_sql.txt --sql_refinement src/sql_log/step_3_binary.txt --start_index 0
 ```
-
+```
 ## Evaluation 
 ### Execution (EX) Evaluation:
 Refer to the official evaluation script, the link is: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/bird
@@ -148,9 +151,7 @@ We should organize the output of the database elements in the following format:
         ]
     }
 ```
-
-
-
+```
 
 # Citation
 ```citation
@@ -160,4 +161,5 @@ We should organize the output of the database elements in the following format:
   journal={arXiv preprint arXiv:2411.00073},
   year={2024}
 }
+```
 ```
