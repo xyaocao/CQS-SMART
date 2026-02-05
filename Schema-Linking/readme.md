@@ -114,22 +114,22 @@ python src/step_2_information_augmentation.py --ppl_file src/information/ppl_dev
 python src/information/add_augmentation.py
 ```
 
-```
-### 4. SQL selection
+
+<!-- ### 4. SQL selection
 ```bash
 # step 3: sql selection
 # There is one output files in this step, one is `src/sql_log/step_3_binary.txt`.
 # If an error occurs, you need to save these two files in time, then continue running and save the subsequent results.
 python src/step_3_binary_selection.py --ppl_file src/information/ppl_dev.json --sql_3_output src/sql_log/step_3_binary.txt --sql_1 src/sql_log/preliminary_sql.txt --sql_2 src/sql_log/step_2_information_augmentation.txt --start_index 0
 ```
-```
+
 ### 5. SQL refinement
 ```bash
 # step 4: sql refinement
 # There is one output files in this step, one is `src/sql_log/final_sql.txt`.
 python src/step_4_self_correction.py --ppl_file src/information/ppl_dev.json --sql_4_output src/sql_log/final_sql.txt --sql_refinement src/sql_log/step_3_binary.txt --start_index 0
 ```
-```
+
 ## Evaluation 
 ### Execution (EX) Evaluation:
 Refer to the official evaluation script, the link is: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/bird
@@ -151,7 +151,6 @@ We should organize the output of the database elements in the following format:
         ]
     }
 ```
-```
 
 # Citation
 ```citation
@@ -162,4 +161,4 @@ We should organize the output of the database elements in the following format:
   year={2024}
 }
 ```
-```
+-->
