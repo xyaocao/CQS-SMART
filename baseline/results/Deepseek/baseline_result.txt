@@ -1,8 +1,0 @@
-"""
-The EA is not reliable due to the verbose nature of the DeepseekR1-Distill-Qwen-14B. So I logged its raw_output to analyze 
-and introduced 4 intermediate metrics to test if planner/skeptic will help the model to reason better sql query ideas.
-"""
-
-Execution Accuracy (740 examples): 0.1554  (correct: 115)
-Average Latencies (s): generation=9.580, execution=0.019, total=9.614
-Total Latencies (s): generation=7088.834, execution=14.375, total=7114.208
