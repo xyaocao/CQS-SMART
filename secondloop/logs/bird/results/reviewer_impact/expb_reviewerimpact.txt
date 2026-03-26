@@ -1,0 +1,76 @@
+=================================================================
+  REVIEWER IMPACT ANALYSIS
+  Log: run_expB_full.json
+=================================================================
+
+  Total records   : 1534
+  Evaluated       : 1532
+  Exec errors     : 2
+
+  ACCURACY
+  Initial SQL                   : 888/1532 (58.0%)
+  Final SQL                     : 883/1532 (57.6%)
+  Net gain                      : -5 examples
+
+  TRANSITION COUNTS
+  Both correct (unchanged)      : 869
+  Both wrong (unchanged)        : 630
+  Wrong → Correct (helped)      : 14
+  Correct → Wrong (hurt)        : 19
+  Net                           : -5
+
+  REVISION SUB-BREAKDOWN
+       No revision applied           
+         Both correct      : 848
+         Both wrong        : 543
+       Revision applied              
+         Wrong → Correct   : 14
+         Correct → Wrong   : 19
+         Both correct      : 21
+         Both wrong        : 87
+
+  PER-DIFFICULTY BREAKDOWN
+  Difficulty        Helped     Hurt      Net
+  ----------------------------------------
+  simple                 7       12       -5
+  moderate               4        5       -1
+  challenging            3        2       +1
+
+  WRONG → CORRECT EXAMPLES (reviewer helped)
+  -----------------------------------------------------------------
+  [  32] moderate     [R] california_schools             What is the eligible free or reduced pri
+  [  36] challenging  [R] california_schools             Under whose administration is the school
+  [ 109] simple       [R] financial                      How many clients opened their accounts i
+  [ 152] moderate     [R] financial                      What is the average number of crimes com
+  [ 168] moderate     [R] financial                      What percentage of clients who opened th
+  [ 199] simple       [R] toxicology                     In the molecule containing sodium atoms,
+  [ 238] simple       [R] toxicology                     How many molecules have a triple bond ty
+  [ 332] simple       [R] toxicology                     Among the molecules between TR004 to TR0
+  [ 898] simple       [R] formula_1                      How old is the youngest Japanese driver?
+  [ 944] challenging  [R] formula_1                      How much faster in percentage is the cha
+  [ 945] simple       [R] formula_1                      How many circuits are there in Adelaide,
+  [1188] simple       [R] thrombosis_prediction          How many female patients born in 1964 we
+  [1202] challenging  [R] thrombosis_prediction          How many male patients who underwent tes
+  [1250] moderate     [R] thrombosis_prediction          Which patient has a normal proteinuria l
+
+  CORRECT → WRONG EXAMPLES (reviewer hurt)
+  -----------------------------------------------------------------
+  [  63] simple       [R] california_schools             verdict=needs_revision
+  [  90] simple       [R] financial                      verdict=needs_revision
+  [  92] simple       [R] financial                      verdict=needs_revision
+  [  99] moderate     [R] financial                      verdict=needs_revision
+  [ 131] moderate     [R] financial                      verdict=needs_revision
+  [ 286] simple       [R] toxicology                     verdict=needs_revision
+  [ 324] simple       [R] toxicology                     verdict=needs_revision
+  [ 372] simple       [R] card_games                     verdict=needs_revision
+  [ 415] challenging  [R] card_games                     verdict=needs_revision
+  [ 451] simple       [R] card_games                     verdict=needs_revision
+  [ 462] moderate     [R] card_games                     verdict=needs_revision
+  [ 563] moderate     [R] codebase_community             verdict=needs_revision
+  [ 662] simple       [R] codebase_community             verdict=needs_revision
+  [ 849] simple       [R] formula_1                      verdict=needs_revision
+  [ 880] challenging  [R] formula_1                      verdict=needs_revision
+  [1332] moderate     [R] student_club                   verdict=needs_revision
+  [1466] simple       [R] student_club                   verdict=needs_revision
+  [1496] simple       [R] debit_card_specializing        verdict=needs_revision
+  [1511] simple       [R] debit_card_specializing        verdict=needs_revision

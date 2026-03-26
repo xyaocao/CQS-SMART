@@ -1,0 +1,120 @@
+=================================================================
+  REVIEWER IMPACT ANALYSIS
+  Log: final_noplanner.json
+=================================================================
+
+  Total records   : 1534
+  Evaluated       : 1531
+  Exec errors     : 3
+
+  ACCURACY
+  Initial SQL                   : 906/1531 (59.2%)
+  Final SQL                     : 893/1531 (58.3%)
+  Net gain                      : -13 examples
+
+  TRANSITION COUNTS
+  Both correct (unchanged)      : 861
+  Both wrong (unchanged)        : 593
+  Wrong → Correct (helped)      : 32
+  Correct → Wrong (hurt)        : 45
+  Net                           : -13
+
+  REVISION SUB-BREAKDOWN
+       No revision applied           
+         Both correct      : 833
+         Both wrong        : 460
+       Revision applied              
+         Wrong → Correct   : 32
+         Correct → Wrong   : 45
+         Both correct      : 28
+         Both wrong        : 133
+
+  PER-DIFFICULTY BREAKDOWN
+  Difficulty        Helped     Hurt      Net
+  ----------------------------------------
+  simple                20       19       +1
+  moderate              10       21      -11
+  challenging            2        5       -3
+
+  WRONG → CORRECT EXAMPLES (reviewer helped)
+  -----------------------------------------------------------------
+  [   8] simple       [R] california_schools             What is the number of SAT test takers of
+  [  70] simple       [R] california_schools             How many active and closed District Comm
+  [  89] moderate     [R] financial                      How many accounts who choose issuance af
+  [  91] simple       [R] financial                      The average unemployment ratio of 1995 a
+  [ 164] simple       [R] financial                      Who placed the order with the id 32423?
+  [ 174] simple       [R] financial                      What year was account owner number 130 b
+  [ 182] moderate     [R] financial                      How many male customers who were born be
+  [ 196] simple       [R] toxicology                     In the non-carcinogenic molecules, how m
+  [ 238] simple       [R] toxicology                     How many molecules have a triple bond ty
+  [ 260] moderate     [R] toxicology                     Calculate the total atoms with triple-bo
+  [ 332] simple       [R] toxicology                     Among the molecules between TR004 to TR0
+  [ 391] moderate     [R] card_games                     Among the Artifact cards, which are blac
+  [ 393] simple       [R] card_games                     On how many cards designed by John Avon 
+  [ 401] moderate     [R] card_games                     What percentage of legendary frame effec
+  [ 599] simple       [R] codebase_community             What are the post history type IDs for p
+  [ 614] simple       [R] codebase_community             Among the users who obtained the "Teache
+  [ 696] simple       [R] codebase_community             Count the number of posts with a tag spe
+  [ 799] simple       [R] superhero                      How many superheroes didn't have any pub
+  [ 838] simple       [R] superhero                      Provide the full name of the superhero n
+  [ 851] simple       [R] formula_1                      Please list the positions of the circuit
+  [ 890] simple       [R] formula_1                      How many seasons has Silverstone Circuit
+  [ 892] moderate     [R] formula_1                      State the driver with the most points sc
+  [ 898] simple       [R] formula_1                      How old is the youngest Japanese driver?
+  [1157] simple       [R] thrombosis_prediction          For patients with severe degree of throm
+  [1192] challenging  [R] thrombosis_prediction          List all patients who were followed up a
+  [1194] challenging  [R] thrombosis_prediction          What sex is the patient who in a medical
+  [1218] moderate     [R] thrombosis_prediction          What is the percentage of the female pat
+  [1226] simple       [R] thrombosis_prediction          Who is the oldest patient with the highe
+  [1250] moderate     [R] thrombosis_prediction          Which patient has a normal proteinuria l
+  [1454] moderate     [R] student_club                   What is the percentage of the cost for t
+  [1470] simple       [R] debit_card_specializing        How many gas stations in CZE has Premium
+  [1480] moderate     [R] debit_card_specializing        What was the gas consumption peak month 
+
+  CORRECT → WRONG EXAMPLES (reviewer hurt)
+  -----------------------------------------------------------------
+  [  90] simple       [R] financial                      verdict=ok
+  [  92] simple       [R] financial                      verdict=ok
+  [  95] moderate     [R] financial                      verdict=needs_revision
+  [ 120] moderate     [R] financial                      verdict=ok
+  [ 150] moderate     [R] financial                      verdict=ok
+  [ 189] moderate     [R] financial                      verdict=needs_revision
+  [ 286] simple       [R] toxicology                     verdict=ok
+  [ 298] moderate     [R] toxicology                     verdict=ok
+  [ 417] moderate     [R] card_games                     verdict=needs_revision
+  [ 449] simple       [R] card_games                     verdict=ok
+  [ 451] simple       [R] card_games                     verdict=needs_revision
+  [ 476] simple       [R] card_games                     verdict=ok
+  [ 598] challenging  [R] codebase_community             verdict=ok
+  [ 608] simple       [R] codebase_community             verdict=needs_revision
+  [ 683] moderate     [R] codebase_community             verdict=needs_revision
+  [ 700] simple       [R] codebase_community             verdict=needs_revision
+  [ 753] moderate     [R] superhero                      verdict=needs_revision
+  [ 801] moderate     [R] superhero                      verdict=needs_revision
+  [ 834] challenging  [R] superhero                      verdict=needs_revision
+  [ 849] simple       [R] formula_1                      verdict=needs_revision
+  [ 858] simple       [R] formula_1                      verdict=needs_revision
+  [ 891] simple       [R] formula_1                      verdict=ok
+  [ 897] moderate     [R] formula_1                      verdict=needs_revision
+  [ 975] simple       [R] formula_1                      verdict=needs_revision
+  [ 984] simple       [R] formula_1                      verdict=ok
+  [1051] simple       [R] european_football_2            verdict=ok
+  [1075] moderate     [R] european_football_2            verdict=needs_revision
+  [1137] simple       [R] european_football_2            verdict=needs_revision
+  [1149] moderate     [R] thrombosis_prediction          verdict=needs_revision
+  [1150] moderate     [R] thrombosis_prediction          verdict=ok
+  [1152] moderate     [R] thrombosis_prediction          verdict=ok
+  [1162] moderate     [R] thrombosis_prediction          verdict=needs_revision
+  [1167] moderate     [R] thrombosis_prediction          verdict=needs_revision
+  [1169] challenging  [R] thrombosis_prediction          verdict=needs_revision
+  [1183] challenging  [R] thrombosis_prediction          verdict=needs_revision
+  [1200] moderate     [R] thrombosis_prediction          verdict=ok
+  [1278] simple       [R] thrombosis_prediction          verdict=needs_revision
+  [1301] simple       [R] thrombosis_prediction          verdict=needs_revision
+  [1387] moderate     [R] student_club                   verdict=needs_revision
+  [1405] moderate     [R] student_club                   verdict=ok
+  [1429] challenging  [R] student_club                   verdict=needs_revision
+  [1490] moderate     [R] debit_card_specializing        verdict=ok
+  [1501] moderate     [R] debit_card_specializing        verdict=needs_revision
+  [1508] simple       [R] debit_card_specializing        verdict=ok
+  [1511] simple       [R] debit_card_specializing        verdict=needs_revision

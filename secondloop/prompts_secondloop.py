@@ -397,3 +397,97 @@ SelfVerification_human = (
     "Analyze what the SQL will return and whether it matches the question."
     "Return ONLY JSON."
 )
+
+# =============================================================================
+# EXPERIMENT A: WATCHER-AWARE PROMPT VARIANTS
+# =============================================================================
+# Social-pressure technique: each agent is told its output will be evaluated by
+# a separate independent AI model. Inserted just before the final output
+# instruction of each system prompt (highest recency effect).
+# Kept model-agnostic so the same prompts work on any backbone (Qwen3-Next,
+# DeepSeek-R1, etc.) without self-referential awkwardness.
+
+_WATCHER_SQLGEN = (
+    "IMPORTANT: Your generated SQL will be independently evaluated by a "
+    "separate AI model for correctness. Produce your most careful, accurate SQL — "
+    "errors will be caught.\n\n"
+)
+
+_WATCHER_REVIEWER = (
+    "IMPORTANT: Your review will be cross-validated by an independent AI agent. "
+    "Every step must be genuinely completed and every verdict well-justified — "
+    "superficial or rushed analyses will be detected.\n\n"
+)
+
+_WATCHER_FEEDBACK = (
+    "IMPORTANT: Your revised SQL will be independently verified by a "
+    "separate AI model. Every issue listed below MUST be fully addressed — "
+    "partial fixes will be detected.\n\n"
+)
+
+# Watcher line is injected immediately before the final output instruction.
+SQLGen_system_prompt_v2_expA = SQLGen_system_prompt_v2.replace(
+    "OUTPUT: Only the SQL query, nothing else.",
+    _WATCHER_SQLGEN + "OUTPUT: Only the SQL query, nothing else.",
+)
+
+SQLReviewer_system_prompt_expA = SQLReviewer_system_prompt.replace(
+    "\nReturn ONLY the JSON object.",
+    "\n" + _WATCHER_REVIEWER + "Return ONLY the JSON object.",
+)
+
+SQLGen_with_feedback_system_expA = SQLGen_with_feedback_system.replace(
+    "OUTPUT: Only the corrected SQL query, nothing else.",
+    _WATCHER_FEEDBACK + "OUTPUT: Only the corrected SQL query, nothing else.",
+)
+
+# =============================================================================
+# EXPERIMENT B REVERSED: CODE-FENCE OUTPUT INSTRUCTION
+# =============================================================================
+# When DeepSeek-R1-Distill is the generator, its chain-of-thought reasoning can
+# run indefinitely without a clear delimiter before the SQL output.
+# Replacing the plain-text output instruction with an explicit ```sql``` code
+# fence forces the model to terminate reasoning and wrap the SQL in a fence
+# that extract_sql() reliably detects.
+
+_CODEFENCE_OUTPUT_HEADER = (
+    "REASONING DISCIPLINE: Keep your reasoning to 3-5 sentences maximum. "
+    "Identify the single key issue, state the fix in one sentence, then output the SQL immediately. "
+    "Do NOT re-examine the schema, re-read all columns, or consider alternative approaches — "
+    "focus only on the specific fix required.\n\n"
+)
+
+_CODEFENCE_OUTPUT_SQL = (
+    "OUTPUT: Output ONLY the SQL query inside a ```sql``` code fence. "
+    "No text before or after the fence.\n```sql\n<your SQL here>\n```"
+)
+
+SQLGen_system_prompt_v2_codefence = SQLGen_system_prompt_v2.replace(
+    "OUTPUT: Only the SQL query, nothing else.",
+    _CODEFENCE_OUTPUT_HEADER + _CODEFENCE_OUTPUT_SQL,
+)
+
+SQLGen_with_feedback_system_codefence = SQLGen_with_feedback_system.replace(
+    "OUTPUT: Only the corrected SQL query, nothing else.",
+    _CODEFENCE_OUTPUT_HEADER + _CODEFENCE_OUTPUT_SQL,
+)
+
+# =============================================================================
+# EXPERIMENT A + CODE-FENCE: WATCHER PRESSURE WITH EXPLICIT FENCE OUTPUT
+# =============================================================================
+# Combines ExpA's social-pressure watcher lines with the code-fence output
+# format for models (e.g. DeepSeek-R1) that benefit from an explicit fence
+# delimiter to terminate chain-of-thought reasoning before the SQL.
+
+SQLGen_system_prompt_v2_expA_codefence = SQLGen_system_prompt_v2.replace(
+    "OUTPUT: Only the SQL query, nothing else.",
+    _WATCHER_SQLGEN + _CODEFENCE_OUTPUT_HEADER + _CODEFENCE_OUTPUT_SQL,
+)
+
+SQLGen_with_feedback_system_expA_codefence = SQLGen_with_feedback_system.replace(
+    "OUTPUT: Only the corrected SQL query, nothing else.",
+    _WATCHER_FEEDBACK + _CODEFENCE_OUTPUT_HEADER + _CODEFENCE_OUTPUT_SQL,
+)
+# Note: SQLReviewer outputs JSON, not SQL, so no codefence variant is needed
+# for the reviewer. SQLReviewer_system_prompt_expA is used for both expA and
+# expA+codefence runs.

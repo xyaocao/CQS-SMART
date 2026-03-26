@@ -34,6 +34,16 @@ from prompts_secondloop import (
     SQLRefiner_system_prompt, SQLRefiner_human,
     SelfConsistencyVoter_system_prompt, SelfConsistencyVoter_human,
     SelfVerification_system_prompt, SelfVerification_human,
+    # Experiment A: watcher-aware variants
+    SQLGen_system_prompt_v2_expA,
+    SQLReviewer_system_prompt_expA,
+    SQLGen_with_feedback_system_expA,
+    # Experiment B reversed: code-fence output instruction
+    SQLGen_system_prompt_v2_codefence,
+    SQLGen_with_feedback_system_codefence,
+    # Experiment A + code-fence: watcher pressure + explicit fence (for DeepSeek-R1)
+    SQLGen_system_prompt_v2_expA_codefence,
+    SQLGen_with_feedback_system_expA_codefence,
 )
 
 
@@ -157,10 +167,19 @@ class PlannerAgentV2:
 class SQLGenAgent:
     """SQL Generator from plan."""
 
-    def __init__(self, llm_config: LLMConfig = None):
+    def __init__(self, llm_config: LLMConfig = None, exp_a: bool = False,
+                 codefence_ins: bool = False):
         self.model = get_llm_chat_model(llm_config)
+        if exp_a and codefence_ins:
+            system_prompt = SQLGen_system_prompt_v2_expA_codefence
+        elif exp_a:
+            system_prompt = SQLGen_system_prompt_v2_expA
+        elif codefence_ins:
+            system_prompt = SQLGen_system_prompt_v2_codefence
+        else:
+            system_prompt = SQLGen_system_prompt_v2
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SQLGen_system_prompt_v2),
+            ("system", system_prompt),
             ("human", SQLGen_human_v2),
         ])
 
@@ -217,12 +236,14 @@ class Skeptic:
     Outputs verdict, confidence, issues, and revision hints.
     """
 
-    def __init__(self, llm_config: LLMConfig = None):
+    def __init__(self, llm_config: LLMConfig = None, exp_a: bool = False, aggressive_json: bool = False):
         self.model = get_llm_chat_model(llm_config)
         self.critical_questions = CRITICAL_QUESTIONS_SECONDLOOP
-
+        # aggressive_json=True strips <think> tags and uses lenient JSON parsing (for DeepSeek-R1)
+        self.aggressive_json = aggressive_json
+        system_prompt = SQLReviewer_system_prompt_expA if exp_a else SQLReviewer_system_prompt
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SQLReviewer_system_prompt),
+            ("system", system_prompt),
             ("human", SQLReviewer_human),
         ])
 
@@ -247,8 +268,12 @@ class Skeptic:
         state.latency = time.perf_counter() - start
 
         content = get_response_text(response)
-        review = json_file(content)
         state.raw = content
+
+        # Strip DeepSeek-R1 <think>...</think> reasoning tokens before JSON parsing.
+        # extract_sql() already does this for SQL; we replicate it here for JSON.
+        content_for_json = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL | re.IGNORECASE).strip()
+        review = json_file(content_for_json, aggressive_mode=self.aggressive_json)
 
         # Ensure required fields
         # CRITICAL: If parsing fails or review is malformed, default to "needs_revision"
@@ -311,10 +336,19 @@ class SQLGenWithFeedbackAgent:
     This is used instead of surgical correction - cleaner and more reliable.
     """
 
-    def __init__(self, llm_config: LLMConfig = None):
+    def __init__(self, llm_config: LLMConfig = None, exp_a: bool = False,
+                 codefence_ins: bool = False):
         self.model = get_llm_chat_model(llm_config)
+        if exp_a and codefence_ins:
+            system_prompt = SQLGen_with_feedback_system_expA_codefence
+        elif exp_a:
+            system_prompt = SQLGen_with_feedback_system_expA
+        elif codefence_ins:
+            system_prompt = SQLGen_with_feedback_system_codefence
+        else:
+            system_prompt = SQLGen_with_feedback_system
         self.prompt = ChatPromptTemplate.from_messages([
-            ("system", SQLGen_with_feedback_system),
+            ("system", system_prompt),
             ("human", SQLGen_with_feedback_human),
         ])
 

@@ -1,0 +1,84 @@
+=================================================================
+  Log: final_noplanner
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\final_noplanner.json)
+=================================================================
+
+  Overall Accuracy: 260/500 = 52.0%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                92      155      59.4%
+  moderate             103      200      51.5%
+  challenging           65      145      44.8%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  sqlgen_sec                      498   mean=1.6s  med=1.5s  p95=2.2s
+  reviewer_sec                    499   mean=4.2s  med=4.0s  p95=6.5s
+  regeneration_sec                 92   mean=2.1s  med=1.6s  p95=4.8s
+  regeneration_retry_sec           27   mean=1.7s  med=1.6s  p95=2.5s
+  verification_sec                406   mean=1.8s  med=1.7s  p95=2.5s
+  verification_regen_sec           27   mean=2.1s  med=1.6s  p95=3.0s
+  refiner_sec                       2   mean=1.8s  med=1.8s  p95=2.0s
+  schema_linking_sec              500   mean=3.8s  med=3.7s  p95=4.7s
+  total_sec                       500   mean=8.1s  med=7.5s  p95=12.0s
+  pipeline_total_sec              500   mean=11.9s  med=11.3s  p95=16.0s
+
+  Pipeline Rates (out of 500):
+    Revision applied:        99  (19.8%)
+    Refiner applied:          2  (0.4%)
+    Verification ran:       406  (81.2%)
+    Verify→regen:            27  (5.4%)
+
+======================================================================
+  Log   : final_noplanner
+  Path  : F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\final_noplanner.json
+  Data  : BIRD / dev
+======================================================================
+
+  Records in log : 1534
+  Evaluated      : 1534
+  WARNING: gold_errors = 1
+
+  Execution Accuracy
+  Mode        Correct    Total   Accuracy
+  ----------------------------------------
+  hard            895     1533      58.4%
+  soft            918     1533      59.9%
+  partial         937     1533      61.1%
+
+  Per-Difficulty Breakdown (Hard match only)
+  Difficulty       Correct    Total   Accuracy
+  ---------------------------------------------
+  simple               589      924      63.7%
+  moderate             241      464      51.9%
+  challenging           65      145      44.8%
+
+  Per-Difficulty Breakdown (All match modes)
+  Difficulty              hard         soft      partial
+  ------------------------------------------------------
+  simple                 63.7%        65.4%        66.2%
+  moderate               51.9%        52.6%        54.3%
+  challenging            44.8%        48.3%        50.3%
+
+  Latency (seconds):
+  Stage                           Count   Stats
+  --------------------------------------------------------------------
+  sqlgen_sec                       1531   mean=1.5s  med=1.4s  p95=2.0s
+  reviewer_sec                     1530   mean=4.1s  med=3.8s  p95=6.0s
+  regeneration_sec                  234   mean=2.3s  med=1.5s  p95=6.3s
+  regeneration_retry_sec             69   mean=1.6s  med=1.5s  p95=2.4s
+  verification_sec                 1295   mean=1.7s  med=1.7s  p95=2.4s
+  verification_regen_sec             74   mean=1.7s  med=1.5s  p95=2.1s
+  refiner_sec                         5   mean=2.6s  med=2.0s  p95=4.6s
+  schema_linking_sec               1534   mean=3.7s  med=3.6s  p95=4.6s
+  total_sec                        1534   mean=7.9s  med=7.3s  p95=11.5s
+  pipeline_total_sec               1534   mean=11.7s  med=10.9s  p95=15.5s
+
+  Pipeline Rates (out of 1534 evaluated):
+    Revision applied    :   241  (15.7%)
+    Refiner applied     :     5  (0.3%)
+    Verification ran    :  1295  (84.4%)
+    Verify → regen      :    74  (4.8%)

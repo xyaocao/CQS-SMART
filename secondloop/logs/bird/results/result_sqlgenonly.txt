@@ -1,0 +1,27 @@
+=================================================================
+  Log: SQLGenOnly
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\SQLGenOnly.json)
+=================================================================
+
+  Overall Accuracy: 262/500 = 52.4%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                91      155      58.7%
+  moderate             107      200      53.5%
+  challenging           64      145      44.1%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  sqlgen_sec                      500   mean=1.5s  med=1.4s  p95=2.0s
+  schema_linking_sec              500   mean=3.9s  med=3.5s  p95=4.4s
+  total_sec                       500   mean=1.5s  med=1.4s  p95=2.0s
+  pipeline_total_sec              500   mean=5.3s  med=5.0s  p95=6.2s
+
+  Pipeline Rates (out of 500):
+    Revision applied:         0  (0.0%)
+    Refiner applied:          0  (0.0%)
+    Verification ran:         0  (0.0%)
+    Verify→regen:             0  (0.0%)

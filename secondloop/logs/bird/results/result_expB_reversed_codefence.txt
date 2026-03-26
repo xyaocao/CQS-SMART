@@ -1,0 +1,47 @@
+======================================================================
+  Log   : run_expB_reversed_codefence_full
+  Path  : F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\expB\run_expB_reversed_codefence_full.json
+  Data  : BIRD / dev
+======================================================================
+
+  Records in log : 1534
+  Evaluated      : 1534
+  WARNING: exec_errors = 94
+
+  Execution Accuracy
+  Mode        Correct    Total   Accuracy
+  ----------------------------------------
+  hard            716     1534      46.7%
+  soft            772     1534      50.3%
+  partial         785     1534      51.2%
+
+  Per-Difficulty Breakdown (Hard match only)
+  Difficulty       Correct    Total   Accuracy
+  ---------------------------------------------
+  simple               503      925      54.4%
+  moderate             173      464      37.3%
+  challenging           40      145      27.6%
+
+  Per-Difficulty Breakdown (All match modes)
+  Difficulty              hard         soft      partial  
+  ------------------------------------------------------  
+  simple                 54.4%        57.9%        58.4%  
+  moderate               37.3%        40.5%        41.8%  
+  challenging            27.6%        33.1%        35.2%  
+
+  Latency (seconds):
+  Stage                           Count   Stats
+  --------------------------------------------------------------------
+  sqlgen_sec                       1534   mean=9.6s  med=8.4s  p95=18.9s
+  reviewer_sec                     1534   mean=2.4s  med=2.1s  p95=3.9s
+  regeneration_sec                  465   mean=11.0s  med=7.8s  p95=41.1s
+  regeneration_retry_sec            159   mean=17.8s  med=11.1s  p95=42.9s
+  schema_linking_sec               1534   mean=1.5s  med=1.3s  p95=1.9s
+  total_sec                        1534   mean=17.2s  med=11.3s  p95=50.3s
+  pipeline_total_sec               1534   mean=18.6s  med=12.7s  p95=52.0s
+
+  Pipeline Rates (out of 1534 evaluated):
+    Revision applied    :   449  (29.3%)
+    Refiner applied     :     0  (0.0%)
+    Verification ran    :     0  (0.0%)
+    Verify → regen      :     0  (0.0%)

@@ -1,0 +1,78 @@
+=================================================================
+  Log: final_reviewer_only
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\final_reviewer_only.json)
+=================================================================
+
+  Overall Accuracy: 265/500 = 53.0%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                94      155      60.6%
+  moderate             107      200      53.5%
+  challenging           64      145      44.1%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  sqlgen_sec                      499   mean=1.6s  med=1.5s  p95=2.1s
+  reviewer_sec                    500   mean=4.1s  med=3.9s  p95=6.3s
+  regeneration_sec                 81   mean=2.0s  med=1.6s  p95=3.7s
+  regeneration_retry_sec           23   mean=1.8s  med=1.7s  p95=2.4s
+  schema_linking_sec              500   mean=3.7s  med=3.6s  p95=4.7s
+  total_sec                       500   mean=6.1s  med=5.5s  p95=10.8s
+  pipeline_total_sec              500   mean=9.8s  med=9.1s  p95=15.2s
+
+  Pipeline Rates (out of 500):
+    Revision applied:        60  (12.0%)
+    Refiner applied:          0  (0.0%)
+    Verification ran:         0  (0.0%)
+    Verify→regen:             0  (0.0%)
+
+======================================================================
+  Log   : final_reviewer_only
+  Path  : F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\final_reviewer_only.json
+  Data  : BIRD / dev
+======================================================================
+
+  Records in log : 1534
+  Evaluated      : 1534
+  WARNING: exec_errors = 9
+
+  Execution Accuracy
+  Mode        Correct    Total   Accuracy
+  ----------------------------------------
+  hard            894     1534      58.3%
+  soft            915     1534      59.6%
+  partial         938     1534      61.1%
+
+  Per-Difficulty Breakdown (Hard match only)
+  Difficulty       Correct    Total   Accuracy
+  ---------------------------------------------
+  simple               585      925      63.2%
+  moderate             245      464      52.8%
+  challenging           64      145      44.1%
+
+  Per-Difficulty Breakdown (All match modes)
+  Difficulty              hard         soft      partial
+  ------------------------------------------------------
+  simple                 63.2%        64.4%        65.5%
+  moderate               52.8%        53.2%        55.2%
+  challenging            44.1%        49.7%        52.4%
+
+  Latency (seconds):
+  Stage                           Count   Stats
+  --------------------------------------------------------------------
+  sqlgen_sec                       1533   mean=1.5s  med=1.4s  p95=2.0s
+  reviewer_sec                     1533   mean=4.0s  med=3.7s  p95=5.9s
+  regeneration_sec                  225   mean=2.0s  med=1.5s  p95=5.4s
+  regeneration_retry_sec             67   mean=2.2s  med=1.6s  p95=3.1s
+  schema_linking_sec               1534   mean=3.7s  med=3.6s  p95=4.7s
+  total_sec                        1534   mean=5.9s  med=5.2s  p95=9.9s
+  pipeline_total_sec               1534   mean=9.6s  med=8.9s  p95=14.0s
+
+  Pipeline Rates (out of 1534 evaluated):
+    Revision applied    :   165  (10.8%)
+    Refiner applied     :     0  (0.0%)
+    Verification ran    :     0  (0.0%)
+    Verify → regen      :     0  (0.0%)

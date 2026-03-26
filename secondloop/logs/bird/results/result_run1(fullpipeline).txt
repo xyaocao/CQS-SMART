@@ -1,0 +1,47 @@
+=================================================================
+  Log: run1
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\run1.json)
+=================================================================
+
+  Overall Accuracy: 253/500 = 50.6%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                89      155      57.4%
+  moderate             108      200      54.0%
+  challenging           56      145      38.6%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  planner_sec                     500   mean=3.0s  med=2.8s  p95=4.0s
+  sqlgen_sec                      500   mean=1.5s  med=1.5s  p95=2.0s
+  reviewer_sec                    500   mean=4.3s  med=4.1s  p95=6.3s
+  regeneration_sec                 64   mean=2.1s  med=1.6s  p95=5.4s
+  regeneration_retry_sec           15   mean=1.8s  med=1.7s  p95=3.5s
+  verification_sec                436   mean=1.9s  med=1.8s  p95=3.0s
+  verification_regen_sec           46   mean=1.7s  med=1.6s  p95=2.4s
+  refiner_sec                       3   mean=2.0s  med=2.0s  p95=2.1s
+  schema_linking_sec              500   mean=3.8s  med=3.7s  p95=4.7s
+  total_sec                       500   mean=11.2s  med=10.6s  p95=15.6s
+  pipeline_total_sec              500   mean=14.9s  med=14.3s  p95=20.0s
+
+  Pipeline Rates (out of 500):
+    Revision applied:        94  (18.8%)
+    Refiner applied:          3  (0.6%)
+    Verification ran:       436  (87.2%)
+    Verify→regen:            46  (9.2%)
+
+
+===========================================================================
+  SIDE-BY-SIDE COMPARISON
+===========================================================================
+  Metric                              run1        SQLGenOnly
+  ----------------------------------------------------------
+  Overall Accuracy                   50.6%             52.4%
+  Simple                             57.4%             58.7%
+  Moderate                           54.0%             53.5%
+  Challenging                        38.6%             44.1%
+  Mean total_sec                     11.2s              1.5s
+  Revision rate                      18.8%              0.0%

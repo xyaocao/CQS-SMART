@@ -1,0 +1,83 @@
+=================================================================
+  REVIEWER IMPACT ANALYSIS
+  Log: final_reviewer_only.json
+=================================================================
+
+  Total records   : 1534
+  Evaluated       : 1534
+  Exec errors     : 0
+
+  ACCURACY
+  Initial SQL                   : 895/1534 (58.3%)
+  Final SQL                     : 897/1534 (58.5%)
+  Net gain                      : +2 examples
+
+  TRANSITION COUNTS
+  Both correct (unchanged)      : 876
+  Both wrong (unchanged)        : 618
+  Wrong → Correct (helped)      : 21
+  Correct → Wrong (hurt)        : 19
+  Net                           : +2
+
+  REVISION SUB-BREAKDOWN
+       No revision applied           
+         Both correct      : 860
+         Both wrong        : 518
+       Revision applied              
+         Wrong → Correct   : 21
+         Correct → Wrong   : 19
+         Both correct      : 16
+         Both wrong        : 100
+
+  PER-DIFFICULTY BREAKDOWN
+  Difficulty        Helped     Hurt      Net
+  ----------------------------------------
+  simple                11        7       +4
+  moderate               6        8       -2
+  challenging            4        4       +0
+
+  WRONG → CORRECT EXAMPLES (reviewer helped)
+  -----------------------------------------------------------------
+  [ 119] moderate     [R] financial                      For accounts in 1993 with statement issu
+  [ 238] simple       [R] toxicology                     How many molecules have a triple bond ty
+  [ 332] simple       [R] toxicology                     Among the molecules between TR004 to TR0
+  [ 362] simple       [R] card_games                     What is the description about the ruling
+  [ 393] simple       [R] card_games                     On how many cards designed by John Avon 
+  [ 401] moderate     [R] card_games                     What percentage of legendary frame effec
+  [ 490] simple       [R] card_games                     For the set which had 'SS2' as the code,
+  [ 799] simple       [R] superhero                      How many superheroes didn't have any pub
+  [ 858] simple       [R] formula_1                      Which country is the constructor which g
+  [ 880] challenging  [R] formula_1                      Paul di Resta was in the No. 853 race, w
+  [ 898] simple       [R] formula_1                      How old is the youngest Japanese driver?
+  [ 957] simple       [R] formula_1                      How many Italian drivers haven't finishe
+  [ 962] challenging  [R] formula_1                      From 2000 to 2005, what percentage of dr
+  [1002] moderate     [R] formula_1                      As of the present, what is the full name
+  [1157] simple       [R] thrombosis_prediction          For patients with severe degree of throm
+  [1165] moderate     [R] thrombosis_prediction          What is the age gap between the youngest
+  [1171] challenging  [R] thrombosis_prediction          How many underage patients were examined
+  [1188] simple       [R] thrombosis_prediction          How many female patients born in 1964 we
+  [1192] challenging  [R] thrombosis_prediction          List all patients who were followed up a
+  [1250] moderate     [R] thrombosis_prediction          Which patient has a normal proteinuria l
+  [1296] moderate     [R] thrombosis_prediction          What is the anti-nucleus antibody concen
+
+  CORRECT → WRONG EXAMPLES (reviewer hurt)
+  -----------------------------------------------------------------
+  [ 324] simple       [R] toxicology                     verdict=needs_revision
+  [ 367] simple       [R] card_games                     verdict=needs_revision
+  [ 415] challenging  [R] card_games                     verdict=needs_revision
+  [ 417] moderate     [R] card_games                     verdict=needs_revision
+  [ 451] simple       [R] card_games                     verdict=needs_revision
+  [ 508] moderate     [R] card_games                     verdict=needs_revision
+  [ 753] moderate     [R] superhero                      verdict=needs_revision
+  [ 801] moderate     [R] superhero                      verdict=needs_revision
+  [ 834] challenging  [R] superhero                      verdict=needs_revision
+  [ 849] simple       [R] formula_1                      verdict=needs_revision
+  [ 975] simple       [R] formula_1                      verdict=needs_revision
+  [1108] moderate     [R] european_football_2            verdict=needs_revision
+  [1149] moderate     [R] thrombosis_prediction          verdict=needs_revision
+  [1162] moderate     [R] thrombosis_prediction          verdict=needs_revision
+  [1169] challenging  [R] thrombosis_prediction          verdict=needs_revision
+  [1278] simple       [R] thrombosis_prediction          verdict=needs_revision
+  [1301] simple       [R] thrombosis_prediction          verdict=needs_revision
+  [1429] challenging  [R] student_club                   verdict=needs_revision
+  [1501] moderate     [R] debit_card_specializing        verdict=needs_revision

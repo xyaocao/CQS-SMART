@@ -1,0 +1,33 @@
+=================================================================
+  Log: noplanner
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\noplanner.json)
+=================================================================
+
+  Overall Accuracy: 261/500 = 52.2%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                92      155      59.4%
+  moderate             104      200      52.0%
+  challenging           65      145      44.8%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  sqlgen_sec                      500   mean=1.4s  med=1.3s  p95=1.8s
+  reviewer_sec                    500   mean=3.5s  med=3.2s  p95=5.6s
+  regeneration_sec                 93   mean=1.7s  med=1.5s  p95=4.0s
+  regeneration_retry_sec           28   mean=1.6s  med=1.5s  p95=2.9s
+  verification_sec                407   mean=1.6s  med=1.5s  p95=2.2s
+  verification_regen_sec           25   mean=1.9s  med=1.4s  p95=2.3s
+  refiner_sec                       4   mean=4.4s  med=3.6s  p95=8.4s
+  schema_linking_sec              500   mean=3.4s  med=3.4s  p95=4.1s
+  total_sec                       500   mean=7.5s  med=6.4s  p95=11.1s
+  pipeline_total_sec              500   mean=10.9s  med=9.9s  p95=14.6s
+
+  Pipeline Rates (out of 500):
+    Revision applied:        98  (19.6%)
+    Refiner applied:          2  (0.4%)
+    Verification ran:       407  (81.4%)
+    Verify→regen:            25  (5.0%)

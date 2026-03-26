@@ -1,0 +1,30 @@
+=================================================================
+  Log: reviewer_only
+  (F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\qwen3\online\reviewer_only.json)
+=================================================================
+
+  Overall Accuracy: 263/500 = 52.6%
+
+  Per-Difficulty Breakdown:
+  Difficulty       Correct    Total   Accuracy
+  -------------------------------------------
+  simple                93      155      60.0%
+  moderate             105      200      52.5%
+  challenging           65      145      44.8%
+
+  Latency (seconds):
+  Stage                         Count   Stats
+  -----------------------------------------------------------------
+  sqlgen_sec                      500   mean=1.8s  med=1.6s  p95=2.4s
+  reviewer_sec                    500   mean=4.7s  med=4.4s  p95=7.1s
+  regeneration_sec                 90   mean=2.0s  med=1.7s  p95=4.1s
+  regeneration_retry_sec           31   mean=1.7s  med=1.6s  p95=2.6s
+  schema_linking_sec              500   mean=4.0s  med=4.0s  p95=4.9s
+  total_sec                       500   mean=6.9s  med=6.2s  p95=11.4s
+  pipeline_total_sec              500   mean=11.0s  med=10.3s  p95=16.1s       
+
+  Pipeline Rates (out of 500):
+    Revision applied:        69  (13.8%)
+    Refiner applied:          0  (0.0%)
+    Verification ran:         0  (0.0%)
+    Verify→regen:             0  (0.0%)

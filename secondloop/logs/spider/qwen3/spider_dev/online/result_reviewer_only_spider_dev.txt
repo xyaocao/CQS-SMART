@@ -1,0 +1,34 @@
+======================================================================
+  Log   : final_reviewer_only
+  Path  : F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\spider\qwen3\online\final_reviewer_only.json
+  Data  : SPIDER / dev
+======================================================================
+
+  Records in log : 1034
+  Evaluated      : 1034
+
+  Execution Accuracy
+  Mode        Correct    Total   Accuracy
+  ----------------------------------------
+  hard            884     1034      85.5%
+  soft            892     1034      86.3%
+  partial         897     1034      86.8%
+
+  (Per-difficulty breakdown not available for SPIDER)     
+
+  Latency (seconds):
+  Stage                           Count   Stats
+  --------------------------------------------------------------------
+  sqlgen_sec                       1034   mean=1.4s  med=1.4s  p95=1.9s
+  reviewer_sec                     1034   mean=4.2s  med=4.0s  p95=5.8s
+  regeneration_sec                   83   mean=1.4s  med=1.4s  p95=1.9s
+  regeneration_retry_sec             27   mean=1.4s  med=1.4s  p95=2.0s
+  schema_linking_sec               1034   mean=3.6s  med=3.5s  p95=4.6s
+  total_sec                        1034   mean=5.8s  med=5.4s  p95=8.1s
+  pipeline_total_sec               1034   mean=9.4s  med=9.0s  p95=12.3s
+
+  Pipeline Rates (out of 1034 evaluated):
+    Revision applied    :    57  (5.5%)
+    Refiner applied     :     0  (0.0%)
+    Verification ran    :     0  (0.0%)
+    Verify → regen      :     0  (0.0%)
