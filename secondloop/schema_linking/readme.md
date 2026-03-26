@@ -7,7 +7,9 @@ Credit to RSL-SQL: Robust Schema Linking in Text-to-SQL Generation, https://arxi
 
 - Download `pytorch_model.bin` and place it in the `few_shot/sentence_transformers/` folder. Download address: https://huggingface.co/sentence-transformers/all-mpnet-base-v2/tree/main
 
-- Download the `column_meaning.json` file and place it in the `data/` folder. Download address: https://github.com/quge2023/TA-SQL/blob/master/outputs/column_meaning.json
+- Download the `column_meaning.json` file and place it in the `Data/BIRD/dev` folder. Download address: https://github.com/quge2023/TA-SQL/blob/master/outputs/column_meaning.json
+
+- Download the `spider_dev_samples.json` file and place it in the `Data/spider_data/` folder. Download address: https://huggingface.co/datasets/griffith-bigdata/GRAST-SQL-Spider/blob/main/spider_dev_samples.json
 
 - Download the `dev.json` file and `dev_tables.json` file of the development set in the `data/` folder. Download address: https://bird-bench.github.io/
 
@@ -26,7 +28,7 @@ RSL-SQL/
 ├── README.md
 ├── requirements.txt
 │
-├── data/
+├── Data/BIRD/dev
 │   ├── column_meaning.json
 │   ├── dev.json
 │   └── dev_tables.json
@@ -112,7 +114,8 @@ python src/step_2_information_augmentation.py --ppl_file src/information/ppl_dev
 python src/information/add_augmentation.py
 ```
 
-### 4. SQL selection
+
+<!-- ### 4. SQL selection
 ```bash
 # step 3: sql selection
 # There is one output files in this step, one is `src/sql_log/step_3_binary.txt`.
@@ -149,9 +152,6 @@ We should organize the output of the database elements in the following format:
     }
 ```
 
-
-
-
 # Citation
 ```citation
 @article{cao2024rsl,
@@ -161,3 +161,4 @@ We should organize the output of the database elements in the following format:
   year={2024}
 }
 ```
+-->
