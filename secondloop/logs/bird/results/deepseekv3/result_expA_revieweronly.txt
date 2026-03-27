@@ -1,0 +1,47 @@
+======================================================================
+  Log   : final_revieweronly_expA_log
+  Path  : F:\MAster Thesis\CQS-SMART - 1\secondloop\logs\bird\deepseekv3\final_revieweronly_expA_log.json
+  Data  : BIRD / dev
+======================================================================
+
+  Records in log : 1534
+  Evaluated      : 1534
+  WARNING: exec_errors = 13
+
+  Execution Accuracy
+  Mode        Correct    Total   Accuracy
+  ----------------------------------------
+  hard            804     1534      52.4%
+  soft            867     1534      56.5%
+  partial         879     1534      57.3%
+
+  Per-Difficulty Breakdown (Hard match only)
+  Difficulty       Correct    Total   Accuracy
+  ---------------------------------------------
+  simple               550      925      59.5%
+  moderate             202      464      43.5%
+  challenging           52      145      35.9%
+
+  Per-Difficulty Breakdown (All match modes)
+  Difficulty              hard         soft      partial
+  ------------------------------------------------------
+  simple                 59.5%        63.8%        64.3%
+  moderate               43.5%        46.3%        47.4%
+  challenging            35.9%        42.8%        44.1%
+
+  Latency (seconds):
+  Stage                           Count   Stats
+  --------------------------------------------------------------------
+  sqlgen_sec                       1534   mean=3.2s  med=3.0s  p95=5.3s
+  reviewer_sec                     1534   mean=8.4s  med=8.0s  p95=12.1s
+  regeneration_sec                  243   mean=4.0s  med=3.6s  p95=7.1s
+  regeneration_retry_sec            107   mean=4.1s  med=3.6s  p95=7.3s
+  schema_linking_sec               1534   mean=8.2s  med=7.9s  p95=12.1s
+  total_sec                        1534   mean=12.5s  med=11.3s  p95=21.1s
+  pipeline_total_sec               1534   mean=20.7s  med=19.6s  p95=30.9s
+
+  Pipeline Rates (out of 1534 evaluated):
+    Revision applied    :   226  (14.7%)
+    Refiner applied     :     0  (0.0%)
+    Verification ran    :     0  (0.0%)
+    Verify → regen      :     0  (0.0%)
